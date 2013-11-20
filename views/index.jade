@@ -1,0 +1,17 @@
+extends layout
+
+block content
+  .container
+    h1 Welcome to my Topic Posting Site (beta)
+    h2 Create a topic and post posting underneath it. Very quick and easy way to organize opinions.
+    .container.col-lg-4.col-md-4.col-xs-4
+      h3 List of topics
+      ul
+      - each topic in topics
+          li= topic.name
+    .container.col-lg-4.col-md-8.col-xs-8
+      h3 List of posts
+      ul
+      - each post in posts
+          li= post.name
+    

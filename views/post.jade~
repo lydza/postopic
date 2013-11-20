@@ -1,0 +1,22 @@
+extends index
+
+block content
+    form(class='form-horizontal',action='/post/create',method='POST',id='createPost')
+        fieldset
+            div#legend
+                legend Login
+            div.control-group
+                label(for='username',class='control-label') Username
+                div.controls
+                    input(type='text',id='username',name='username',placeholder='Username',class='input-xlarge')
+            div.control-group
+                label(for='password',class='control-label') Password
+                div.controls
+                    input(type='text',id='password',name='password',placeholder='Password',class='input-xlarge')
+            div.control-group
+                label(for='rememberme',class='control-label') Remember Me
+                div.controls
+                    input(type='checkbox',name='rememberme')
+            div.control-group
+                div.controls
+                    input(type='submit',class='btn btn-success') Login

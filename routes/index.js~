@@ -1,0 +1,14 @@
+
+/*
+ * GET home page.
+ */
+
+var PostSchema = require('../models/Post');
+var TopicSchema = require('../models/Topic');
+
+exports.index = function(req, res){
+  res.render('index', { 
+    posts: PostSchema.find();
+    topics: TopicSchema.find();
+  });
+};

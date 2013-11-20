@@ -1,0 +1,19 @@
+{
+  "name": "application-name",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "nodemon app.js"
+  },
+  "dependencies": {
+    "express": "3.4.4",
+    "jade": "*",
+    "passport": "*",
+    "passport-twitter": "*",
+    "mongoose": "~3.8.0"
+  },
+  "devDependencies": {
+    "nodemon": "*"
+  }
+  
+}
