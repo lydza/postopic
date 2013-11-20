@@ -3,11 +3,9 @@
 var mongoose = require('mongoose');
 
 var topicSchema = mongoose.Schema({
-  id: String,
   name: String,
   author: String,
-  date: Date,
-  influence: Object
+  date: Date
 });
 
 topicSchema.methods.onCreate = function() {

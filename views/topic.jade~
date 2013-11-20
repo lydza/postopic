@@ -1,8 +1,11 @@
 extends layout
 
 block content
-  div.col-md-8.col-xs-12
-    form(role='form', class='form-control',action='/topic/create',method='POST',id='createTopic')
-      label(for='createTopic') Topic
-      input(type='text', id='topic',placeholder='#topic',class='form-control')
-      input(type='submit',class='btn btn-default') Submit
+  .container
+    h1 List of Topics
+    h2 This is our full list of topics being talked about right now.
+    h3 List of topics
+    ul
+      each topic in topics
+        li 
+          a(href="/topic/#{topic._id}"topic.name

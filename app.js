@@ -35,6 +35,7 @@ app.use(express.logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded());
 app.use(express.methodOverride());
+app.use(express.bodyParser());
 app.use(app.router);
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -56,7 +57,6 @@ app.get('/', function(req, res){
   });
 });
 app.post('/topic/create',function(req, res){
-    
   var topic = new Topic({
     name: req.body.name,
     author: req.body.author,
@@ -69,13 +69,59 @@ app.post('/topic/create',function(req, res){
       return;
     }
     newTopic.onCreate();
-    console.log('Succecsfully added to database~!');
+    console.log('Succecsfully added a new topic to database.');
+    res.redirect('/');
+  });
+});
+
+
+app.post('/post/create',function(req, res){
+  var post = new Post({
+    name: req.body.name,
+    author: req.body.author,
+    text: req.body.text,
+    date: Date.now(),
+  });
+  post.save(function (err, newPost) {
+    if (err) {
+      console.log('There was an error saving this new post to the database.');
+      res.redirect('/');
+      return;
+    }
+    newPost.onCreate();
+    console.log('Succecsfully added a new post to database.');
     res.redirect('/');
   });
 });
 
 app.get('/topic',  function(req, res){
-  res.render('', {});
+  Topic.find().sort({date: 'asc'}).exec(function(err, results){
+    if(err){
+      console.log('There was an error finding the topics.');
+      res.redirect('/');
+      return;
+    } else{
+      console.log(results);
+      res.render('topic', {
+        topics: results
+      });
+    }
+  })
+});
+
+app.get('/posts',  function(req, res){
+  Post.find().sort({date: 'asc'}).exec(function(err, results){
+    if(err){
+      console.log('There was an error finding the posts.');
+      res.redirect('/');
+      return;
+    } else{
+      console.log(results);
+      res.render('post', {
+        posts: results
+      });
+    }
+  })
 });
 
 http.createServer(app).listen(app.get('port'), function(){

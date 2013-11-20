@@ -6,7 +6,7 @@ var topicSchema = mongoose.Schema({
   id: String,
   name: String,
   author: String,
-  datetime: Date,
+  date: Date,
   influence: Object
 });
 

@@ -3,17 +3,15 @@
 var mongoose = require('mongoose');
 
 var postSchema = mongoose.Schema({
-  id: String,
   name: String,
   text: String,
   author: String,
   date: Date,
-  topic: Number,
-  influence: Object
+  topic_id: Number
 });
 
 postSchema.methods.onCreate = function() {
-  console.log('The post "' + this.name + '" was created. dang!');
+  console.log('The post "' + this.name + '" was created.');
 };
 
 var Post = mongoose.model('Post', postSchema);

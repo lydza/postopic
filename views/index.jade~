@@ -7,11 +7,11 @@ block content
     .container.col-lg-4.col-md-4.col-xs-4
       h3 List of topics
       ul
-        each topic in topics
-          li= topic
+      - each topic in topics
+          li= topic.$_id
     .container.col-lg-4.col-md-8.col-xs-8
       h3 List of posts
       ul
-        each post in posts
-          li= post
+      - each post in posts
+          li= post.name
     
