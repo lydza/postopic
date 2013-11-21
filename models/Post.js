@@ -11,7 +11,7 @@ var postSchema = mongoose.Schema({
 });
 
 postSchema.methods.onCreate = function() {
-  console.log('The post "' + this.name + '" was created.');
+  console.log('The post "' + this.name + '" by ' + this.author + ' was created at ' + this.date + '.');
 };
 
 var Post = mongoose.model('Post', postSchema);

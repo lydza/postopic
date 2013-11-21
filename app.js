@@ -79,6 +79,7 @@ if ('development' == app.get('env')) {
  *****************************************************************************/
 
 app.get('/', index.render(database.info));
+app.get('/error', index.error);
 app.post('/topic/create', topic.create(database.info));
 app.post('/post/create', post.create(database.info));
 app.get('/topics', topic.all(database.info));

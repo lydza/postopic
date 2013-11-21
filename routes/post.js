@@ -3,6 +3,7 @@ module.exports.create = function(db) {
   var Topic = db.models.topic;
   var database = db.database;
   return function(req, res){
+    console.log('Route: /post/create');
     var post = new Post({
       name: req.body.name,
       author: req.body.author,
@@ -11,13 +12,13 @@ module.exports.create = function(db) {
     });
     post.save(function (err, newPost) {
       if (err) {
-        console.log('There was an error saving this new post to the database.');
-        res.redirect('/');
+        console.log('There was an error saving this new post to the database: ' + err);
+        res.redirect('/error');
         return;
       }
       newPost.onCreate();
-      console.log('Succecsfully added a new post to database.');
       res.redirect('/');
+      return;
     });
   };
 };
@@ -27,10 +28,11 @@ module.exports.all = function(db) {
   var Topic = db.models.topic;
   var database = db.database;
   return function(req, res){
+    console.log('Route: /posts');
     Post.find().sort({date: 'asc'}).exec(function(err, results){
       if(err){
-        console.log('There was an error finding the posts.');
-        res.redirect('/');
+        console.log('There was an error finding all posts:' + err);
+        res.redirect('/error');
         return;
       } else{
         console.log('Found ' + results.length + ' posts.');
@@ -47,13 +49,14 @@ module.exports.id = function(db) {
   var Topic = db.models.topic;
   var database = db.database;
   return function(req, res){
+    console.log('Route: /post/:id');
     Post.find().where('_id', req.params.id).sort({date: 'asc'}).exec(function(err, results){
       if(err){
-        console.log('There was an error finding the posts.');
-        res.redirect('/');
+        console.log('There was an error finding the post with the id' + req.params.id + ': \n' + err);
+        res.redirect('/error');
         return;
       } else{
-        console.log('Found the post with this ID.\n' + results);
+        console.log('Found the post with the id ' + req.params.id + '\n' + results);
         res.render('post', {
           post: results[0]
         });

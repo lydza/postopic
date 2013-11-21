@@ -9,7 +9,7 @@ var topicSchema = mongoose.Schema({
 });
 
 topicSchema.methods.onCreate = function() {
-  console.log('The topic "' + this.name + '" was created.');
+  console.log('The topic "' + this.name + '" by ' + this.author + ' was created on ' + this.date + '.');
 };
 
 var Topic = mongoose.model('Topic', topicSchema);
