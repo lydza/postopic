@@ -3,12 +3,21 @@
  * Module dependencies.
  */
 
-// Default variables that came with Express
+/******************************************************************************
+ *
+ * Variables
+ *
+ *****************************************************************************/
+ 
+// Came with Express
 
 var express = require('express');
 var routes = require('./routes');
 var http = require('http');
 var path = require('path');
+
+// For Routing
+
 var post = require('./routes/post');
 var topic = require('./routes/topic');
 var index = require('./routes/index');
@@ -18,7 +27,7 @@ var index = require('./routes/index');
 var Post = require('./models/Post.js');
 var Topic = require('./models/Topic.js');
 
-// Database Connections
+// Database Connection
 
 var db = require('./db.js');
 db.on('error', console.error.bind(console, 'connection error:'));
@@ -26,7 +35,8 @@ db.once('open', function callback () {
   console.log('Connected to database.');
 });
 
-// Holds the database info for the routes.
+// Database Info to Pass to Routes
+
 var database = {
   info: {
     database: db,
@@ -37,8 +47,12 @@ var database = {
   }
 };
 
-// For all environments
-
+/******************************************************************************
+ *
+ * Middleware
+ *
+ *****************************************************************************/
+ 
 var app = express();
 app.set('port', process.env.PORT || 3000);
 app.set('views', path.join(__dirname, 'views'));
@@ -58,7 +72,11 @@ if ('development' == app.get('env')) {
   app.use(express.errorHandler());
 }
 
-// Routes for this application
+/******************************************************************************
+ *
+ * Routes
+ *
+ *****************************************************************************/
 
 app.get('/', index.render(database.info));
 app.post('/topic/create', topic.create(database.info));
@@ -67,6 +85,12 @@ app.get('/topics', topic.all(database.info));
 app.get('/posts', post.all(database.info));
 app.get('/topic/:id', topic.id(database.info));
 app.get('/post/:id', post.id(database.info));
+
+/******************************************************************************
+ *
+ * Variables
+ *
+ *****************************************************************************/
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
