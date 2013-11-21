@@ -1,0 +1,13 @@
+extends layout
+
+block content
+  .container
+    h1 This is the topic #{topic.name} by #{topic.author}
+    h2 Posts for this topic
+    if posts.length
+      ul
+        each post in posts
+          li 
+            a(href="/post/#{post._id}") #{post.name} by #{post.author}: #{post.text} posted on #{post.date}
+    else
+      p This topic has no posts.

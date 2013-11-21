@@ -94,15 +94,15 @@ app.post('/post/create',function(req, res){
   });
 });
 
-app.get('/topic',  function(req, res){
+app.get('/topics',  function(req, res){
   Topic.find().sort({date: 'asc'}).exec(function(err, results){
     if(err){
       console.log('There was an error finding the topics.');
       res.redirect('/');
       return;
     } else{
-      console.log(results);
-      res.render('topic', {
+      console.log('Found ' + results.length + ' topics.');
+      res.render('topics', {
         topics: results
       });
     }
@@ -116,9 +116,51 @@ app.get('/posts',  function(req, res){
       res.redirect('/');
       return;
     } else{
-      console.log(results);
-      res.render('post', {
+      console.log('Found ' + results.length + ' posts.');
+      res.render('posts', {
         posts: results
+      });
+    }
+  })
+});
+
+app.get('/topic/:id',  function(req, res){
+  console.log('Looking in the database for the topic: ' + req.params.id + '...');
+  Topic.find().where('_id', req.params.id).exec(function(err, topicResults){
+    if(err){
+      console.log('There was an error finding the topics.');
+      res.redirect('/');
+      return;
+    } else{
+      console.log('Found the topic. It has the length '+ topicResults.length +'. Now looking in the database for the a posts with that topic...');
+      Post.find().where('topic_id', String(req.params.id)).exec(function(err, postResults){
+        if(err){
+          console.log('There was an error finding the posts associated with this topic:' + err);
+          res.redirect('/');
+          return;
+        }
+        else{
+          console.log('Found ' + postResults.length + ' posts with this topic.');
+          res.render('topic', {
+            posts: postResults,
+            topic: topicResults[0]
+          });
+        }
+      });
+    }
+  })
+});
+
+app.get('/post/:id',  function(req, res){
+  Post.find().where('_id', req.params.id).sort({date: 'asc'}).exec(function(err, results){
+    if(err){
+      console.log('There was an error finding the posts.');
+      res.redirect('/');
+      return;
+    } else{
+      console.log('Found the post with this ID.\n' + results);
+      res.render('post', {
+        post: results
       });
     }
   })

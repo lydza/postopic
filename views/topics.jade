@@ -8,4 +8,5 @@ block content
     ul
       each topic in topics
         li 
-          a(href="/topic/#{topic._id}") topic.name
+          a(href="/topic/#{topic._id}") #{topic.name} 
+          | by #{topic.author}

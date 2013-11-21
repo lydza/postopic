@@ -7,7 +7,7 @@ var postSchema = mongoose.Schema({
   text: String,
   author: String,
   date: Date,
-  topic_id: Number
+  topic_id: String
 });
 
 postSchema.methods.onCreate = function() {
