@@ -8,6 +8,9 @@ block content
       ul
         each post in posts
           li 
-            a(href="/post/#{post._id}") #{post.name} by #{post.author}: #{post.text} posted on #{post.date}
+            a(href="/post/#{post._id}") #{post.name} 
+            | by #{post.author}: "#{post.text}" posted on #{post.date} 
+            | in the topic 
+            a(href="/topic/#{topic._id}") #{topic.name}
     else
       p This topic has no posts.

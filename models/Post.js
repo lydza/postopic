@@ -6,8 +6,8 @@ var postSchema = mongoose.Schema({
   name: String,
   text: String,
   author: String,
-  date: Date,
-  topic_id: String
+  topicId: String,
+  date: Date
 });
 
 postSchema.methods.onCreate = function() {

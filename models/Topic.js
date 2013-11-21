@@ -5,7 +5,8 @@ var mongoose = require('mongoose');
 var topicSchema = mongoose.Schema({
   name: String,
   author: String,
-  date: Date
+  dateCreated: Date,
+  dateUpdated: Date
 });
 
 topicSchema.methods.onCreate = function() {

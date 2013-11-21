@@ -1,38 +1,29 @@
 Specific Routes
  - /
-    - List all posts and topics with the author and time. 
     - On the posts side, add a reference to the topic. Organize it by date
-    - On the Topic side, add a reference to the amount of posts that match this topic. Organize it by the amount of posts associated to them. In descending order.
+    - On the Topic side, add a reference to the amount of posts that match this topic. Organize it by the amount of posts associated to them. In descending order. (So many queries...)
 
  - /posts
-    - Add the topic that this topic falls under on the page
-    - Add the date, and author
-    - Organize it by date
+    - Add the topic that this post falls under on the page (Not sure how to do this with the array of values without having to make a separate query for each value. Or saving this info in the database)
  
  - /topics
-    - Change the date params in topics. Make a dateCreated and dateUpdated.
-    - Add the date and number of posts associated
-    - Organize it by the the dateUpdated
+    - Add the number of posts associated (extra query)
 
  - /post/:id
-    - Fix the problem of the posts not being rendered on the screen
-    - Add the date, topic associated, and author
+    - Everything looks great here. :)
 
  - /topic/:id
-    - Fix the problem of not finding the posts associated with the topic.
-    - Display the posts in the same way as /posts (possibly reuse the layout but use different params)
+    - Everything looks great here. :)
 
  - /topic/create
-    - Once I change the date params in the Topic model, will need to make create it with the Date.now value.
+    - Once I change the date params in the Topic model, will need to make create it with the Date.now value. (Another query)
 
  - /post/create
-    - Once I change the date params in the Topic model, will need to update the dateUpdated var to now. The dateCreated will remain the same.
+    - Everything looks great here. :)
 
 All routes
  - Make the data available to the view consistent. Make sure everything has an author, date and posts and topics (when applicable)
  - Make them all look better. Format the CSS a little better
- - Log better. Don't console.log the entire dataset, just log the amount, results.length
- - Make it clear thru the logs what routes I went to and the data I sent it. Better logging helps things go faster.
 
 New Features
  - Ability to delete topics and posts. When topics are deleted, all posts associated with them must be deleted as well.
@@ -42,10 +33,8 @@ New Features
     - '+ Add to this conversation' next to the posts also with a div that will appear and disappear.
 
 Implementation Details
- - Separate routes from the app.js. It's starting to look stringy. Use the routes folder. Figure out how to access the data set in app.js from the routes folder without exposing it publicly.
  - Use async.js to get rid of callback madness.
  - Clean up code as much as possible.
  - Write tons of comments. No shame in putting tons of comments into something I'm learning.
  - Connect-flash to make the user experience better.
- - Add info to the README.md
  - Once the data is rendered on the page, will add some interactivity, possibly make it run on Backbone.

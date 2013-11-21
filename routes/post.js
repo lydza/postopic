@@ -8,7 +8,8 @@ module.exports.create = function(db) {
       name: req.body.name,
       author: req.body.author,
       text: req.body.text,
-      date: Date.now(),
+      topicId: req.body.topicId,
+      date: Date.now()
     });
     post.save(function (err, newPost) {
       if (err) {
@@ -29,7 +30,7 @@ module.exports.all = function(db) {
   var database = db.database;
   return function(req, res){
     console.log('Route: /posts');
-    Post.find().sort({date: 'asc'}).exec(function(err, results){
+    Post.find().sort({date: 'desc'}).exec(function(err, results){
       if(err){
         console.log('There was an error finding all posts:' + err);
         res.redirect('/error');
@@ -50,15 +51,24 @@ module.exports.id = function(db) {
   var database = db.database;
   return function(req, res){
     console.log('Route: /post/:id');
-    Post.find().where('_id', req.params.id).sort({date: 'asc'}).exec(function(err, results){
+    Post.find().where('_id', req.params.id).sort({date: 'asc'}).exec(function(err, postResults){
       if(err){
         console.log('There was an error finding the post with the id' + req.params.id + ': \n' + err);
         res.redirect('/error');
         return;
       } else{
-        console.log('Found the post with the id ' + req.params.id + '\n' + results);
-        res.render('post', {
-          post: results[0]
+        console.log('Found the post with the id ' + req.params.id + '. Now looking for the topic with the id ' + postResults[0].topicID + ' associated with it...');
+        Topic.find().where('_id', postResults[0].topicId).exec(function(err, topicResults){
+          if(err){
+            console.log('There was an error finding the topic associated with this post: \n' + err);
+            res.redirect('/error');
+          } else{
+            console.log('Found ' + topicResults.length + ' topic associated with this post. Should be 1.');
+            res.render('post', {
+              post: postResults[0],
+              topic: topicResults[0]
+            });
+          }
         });
       }
     })

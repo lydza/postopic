@@ -9,4 +9,4 @@ block content
       each topic in topics
         li 
           a(href="/topic/#{topic._id}") #{topic.name} 
-          | by #{topic.author}
+          | by #{topic.author} last updated on #{topic.dateUpdated}

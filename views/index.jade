@@ -7,8 +7,10 @@ block content
     .container.col-lg-4.col-md-4.col-xs-4
       h3 List of topics
       ul
-      - each topic in topics
-          li= topic.name
+        each topic in topics
+          li 
+            a(href="/topic/#{topic._id}") #{topic.name} 
+            | by #{topic.author}
     .container.col-lg-4.col-md-8.col-xs-8
       h3 List of posts
       ul

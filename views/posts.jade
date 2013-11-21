@@ -8,4 +8,5 @@ block content
     ul
       each post in posts
         li 
-          a(href="/post/#{post._id}") post.name
+          a(href="/post/#{post._id}") #{post.name} 
+          | by #{post.author} on #{post.date}
