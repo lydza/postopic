@@ -48,3 +48,4 @@ Implementation Details
  - Write tons of comments. No shame in putting tons of comments into something I'm learning.
  - Connect-flash to make the user experience better.
  - Add info to the README.md
+ - Once the data is rendered on the page, will add some interactivity, possibly make it run on Backbone.
