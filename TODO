@@ -1,13 +1,13 @@
 Specific Routes
  - /
-    - On the posts side, add a reference to the topic. Organize it by date
-    - On the Topic side, add a reference to the amount of posts that match this topic. Organize it by the amount of posts associated to them. In descending order. (So many queries...)
+    - On the posts side, add a reference to the topic. Organize it by date (many query)
+    - On the Topic side, add a reference to the amount of posts that match this topic. Organize it by the amount of posts associated to them. In descending order. (many queries)
 
  - /posts
-    - Add the topic that this post falls under on the page (Not sure how to do this with the array of values without having to make a separate query for each value. Or saving this info in the database)
+    - Add the topic that this post falls under on the page (many queries)
  
  - /topics
-    - Add the number of posts associated (extra query)
+    - Add the number of posts associated (many queries)
 
  - /post/:id
     - Everything looks great here. :)
