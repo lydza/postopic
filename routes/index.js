@@ -1,3 +1,12 @@
+/******************************************************************************
+ *
+ * Index routes - Holds all routes that don't begin with /post or /topic.
+ * 
+ * render |   '/'    | displays all posts and topics in the index view.
+ * error  | '/error' | displays the error view.
+ *
+ *****************************************************************************/
+
 module.exports.render = function(data) {
   var Post = data.database.model.post;
   var Topic = data.database.model.topic;

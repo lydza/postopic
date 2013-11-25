@@ -1,3 +1,13 @@
+/******************************************************************************
+ *
+ * Post routes - Holds all routes that begin with /post.
+ * 
+ * create | '/post/create' | creates a new post. gets data from req object
+ * all    | '/posts'       | displays all posts
+ * id     | 'post/:id'     | displays a specific post
+ * 
+ *****************************************************************************/
+
 module.exports.create = function(data) {
   var Post = data.database.model.post;
   var Topic = data.database.model.topic;
@@ -50,14 +60,14 @@ module.exports.id = function(data) {
   var Topic = data.database.model.topic;
   var async = data.helper.async;
   return function(req, res){
-    console.log('Route: /post/:id');
+    console.log('Route: /post/' + req.params.id);
     Post.find().where('_id', req.params.id).sort({date: 'asc'}).exec(function(err, postResults){
       if(err){
         console.log('There was an error finding the post with the id' + req.params.id + ': \n' + err);
         res.redirect('/error');
         return;
       } else{
-        console.log('Found the post with the id ' + req.params.id + '. Now looking for the topic with the id ' + postResults[0].topicID + ' associated with it...');
+        console.log('Found the post with the id ' + req.params.id + '. Now looking for the topic with the id ' + postResults[0].topicId + ' associated with it...');
         Topic.find().where('_id', postResults[0].topicId).exec(function(err, topicResults){
           if(err){
             console.log('There was an error finding the topic associated with this post: \n' + err);

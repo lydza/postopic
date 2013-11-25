@@ -1,8 +1,3 @@
-
-/**
- * Module dependencies.
- */
-
 /******************************************************************************
  *
  * Variables
@@ -86,16 +81,18 @@ if ('development' == app.get('env')) {
 
 app.get('/', index.render(routerData));
 app.get('/error', index.error);
-app.post('/topic/create', topic.create(routerData));
-app.post('/post/create', post.create(routerData));
+
 app.get('/topics', topic.all(routerData));
-app.get('/posts', post.all(routerData));
 app.get('/topic/:id', topic.id(routerData));
+app.post('/topic/create', topic.create(routerData));
+
+app.get('/posts', post.all(routerData));
 app.get('/post/:id', post.id(routerData));
+app.post('/post/create', post.create(routerData));
 
 /******************************************************************************
  *
- * Variables
+ * Start the server!
  *
  *****************************************************************************/
 
