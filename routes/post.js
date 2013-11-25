@@ -1,7 +1,7 @@
-module.exports.create = function(db) {
-  var Post = db.models.post;
-  var Topic = db.models.topic;
-  var database = db.database;
+module.exports.create = function(data) {
+  var Post = data.database.model.post;
+  var Topic = data.database.model.topic;
+  var async = data.helper.async;
   return function(req, res){
     console.log('Route: /post/create');
     var post = new Post({
@@ -24,10 +24,10 @@ module.exports.create = function(db) {
   };
 };
 
-module.exports.all = function(db) {
-  var Post = db.models.post;
-  var Topic = db.models.topic;
-  var database = db.database;
+module.exports.all = function(data) {
+  var Post = data.database.model.post;
+  var Topic = data.database.model.topic;
+  var async = data.helper.async;
   return function(req, res){
     console.log('Route: /posts');
     Post.find().sort({date: 'desc'}).exec(function(err, results){
@@ -45,10 +45,10 @@ module.exports.all = function(db) {
   };
 };
 
-module.exports.id = function(db) {
-  var Post = db.models.post;
-  var Topic = db.models.topic;
-  var database = db.database;
+module.exports.id = function(data) {
+  var Post = data.database.model.post;
+  var Topic = data.database.model.topic;
+  var async = data.helper.async;
   return function(req, res){
     console.log('Route: /post/:id');
     Post.find().where('_id', req.params.id).sort({date: 'asc'}).exec(function(err, postResults){

@@ -22,6 +22,10 @@ var post = require('./routes/post');
 var topic = require('./routes/topic');
 var index = require('./routes/index');
 
+// Helpers
+
+var async = require('async');
+
 // Models
 
 var Post = require('./models/Post.js');
@@ -35,15 +39,17 @@ db.once('open', function callback () {
   console.log('Connected to database.');
 });
 
-// Database Info to Pass to Routes
+// Info to Pass to Routes
 
-var database = {
-  info: {
-    database: db,
-    models: {
+var routerData = {
+  database: {
+    model: {
       post: Post,
       topic: Topic
     }
+  },
+  helper: {
+    async: async
   }
 };
 
@@ -78,14 +84,14 @@ if ('development' == app.get('env')) {
  *
  *****************************************************************************/
 
-app.get('/', index.render(database.info));
+app.get('/', index.render(routerData));
 app.get('/error', index.error);
-app.post('/topic/create', topic.create(database.info));
-app.post('/post/create', post.create(database.info));
-app.get('/topics', topic.all(database.info));
-app.get('/posts', post.all(database.info));
-app.get('/topic/:id', topic.id(database.info));
-app.get('/post/:id', post.id(database.info));
+app.post('/topic/create', topic.create(routerData));
+app.post('/post/create', post.create(routerData));
+app.get('/topics', topic.all(routerData));
+app.get('/posts', post.all(routerData));
+app.get('/topic/:id', topic.id(routerData));
+app.get('/post/:id', post.id(routerData));
 
 /******************************************************************************
  *

@@ -1,7 +1,7 @@
-module.exports.render = function(db) {
-  var Post = db.models.post;
-  var Topic = db.models.topic;
-  var database = db.database;
+module.exports.render = function(data) {
+  var Post = data.database.model.post;
+  var Topic = data.database.model.topic;
+  var async = data.helper.async;
   return function(req, res){
     console.log('Route: /');
     Post.find().setOptions({sort: 'date'}).exec(function(err, postResult){

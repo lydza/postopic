@@ -1,7 +1,7 @@
-module.exports.create = function(db) {
-  var Post = db.models.post;
-  var Topic = db.models.topic;
-  var database = db.database;
+module.exports.create = function(data) {
+  var Post = data.database.model.post;
+  var Topic = data.database.model.topic;
+  var async = data.helper.async;
   return function(req, res){
     console.log('Route: /topic/create');
     var topic = new Topic({
@@ -23,10 +23,10 @@ module.exports.create = function(db) {
   };
 };
 
-module.exports.all = function(db) {
-  var Post = db.models.post;
-  var Topic = db.models.topic;
-  var database = db.database;
+module.exports.all = function(data) {
+  var Post = data.database.model.post;
+  var Topic = data.database.model.topic;
+  var async = data.helper.async;
   return function(req, res){
     console.log('Route: /topics');
     Topic.find().sort({dateUpdated: 'desc'}).exec(function(err, results){
@@ -44,10 +44,10 @@ module.exports.all = function(db) {
   };
 };
 
-module.exports.id = function(db) {
-  var Post = db.models.post;
-  var Topic = db.models.topic;
-  var database = db.database;
+module.exports.id = function(data) {
+  var Post = data.database.model.post;
+  var Topic = data.database.model.topic;
+  var async = data.helper.async;
   return function(req, res){
     console.log('Route: /topic/:id');
     console.log('Looking in the database for the topic: ' + req.params.id + '...');
