@@ -13,30 +13,29 @@ module.exports.render = function(data) {
   var async = data.helper.async;
   return function(req, res){
     console.log('Route: /');
-    Post.find().setOptions({sort: 'date'}).exec(function(err, postResult){
-        if(err){
-        console.log('There was an error getting all posts from the database: \n' + err);
-        res.redirect('/error');
-        return;
-        } else{
-          console.log('Found ' + postResult.length + ' posts. Now looking for topics...');
-          Topic.find().setOptions({sort: 'name'}).exec(function(err, topicResult){
-              if(err){
-                console.log('There was an error getting all topics from the database: \n' + err);
-                res.redirect('/error');
-                return;
-              } else{
-                  console.log('Found ' + topicResult.length + ' topics. Now rendering...');
-                  res.render('index', { 
-                    posts: postResult,
-                    topics: topicResult
-                  });
-              }
-            }
-          )
-        }
+    async.parallel([
+      function(callback) {
+        Post.find(callback);
+      },
+      function(callback) {
+        Topic.find(callback);
       }
-    );
+    ],
+    function(err, results) {
+      var posts = results[0];
+      var topics = results[1];
+      if (err) {
+        console.log('There was an error getting the data from the database:\n' + err);
+        res.redirect('/error');
+      }
+      else {
+        console.log('Found ' + topics.length + ' topics and ' + posts.length + ' posts. Now rendering...');
+        res.render('index', { 
+          posts: posts,
+          topics: topics
+       });
+      }
+    });
   };
 };
 

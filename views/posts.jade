@@ -10,3 +10,6 @@ block content
         li 
           a(href="/post/#{post._id}") #{post.name} 
           | by #{post.author} on #{post.date}
+          | in the topic 
+          a(href="/topic/#{post.topic._id}") #{post.topic.name}
+          

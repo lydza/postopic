@@ -46,10 +46,31 @@ module.exports.all = function(data) {
         res.redirect('/error');
         return;
       } else{
-        console.log('Found ' + results.length + ' posts.');
-        res.render('posts', {
-          posts: results
-        });
+        async.map(
+          results, 
+          function(item, callback){
+            Topic.findOne({_id: item.topicId}).exec(function(err, topic){
+              if(err){
+                console.log('There was an error finding a topic with the ID ' + item.topicId + ':\n' + err);
+                res.redirect('/error');
+              } else{
+                item.topic = topic;
+                return callback(null, item);
+              }
+            });
+          }, 
+          function(err, results){
+            if(err){
+              console.log('There was an error mapping posts to their topics:\n' + err);
+              res.redirect('/error');
+            } else{
+              console.log('Found ' + results.length + ' posts and all their associated topics.');
+              res.render('posts', {
+                posts: results
+              });
+            }
+          }
+        );
       }
     });
   };
@@ -61,22 +82,22 @@ module.exports.id = function(data) {
   var async = data.helper.async;
   return function(req, res){
     console.log('Route: /post/' + req.params.id);
-    Post.find().where('_id', req.params.id).sort({date: 'asc'}).exec(function(err, postResults){
+    Post.findOne({_id: req.params.id}).exec(function(err, postResult){
       if(err){
         console.log('There was an error finding the post with the id' + req.params.id + ': \n' + err);
         res.redirect('/error');
         return;
       } else{
-        console.log('Found the post with the id ' + req.params.id + '. Now looking for the topic with the id ' + postResults[0].topicId + ' associated with it...');
-        Topic.find().where('_id', postResults[0].topicId).exec(function(err, topicResults){
+        console.log('Found the post with the id ' + req.params.id + '. Now looking for the topic with the id ' + postResult.topicId + ' associated with it...');
+        Topic.findOne({_id: postResult.topicId}).exec(function(err, topicResult){
           if(err){
             console.log('There was an error finding the topic associated with this post: \n' + err);
             res.redirect('/error');
           } else{
-            console.log('Found ' + topicResults.length + ' topic associated with this post. Should be 1.');
+            console.log('Found the topic associated with this post.');
             res.render('post', {
-              post: postResults[0],
-              topic: topicResults[0]
+              post: postResult,
+              topic: topicResult
             });
           }
         });

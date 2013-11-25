@@ -38,18 +38,39 @@ module.exports.all = function(data) {
   var async = data.helper.async;
   return function(req, res){
     console.log('Route: /topics');
-    Topic.find().sort({dateUpdated: 'desc'}).exec(function(err, results){
+    Topic.find().sort({date: 'desc'}).exec(function(err, results){
       if(err){
-        console.log('There was an error finding all topics:\n' + err);
+        console.log('There was an error finding all posts:' + err);
         res.redirect('/error');
         return;
       } else{
-        console.log('Found ' + results.length + ' topics.');
-        res.render('topics', {
-          topics: results
-        });
+        async.map(
+          results, 
+          function(item, callback){
+            Post.find({topicId: item._id}).exec(function(err, posts){
+              if(err){
+                console.log('There was an error finding a topic with the ID ' + item.topicId + ':\n' + err);
+                res.redirect('/error');
+              } else{
+                item.postCount = posts.length;
+                return callback(null, item);
+              }
+            });
+          }, 
+          function(err, results){
+            if(err){
+              console.log('There was an error mapping posts to their topics:\n' + err);
+              res.redirect('/error');
+            } else{
+              console.log('Found ' + results.length + ' topics and the amount of posts they belong to.');
+              res.render('topics', {
+                topics: results
+              });
+            }
+          }
+        );
       }
-    })
+    });
   };
 };
 
@@ -59,28 +80,27 @@ module.exports.id = function(data) {
   var async = data.helper.async;
   return function(req, res){
     console.log('Route: /topic/' + req.params.id);
-    Topic.find().where('_id', req.params.id).exec(function(err, topicResults){
+    async.parallel([
+      function(callback){
+        Topic.find({_id: req.params.id}, null, {}, callback);
+      },
+      function(callback){
+        Post.find({topicId: req.params.id}, null, {}, callback);
+      }
+    ], 
+    function(err, results){
+      var topic = results[0];
+      var posts = results[1];
       if(err){
-        console.log('There was an error finding the topics:\n' + err);
+        console.log('There was an error getting the topic and/or its associated posts: ' + err);
         res.redirect('/error');
-        return;
       } else{
-        console.log('Found the topic wih the id \'' + req.params.id + '\'. Now looking in the database for posts with that topic...');
-        Post.find().where('topicId', req.params.id).exec(function(err, postResults){
-          if(err){
-            console.log('There was an error finding the posts associated with this topic:' + err);
-            res.redirect('/error');
-            return;
-          }
-          else{
-            console.log('Found ' + postResults.length + ' posts for this topic.');
-            res.render('topic', {
-              posts: postResults,
-              topic: topicResults[0]
-            });
-          }
+        console.log('Found ' + posts.length + ' posts for thie topic ' + topic.name + '.');
+        res.render('topic', {
+          posts: posts,
+          topic: topic
         });
       }
-    })
+    });
   };
 };
