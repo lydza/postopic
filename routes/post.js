@@ -2,11 +2,12 @@
  *
  * Post routes - Holds all routes that begin with /post.
  * 
- * create  | POST   '/post/create' | creates a new post
- * all     | GET    '/posts'       | displays all posts
- * id      | GET    'post/:id'     | displays a specific post
- * all.del | DELETE '/posts'       | deletes all posts
- * id.del  | DELETE '/post/:id'    | deletes this specific post
+ * create    | POST   '/post/create' | creates a new post
+ * all       | GET    '/posts'       | displays all posts
+ * id        | GET    '/post/:id'    | displays a specific post
+ * all.del   | DELETE '/posts'       | deletes all posts
+ * id.del    | DELETE '/post/:id'    | deletes this specific post
+ * id.update | PUT    '/post/:id'    | updates a specific post
  * 
  *****************************************************************************/
 
@@ -187,5 +188,22 @@ module.exports.id.del = function(data) {
         }
       }
     });
+  };
+};
+
+module.exports.id.update = function(data) {
+  var Post = data.database.model.post;
+  var Topic = data.database.model.topic;
+  var async = data.helper.async;
+  return function(req, res){
+    console.log('Route: /post/create');
+    var post = {
+      name: req.body.name,
+      author: req.body.author,
+      text: req.body.text,
+      topicId: req.body.topicId   
+    };
+    Post.update({_id: req.params.id}, { $set: post}).exec();
+    res.redirect('/');
   };
 };

@@ -2,11 +2,13 @@
  *
  * Topic routes - Holds all routes that begin with /topic
  * 
- * create  | POST   '/topic/create' | creates a new topic
- * all     | GET    '/topics'       | displays all topic
- * id      | GET    'topic/:id'     | displays a specific topic
- * all.del | DELETE '/topics'       | deletes all topics
- * id.del  | DELETE '/topic/:id'    | deletes this specific topic
+ * create    | POST   '/topic/create' | creates a new topic
+ * all       | GET    '/topics'       | displays all topic
+ * id        | GET    '/topic/:id'    | displays a specific topic
+ * all.del   | DELETE '/topics'       | deletes all topics
+ * id.del    | DELETE '/topic/:id'    | deletes this specific topic
+ * id.update | PUT    '/topic/:id'    | updates a specific topic
+ * 
  *****************************************************************************/
 
 module.exports.create = function(data) {
@@ -188,5 +190,21 @@ module.exports.id.del = function(data) {
         }
       }
     });
+  };
+};
+
+module.exports.id.update = function(data) {
+  var Post = data.database.model.post;
+  var Topic = data.database.model.topic;
+  var async = data.helper.async;
+  return function(req, res){
+    console.log('Route: /topic/:id');
+    var topic = {
+      name: req.body.name,
+      author: req.body.author,
+      dateUpdated: Date.now()
+    };
+    Topic.update({_id: req.params.id}, { $set: topic}).exec();
+    res.redirect('/');
   };
 };
