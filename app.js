@@ -85,10 +85,14 @@ app.get('/error', index.error);
 app.get('/topics', topic.all(routerData));
 app.get('/topic/:id', topic.id(routerData));
 app.post('/topic/create', topic.create(routerData));
+app.del('/topic/:id', topic.id.del(routerData));
+app.del('/topics', topic.all.del(routerData));
 
 app.get('/posts', post.all(routerData));
 app.get('/post/:id', post.id(routerData));
 app.post('/post/create', post.create(routerData));
+app.del('/post/:id', post.id.del(routerData));
+app.del('/posts', post.all.del(routerData));
 
 /******************************************************************************
  *

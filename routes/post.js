@@ -2,9 +2,11 @@
  *
  * Post routes - Holds all routes that begin with /post.
  * 
- * create | '/post/create' | creates a new post. gets data from req object
- * all    | '/posts'       | displays all posts
- * id     | 'post/:id'     | displays a specific post
+ * create  | POST   '/post/create' | creates a new post
+ * all     | GET    '/posts'       | displays all posts
+ * id      | GET    'post/:id'     | displays a specific post
+ * all.del | DELETE '/posts'       | deletes all posts
+ * id.del  | DELETE '/post/:id'    | deletes this specific post
  * 
  *****************************************************************************/
 
@@ -105,5 +107,85 @@ module.exports.id = function(data) {
         });
       }
     })
+  };
+};
+
+module.exports.all.del = function(data) {
+  var Post = data.database.model.post;
+  var Topic = data.database.model.topic;
+  var async = data.helper.async;
+  return function(req, res){
+    console.log('Route: /topics');
+    async.parallel([
+      function(callback){
+        Post.find({}, null, {}, callback);
+      }
+    ], 
+    function(err, results){
+      var posts = results[0];
+      if(err){
+        console.log('There was an error getting all posts: ' + err);
+        res.location('/error');
+        res.render('error');
+      } else{
+        if(posts === undefined){
+          console.log('There are no posts to delete.');
+          // Not an error. Just needed a page to render.
+          res.location('/error');
+          res.render('error');
+        } else{
+          console.log('Deleting ' + posts.length + ' posts.');
+          posts.forEach(function(post){
+            post.remove();
+          });
+          // Not an error. Just needed a page to render.
+          res.location('/error');
+          res.render('error');
+          return;
+        }
+      }
+    });
+  };
+};
+
+module.exports.id.del = function(data) {
+  var Post = data.database.model.post;
+  var Topic = data.database.model.topic;
+  var async = data.helper.async;
+  return function(req, res){
+    console.log('Route: /topic/' + req.params.id);
+    async.parallel([
+      function(callback){
+        Post.find({topicId: req.params.id}, null, {}, callback);
+      }
+    ], 
+    function(err, results){
+      var post = results[0];
+      if(err){
+        console.log('There was an error getting the post with the id ' + req.params.id + ' post: ' + err);
+        res.location('/error');
+        res.render('error');
+        return;
+ 
+      } else{
+        if(post === undefined){
+          console.log('There is no topic with the ID ' + req.params.id + '.');
+          // Not an error. Just needed a page to render.
+          res.location('/error');
+          res.render('error');
+          return;
+        } else{
+          console.log('Deleting the post ' + post.name + '.');
+          topic.remove();
+          posts.forEach(function(post){
+            post.remove();
+          });
+          // Not an error. Just needed a page to render.
+          res.location('/error');
+          res.render('error');
+          return;
+        }
+      }
+    });
   };
 };
