@@ -9,10 +9,10 @@
     "express": "3.4.4",
     "jade": "*",
     "mongoose": "~3.8.0",
-    "async":"*"
+    "async": "*"
   },
   "devDependencies": {
-    "nodemon": "*"
+    "nodemon": "*",
+    "grunt": "~0.4.2"
   }
-  
 }
