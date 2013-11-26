@@ -8,8 +8,6 @@
   "dependencies": {
     "express": "3.4.4",
     "jade": "*",
-    "passport": "*",
-    "passport-twitter": "*",
     "mongoose": "~3.8.0",
     "async":"*"
   },
