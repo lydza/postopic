@@ -20,6 +20,7 @@ module.exports.create = function(data) {
       text: req.body.text,
       topicId: req.body.topicId,
       date: Date.now()
+   
     });
     post.save(function (err, newPost) {
       if (err) {
@@ -27,6 +28,7 @@ module.exports.create = function(data) {
         res.redirect('/error');
         return;
       }
+      Topic.update({_id: req.body.topicId}, { $set: {dateUpdated: Date.now()}}).exec();
       newPost.onCreate();
       res.redirect('/');
       return;
