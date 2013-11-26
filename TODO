@@ -33,7 +33,6 @@ New Features
     - '+ Add to this conversation' next to the posts also with a div that will appear and disappear.
 
 Implementation Details
- - Use async.js to get rid of callback madness.
  - Clean up code as much as possible.
  - Write tons of comments. No shame in putting tons of comments into something I'm learning.
  - Connect-flash to make the user experience better.
