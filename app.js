@@ -94,7 +94,7 @@ app.get('/post/:id', post.id(routerData));
 app.post('/post/create', post.create(routerData));
 app.del('/post/:id', post.id.del(routerData));
 app.del('/posts', post.all.del(routerData));
-app.post('/post/:id', post.id.update(routerData));
+app.put('/post/:id', post.id.update(routerData));
 
 /******************************************************************************
  *
