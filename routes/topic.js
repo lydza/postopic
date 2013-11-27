@@ -26,10 +26,12 @@ module.exports.create = function(data) {
     topic.save(function (err, newTopic) {
       if (err) {
         console.log('There was an error saving this new topic to the database:\n' + err);
-        res.redirect('/error');
+        res.json({
+          error: err
+        });
       }
       newTopic.onCreate();
-      res.redirect('/');
+      res.json(newTopic);
     });
   };
 };
@@ -43,7 +45,9 @@ module.exports.all = function(data) {
     Topic.find().sort({date: 'desc'}).exec(function(err, results){
       if(err){
         console.log('There was an error finding all posts:' + err);
-        res.redirect('/error');
+        res.json({
+          error: err
+        });
         return;
       } else{
         async.map(
@@ -52,7 +56,9 @@ module.exports.all = function(data) {
             Post.find({topicId: item._id}).exec(function(err, posts){
               if(err){
                 console.log('There was an error finding a topic with the ID ' + item.topicId + ':\n' + err);
-                res.redirect('/error');
+                res.json({
+                  error: err
+                });
               } else{
                 item.postCount = posts.length;
                 return callback(null, item);
@@ -62,12 +68,12 @@ module.exports.all = function(data) {
           function(err, results){
             if(err){
               console.log('There was an error mapping posts to their topics:\n' + err);
-              res.redirect('/error');
-            } else{
-              console.log('Found ' + results.length + ' topics and the amount of posts they belong to.');
-              res.render('topics', {
-                topics: results
+              res.json({
+                error: err
               });
+            } else{
+              console.log('Found ' + results.length + ' topics and the amount of posts that belong to them.');
+              res.json(results);
             }
           }
         );
@@ -95,11 +101,13 @@ module.exports.id = function(data) {
       var posts = results[1];
       if(err){
         console.log('There was an error getting the topic and/or its associated posts: ' + err);
-        res.redirect('/error');
+        res.json({
+          error: err
+        });
       } else{
         console.log('Found ' + posts.length + ' posts for thie topic ' + topic.name + '.');
         console.log(topic);
-        res.render('topic', {
+        res.json({
           posts: posts,
           topic: topic
         });
@@ -127,11 +135,15 @@ module.exports.all.del = function(data) {
       var posts = results[1];
       if(err){
         console.log('There was an error getting the topic and/or its associated posts: ' + err);
-        res.redirect('/error');
+        res.json({
+          error: err
+        });
       } else{
         if(topics === undefined){
           console.log('There are no topics to delete.');
-          res.redirect('/error');        
+          res.json({
+            error: 'There are no topics to delete.'
+          });
         } else{
           console.log('Deleting ' + topics.length + ' topics and their ' + posts.length + ' posts.');
           topics.forEach(function(topic){
@@ -140,8 +152,7 @@ module.exports.all.del = function(data) {
           posts.forEach(function(post){
             post.remove();
           });
-          res.redirect('/');
-          return;
+          res.json({});
         }
       }
     });
@@ -167,26 +178,23 @@ module.exports.id.del = function(data) {
       var posts = results[1];
       if(err){
         console.log('There was an error getting the topic and/or its associated posts: ' + err);
-        res.location('/error');
-        res.render('error');
+        res.json({
+          error: err
+        });
         return;
       } else{
         if(topic === undefined){
           console.log('There is no topic with the ID ' + req.params.id + '.');
-          // Not an error. Just needed a page to render.
-          res.location('/error');
-          res.render('error');
-          return;
+          res.json({
+            error: 'There is no topic with this ID.'
+          });
         } else{
           console.log('Deleting the topic' + topic.name + ' and its ' + posts.length + 'posts.');
           topic.remove();
           posts.forEach(function(post){
             post.remove();
           });
-          // Not an error. Just needed a page to render.
-          res.location('/error');
-          res.render('error');
-          return;
+          res.json({});
         }
       }
     });
@@ -205,6 +213,6 @@ module.exports.id.update = function(data) {
       dateUpdated: Date.now()
     };
     Topic.update({_id: req.params.id}, { $set: topic}).exec();
-    res.redirect('/');
+    res.json({});
   };
 };

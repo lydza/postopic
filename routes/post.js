@@ -28,12 +28,14 @@ module.exports.create = function(data) {
     post.save(function (err, newPost) {
       if (err) {
         console.log('There was an error saving this new post to the database: ' + err);
-        res.redirect('/error');
+        res.json({
+          error: err
+        });
         return;
       }
       Topic.update({_id: req.body.topicId}, { $set: {dateUpdated: Date.now()}}).exec();
       newPost.onCreate();
-      res.redirect('/');
+      res.json(newPost);
       return;
     });
   };
@@ -48,7 +50,9 @@ module.exports.all = function(data) {
     Post.find().sort({date: 'desc'}).exec(function(err, results){
       if(err){
         console.log('There was an error finding all posts:' + err);
-        res.redirect('/error');
+        res.json({
+          error: err
+        });
         return;
       } else{
         async.map(
@@ -57,7 +61,9 @@ module.exports.all = function(data) {
             Topic.findOne({_id: item.topicId}).exec(function(err, topic){
               if(err){
                 console.log('There was an error finding a topic with the ID ' + item.topicId + ':\n' + err);
-                res.redirect('/error');
+                res.json({
+                  error: err
+                });
               } else{
                 item.topic = topic;
                 return callback(null, item);
@@ -67,10 +73,12 @@ module.exports.all = function(data) {
           function(err, results){
             if(err){
               console.log('There was an error mapping posts to their topics:\n' + err);
-              res.redirect('/error');
+              res.json({
+                error: err
+              });
             } else{
               console.log('Found ' + results.length + ' posts and all their associated topics.');
-              res.render('posts', {
+              res.json({
                 posts: results
               });
             }
@@ -90,17 +98,21 @@ module.exports.id = function(data) {
     Post.findOne({_id: req.params.id}).exec(function(err, postResult){
       if(err){
         console.log('There was an error finding the post with the id' + req.params.id + ': \n' + err);
-        res.redirect('/error');
+        res.json({
+          error: err
+        });
         return;
       } else{
         console.log('Found the post with the id ' + req.params.id + '. Now looking for the topic with the id ' + postResult.topicId + ' associated with it...');
         Topic.findOne({_id: postResult.topicId}).exec(function(err, topicResult){
           if(err){
             console.log('There was an error finding the topic associated with this post: \n' + err);
-            res.redirect('/error');
+            res.json({
+              error: err
+            });
           } else{
             console.log('Found the topic associated with this post.');
-            res.render('post', {
+            res.json({
               post: postResult,
               topic: topicResult
             });
@@ -126,22 +138,21 @@ module.exports.all.del = function(data) {
       var posts = results[0];
       if(err){
         console.log('There was an error getting all posts: ' + err);
-        res.location('/error');
-        res.render('error');
+        res.json({
+          error: err
+        });
       } else{
-        if(posts === undefined){
+        if(posts.length === 0){
           console.log('There are no posts to delete.');
-          // Not an error. Just needed a page to render.
-          res.location('/error');
-          res.render('error');
+          res.json({
+            error: 'There are no posts to delete'
+          });
         } else{
           console.log('Deleting ' + posts.length + ' posts.');
           posts.forEach(function(post){
             post.remove();
           });
-          // Not an error. Just needed a page to render.
-          res.location('/error');
-          res.render('error');
+          res.json({});
           return;
         }
       }
@@ -161,29 +172,24 @@ module.exports.id.del = function(data) {
       }
     ], 
     function(err, results){
-      var post = results[0];
+      var post = results[0][0];
       if(err){
         console.log('There was an error getting the post with the id ' + req.params.id + ' post: ' + err);
-        res.location('/error');
-        res.render('error');
+        res.json({
+          error: err
+        });
         return;
- 
       } else{
         if(post === undefined){
-          console.log('There is no topic with the ID ' + req.params.id + '.');
-          // Not an error. Just needed a page to render.
-          res.location('/error');
-          res.render('error');
+          console.log('There is no post with the ID ' + req.params.id + '.');
+          res.json({
+            error: 'This post does not exist.'
+          });
           return;
         } else{
           console.log('Deleting the post ' + post.name + '.');
-          topic.remove();
-          posts.forEach(function(post){
-            post.remove();
-          });
-          // Not an error. Just needed a page to render.
-          res.location('/error');
-          res.render('error');
+          post.remove();
+          res.json({});
           return;
         }
       }
@@ -203,7 +209,14 @@ module.exports.id.update = function(data) {
       text: req.body.text,
       topicId: req.body.topicId   
     };
-    Post.update({_id: req.params.id}, { $set: post}).exec();
-    res.redirect('/');
+    Post.update({_id: req.params.id}, { $set: post}, {multi: false}, function(err, updatedPost){
+      if(err){
+        res.json({
+          error: err
+        });
+      } else{
+        res.json({});
+      }
+    });
   };
 };

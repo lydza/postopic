@@ -26,11 +26,14 @@ module.exports.render = function(data) {
       var topics = results[1];
       if (err) {
         console.log('There was an error getting the data from the database:\n' + err);
-        res.redirect('/error');
+        res.json({
+          error: err
+        });
+        
       }
       else {
-        console.log('Found ' + topics.length + ' topics and ' + posts.length + ' posts. Now rendering...');
-        res.render('index', { 
+        console.log('Found ' + topics.length + ' topics and ' + posts.length + ' posts.');
+        res.json({ 
           posts: posts,
           topics: topics
        });
