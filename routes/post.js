@@ -119,7 +119,7 @@ module.exports.id = function(data) {
           }
         });
       }
-    })
+    });
   };
 };
 
