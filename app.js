@@ -56,7 +56,7 @@ var routerData = {
  
 var app = express();
 app.set('port', process.env.PORT || 3000);
-app.set('views', path.join(__dirname, 'views'));
+app.set('views', path.join(__dirname, 'public'));
 app.set('env', 'development');
 app.set('view engine', 'jade');
 app.use(express.favicon());
@@ -66,7 +66,7 @@ app.use(express.urlencoded());
 app.use(express.methodOverride());
 app.use(express.bodyParser());
 app.use(app.router);
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'app')));
 
 // For the development environment only
 if ('development' == app.get('env')) {
@@ -79,22 +79,21 @@ if ('development' == app.get('env')) {
  *
  *****************************************************************************/
 
-app.get('/', index.render(routerData));
-app.get('/error', index.error);
+app.get('/api/topics', topic.all(routerData));
+app.get('/api/topic/:id', topic.id(routerData));
+app.post('/api/topic/create', topic.create(routerData));
+app.del('/api/topic/:id', topic.id.del(routerData));
+app.del('/api/topics', topic.all.del(routerData));
+app.put('/api/topic/:id', topic.id.update(routerData));
 
-app.get('/topics', topic.all(routerData));
-app.get('/topic/:id', topic.id(routerData));
-app.post('/topic/create', topic.create(routerData));
-app.del('/topic/:id', topic.id.del(routerData));
-app.del('/topics', topic.all.del(routerData));
-app.put('/topic/:id', topic.id.update(routerData));
+app.get('/api/posts', post.all(routerData));
+app.get('/api/post/:id', post.id(routerData));
+app.post('/api/post/create', post.create(routerData));
+app.del('/api/post/:id', post.id.del(routerData));
+app.del('/api/posts', post.all.del(routerData));
+app.put('/api/post/:id', post.id.update(routerData));
 
-app.get('/posts', post.all(routerData));
-app.get('/post/:id', post.id(routerData));
-app.post('/post/create', post.create(routerData));
-app.del('/post/:id', post.id.del(routerData));
-app.del('/posts', post.all.del(routerData));
-app.put('/post/:id', post.id.update(routerData));
+app.all('*', index.render());
 
 /******************************************************************************
  *
