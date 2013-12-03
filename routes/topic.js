@@ -2,12 +2,12 @@
  *
  * Topic routes - Holds all routes that begin with /topic
  * 
- * create    | POST   '/topic/create' | creates a new topic
- * all       | GET    '/topics'       | displays all topic
- * id        | GET    '/topic/:id'    | displays a specific topic
- * all.del   | DELETE '/topics'       | deletes all topics
- * id.del    | DELETE '/topic/:id'    | deletes this specific topic
- * id.update | PUT    '/topic/:id'    | updates a specific topic
+ * create    | POST   '/api/topics'        | creates a new topic
+ * all       | GET    '/api/topics'        | displays all topic
+ * id        | GET    '/api/topics/:id'    | displays a specific topic
+ * all.del   | DELETE '/api/topics'        | deletes all topics
+ * id.del    | DELETE '/api/topics/:id'    | deletes this specific topic
+ * id.update | PUT    '/api/topics/:id'    | updates a specific topic
  * 
  *****************************************************************************/
 
@@ -16,7 +16,7 @@ module.exports.create = function(data) {
   var Topic = data.database.model.topic;
   var async = data.helper.async;
   return function(req, res){
-    console.log('Route: /topic/create');
+    console.log('\nHttp Method:   POST \nRoute:         /topics \nAction:        Creates a new topic');
     var topic = new Topic({
       name: req.body.name,
       author: req.body.author,
@@ -41,7 +41,7 @@ module.exports.all = function(data) {
   var Topic = data.database.model.topic;
   var async = data.helper.async;
   return function(req, res){
-    console.log('Route: /topics');
+    console.log('\nHttp Method:   GET \nRoute:         /topics \nAction:        Shows all topics');
     Topic.find().sort({date: 'desc'}).exec(function(err, results){
       if(err){
         console.log('There was an error finding all posts:' + err);
@@ -87,7 +87,7 @@ module.exports.id = function(data) {
   var Topic = data.database.model.topic;
   var async = data.helper.async;
   return function(req, res){
-    console.log('Route: /topic/' + req.params.id);
+    console.log('\nHttp Method:   GET \nRoute:         /topics/' + req.params.id + ' \nAction:        Shows one topic');
     async.parallel([
       function(callback){
         Topic.find({_id: req.params.id}, null, {}, callback);
@@ -106,7 +106,6 @@ module.exports.id = function(data) {
         });
       } else{
         console.log('Found ' + posts.length + ' posts for thie topic ' + topic.name + '.');
-        console.log(topic);
         res.json({
           posts: posts,
           topic: topic
@@ -121,7 +120,7 @@ module.exports.all.del = function(data) {
   var Topic = data.database.model.topic;
   var async = data.helper.async;
   return function(req, res){
-    console.log('Route: /topics');
+    console.log('\nHttp Method:   DELETE \nRoute:         /topics \nAction:        Deletes all topics');
     async.parallel([
       function(callback){
         Topic.find({}, null, {}, callback);
@@ -164,7 +163,7 @@ module.exports.id.del = function(data) {
   var Topic = data.database.model.topic;
   var async = data.helper.async;
   return function(req, res){
-    console.log('Route: /topic/' + req.params.id);
+    console.log('\nHttp Method:   DELETE \nRoute:         /topics/' + req.params.id + ' \nAction:        Deletes one topic');
     async.parallel([
       function(callback){
         Topic.find({_id: req.params.id}, null, {}, callback);
@@ -206,7 +205,7 @@ module.exports.id.update = function(data) {
   var Topic = data.database.model.topic;
   var async = data.helper.async;
   return function(req, res){
-    console.log('Route: /topic/:id');
+    console.log('\nHttp Method:   PUT \nRoute:         /topics/' + req.params.id + ' \nAction:        Updates one topic');
     var topic = {
       name: req.body.name,
       author: req.body.author,

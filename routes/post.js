@@ -2,12 +2,12 @@
  *
  * Post routes - Holds all routes that begin with /post.
  * 
- * create    | POST   '/post/create' | creates a new post
- * all       | GET    '/posts'       | displays all posts
- * id        | GET    '/post/:id'    | displays a specific post
- * all.del   | DELETE '/posts'       | deletes all posts
- * id.del    | DELETE '/post/:id'    | deletes this specific post
- * id.update | PUT    '/post/:id'    | updates a specific post
+ * create    | POST   '/api/posts'        | creates a new post
+ * all       | GET    '/api/posts'        | displays all posts
+ * id        | GET    '/api/posts/:id'    | displays a specific post
+ * all.del   | DELETE '/api/posts'        | deletes all posts
+ * id.del    | DELETE '/api/posts/:id'    | deletes this specific post
+ * id.update | PUT    '/api/posts/:id'    | updates a specific post
  * 
  *****************************************************************************/
 
@@ -16,7 +16,7 @@ module.exports.create = function(data) {
   var Topic = data.database.model.topic;
   var async = data.helper.async;
   return function(req, res){
-    console.log('Route: /post/create');
+    console.log('\nHttp Method:   POST \nRoute:         /posts/ \nAction:        Creates a new post');
     var post = new Post({
       name: req.body.name,
       author: req.body.author,
@@ -46,7 +46,7 @@ module.exports.all = function(data) {
   var Topic = data.database.model.topic;
   var async = data.helper.async;
   return function(req, res){
-    console.log('Route: /posts');
+    console.log('\nHttp Method:   GET \nRoute:         /posts \nAction:        Shows all posts');
     Post.find().sort({date: 'desc'}).exec(function(err, results){
       if(err){
         console.log('There was an error finding all posts:' + err);
@@ -94,7 +94,7 @@ module.exports.id = function(data) {
   var Topic = data.database.model.topic;
   var async = data.helper.async;
   return function(req, res){
-    console.log('Route: /post/' + req.params.id);
+    console.log('\nHttp Method:   GET \nRoute:         /posts/' + req.params.id + ' \nAction:        Shows one post');
     Post.findOne({_id: req.params.id}).exec(function(err, postResult){
       if(err){
         console.log('There was an error finding the post with the id' + req.params.id + ': \n' + err);
@@ -128,7 +128,7 @@ module.exports.all.del = function(data) {
   var Topic = data.database.model.topic;
   var async = data.helper.async;
   return function(req, res){
-    console.log('Route: /topics');
+    console.log('\nHttp Method:   DELETE \nRoute:         /posts \nAction:        Deletes all posts');
     async.parallel([
       function(callback){
         Post.find({}, null, {}, callback);
@@ -165,7 +165,7 @@ module.exports.id.del = function(data) {
   var Topic = data.database.model.topic;
   var async = data.helper.async;
   return function(req, res){
-    console.log('Route: /topic/' + req.params.id);
+    console.log('\nHttp Method:   DELETE \nRoute:         /posts/' + req.params.id + ' \nAction:        Deletes one post');
     async.parallel([
       function(callback){
         Post.find({topicId: req.params.id}, null, {}, callback);
@@ -202,7 +202,7 @@ module.exports.id.update = function(data) {
   var Topic = data.database.model.topic;
   var async = data.helper.async;
   return function(req, res){
-    console.log('Route: /post/create');
+    console.log('\nHttp Method:   PUT \nRoute:         /posts/' + req.params.id + ' \nAction:        Updates one post');
     var post = {
       name: req.body.name,
       author: req.body.author,
