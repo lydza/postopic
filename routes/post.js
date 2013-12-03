@@ -25,18 +25,35 @@ module.exports.create = function(data) {
       date: Date.now()
    
     });
-    post.save(function (err, newPost) {
-      if (err) {
-        console.log('There was an error saving this new post to the database: ' + err);
+    Topic.findOne({_id: req.body.topicId}).exec(function(err, topicResult){
+      if(err){
+        console.log('There was an error finding the topic associated with this post: \n' + err);
         res.json({
           error: err
         });
-        return;
+      } else{
+        if(topicResult === null){
+          console.log('There is no topic associated with this post. Can\'t add it to the database.');
+          res.json({
+            error: 'There is no topic associated with this post. Can\'t add it to the database.'
+          });
+        } else {
+          post.save(function (err, newPost) {
+            if (err) {
+              console.log('There was an error saving this new post to the database: ' + err);
+              res.json({
+                error: err
+              });
+              return;
+            }
+            console.log('Fount the topic associated with this post. It\'s been saved.');
+            Topic.update({_id: req.body.topicId}, { $set: {dateUpdated: Date.now()}}).exec();
+            newPost.onCreate();
+            res.json(newPost);
+            return;
+          });
+        }
       }
-      Topic.update({_id: req.body.topicId}, { $set: {dateUpdated: Date.now()}}).exec();
-      newPost.onCreate();
-      res.json(newPost);
-      return;
     });
   };
 };
