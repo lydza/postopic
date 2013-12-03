@@ -1,5 +1,5 @@
 define([
-  "text!templates/TopicsTemplate.html",
+  "text!templates/TopicTemplate.html",
   "helpers/BaseView",
   "underscore"
 ],
@@ -11,14 +11,13 @@ function(template, BaseView, _) {
     template: _.template(template),
 
     initialize: function(args) {
-      this.collection = args.collection;
-      this.listenTo(this.collection, "reset", this.render);      
-      this.collection.fetch();
+      this.id = args.id;
+      // TODO: Find topic in the TopicModel thru this.id and assign it to this.topic.
     },
 
     serialize: function(){
       return {
-        collection: this.collection.toJSON()
+        topic: this.topic
       };
     }
   });

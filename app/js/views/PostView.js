@@ -1,5 +1,5 @@
 define([
-  "text!templates/TopicsTemplate.html",
+  "text!templates/PostTemplate.html",
   "helpers/BaseView",
   "underscore"
 ],
@@ -11,14 +11,13 @@ function(template, BaseView, _) {
     template: _.template(template),
 
     initialize: function(args) {
-      this.collection = args.collection;
-      this.listenTo(this.collection, "reset", this.render);      
-      this.collection.fetch();
+      this.id = args.id;
+      // TODO: Find post in the PostModel thru this.id and assign it to this.post.
     },
 
     serialize: function(){
       return {
-        collection: this.collection.toJSON()
+        post: this.post
       };
     }
   });

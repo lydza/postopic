@@ -1,5 +1,5 @@
 define([
-  "text!templates/post/PostsTemplate.html",
+  "text!templates/PostsTemplate.html",
   "helpers/BaseView",
   "underscore"
 ],
@@ -10,13 +10,17 @@ function(template, BaseView, _) {
   return BaseView.extend({
     template: _.template(template),
 
-    initialize: function() {
-      this.listenTo(this.collection, "reset", this.render);
+    initialize: function(args) {
+      this.collection = args.collection;
+      this.listenTo(this.collection, "reset", this.render);      
       this.collection.fetch();
     },
 
-    serialize: function(){}
-
+    serialize: function(){
+      return {
+        collection: this.collection.toJSON()
+      };
+    }
   });
 
 });

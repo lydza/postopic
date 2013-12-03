@@ -2,16 +2,15 @@ define([
   "app",  
   "backbone",
   "jquery",
-  "views/MainView",
-  "views/layouts/SingleLayoutView",
-  "views/layouts/DoubleLayoutView",
+  "views/SingleLayoutView",
+  "views/DoubleLayoutView",
   "helpers/Message",
   "helpers/MessageBus",
   "collections/TopicsCollection",
   "collections/PostsCollection"
   ],
 
-function(app, BackBone, $, MainView, SingleLayout, DoubleLayout, Message, MessageBus, TopicsCollection, PostsCollection) {
+function(app, BackBone, $, SingleLayout, DoubleLayout, Message, MessageBus, TopicsCollection, PostsCollection) {
 
   "use strict";
 
@@ -47,7 +46,6 @@ function(app, BackBone, $, MainView, SingleLayout, DoubleLayout, Message, Messag
       var pageName = page.toLowerCase();
 
       // All of our views share these common options
-      var gallery = this.gallery;
       var layoutOptions = {
         el: "#main",
         topics: this.topics,
@@ -57,7 +55,7 @@ function(app, BackBone, $, MainView, SingleLayout, DoubleLayout, Message, Messag
       if((typeof idOrCreate !== 'undefined') && (idOrCreate.toLowerCase() === 'create')){
         pageName = page + ' create';
       } else if (typeof idOrCreate !== "undefined") {
-        layoutOptions.modelID = id;
+        layoutOptions.modelID = idOrCreate;
       }
 
       // Trigger the `pageBeforeChange` event in the MessageBus

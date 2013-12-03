@@ -9,7 +9,7 @@ function(PostModel, Backbone) {
 
   return Backbone.Collection.extend({
     model: PostModel,
-    urlRoot: '/api/posts'
+    url: '/api/posts'
   });
 
 });

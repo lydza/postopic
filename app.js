@@ -81,18 +81,18 @@ if ('development' == app.get('env')) {
  *****************************************************************************/
 
 app.get('/api/topics', topic.all(routerData));
-app.get('/api/topic/:id', topic.id(routerData));
-app.post('/api/topic/create', topic.create(routerData));
-app.del('/api/topic/:id', topic.id.del(routerData));
+app.get('/api/topics/:id', topic.id(routerData));
+app.post('/api/topics', topic.create(routerData));
+app.del('/api/topics/:id', topic.id.del(routerData));
 app.del('/api/topics', topic.all.del(routerData));
-app.put('/api/topic/:id', topic.id.update(routerData));
+app.put('/api/topics/:id', topic.id.update(routerData));
 
 app.get('/api/posts', post.all(routerData));
-app.get('/api/post/:id', post.id(routerData));
-app.post('/api/post/create', post.create(routerData));
-app.del('/api/post/:id', post.id.del(routerData));
+app.get('/api/posts/:id', post.id(routerData));
+app.post('/api/posts', post.create(routerData));
+app.del('/api/posts/:id', post.id.del(routerData));
 app.del('/api/posts', post.all.del(routerData));
-app.put('/api/post/:id', post.id.update(routerData));
+app.put('/api/posts/:id', post.id.update(routerData));
 
 app.all('*', index.render());
 

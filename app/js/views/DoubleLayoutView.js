@@ -8,14 +8,14 @@ define([
   "helpers/BaseView",
 
   // Views
-  "views/post/PostsView",
-  "views/topic/TopicsView",
+  "views/PostsView",
+  "views/TopicsView",
 
   // Libraries
   "underscore",
 
   // Templates
-  "text!templates/layouts/DoubleLayoutTemplate.html"
+  "text!templates/DoubleLayoutTemplate.html"
 ],
 
 // Map dependencies from above array.
@@ -26,6 +26,11 @@ function(app, Message, MessageBus, BaseView, TopicsView, PostsView, _, template)
   return BaseView.extend({
 
     template: _.template(template),
+    
+    initialize: function(options) {
+      this.topics = options.topics;
+      this.posts = options.posts;
+    },
 
     postRender: function() {
 
@@ -33,8 +38,6 @@ function(app, Message, MessageBus, BaseView, TopicsView, PostsView, _, template)
       // We load different subViews, depending on which page this layout
       // represents
       this.listenTo(MessageBus, Message.PageChange, function(){
-        
-        console.log("Topics: " + this.topics + "Posts: " + this.posts);
         this.addSubView({
           name: "TopicsView",
           viewType: TopicsView,

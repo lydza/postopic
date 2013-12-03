@@ -9,7 +9,7 @@ function(TopicModel, Backbone) {
 
   return Backbone.Collection.extend({
     model: TopicModel,
-    urlRoot: '/api/topics'
+    url: '/api/topics'
   });
 
 });
