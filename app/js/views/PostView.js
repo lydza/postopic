@@ -1,9 +1,10 @@
 define([
   "text!templates/PostTemplate.html",
   "helpers/BaseView",
+  "models/PostModel",
   "underscore"
 ],
-function(template, BaseView, _) {
+function(template, BaseView, PostModel, _) {
 
   "use strict";
 
@@ -11,13 +12,14 @@ function(template, BaseView, _) {
     template: _.template(template),
 
     initialize: function(args) {
-      this.id = args.id;
-      // TODO: Find post in the PostModel thru this.id and assign it to this.post.
+      console.log(args.id);
+      this.post = new PostModel(args);
+      this.post.fetch();
     },
 
     serialize: function(){
       return {
-        post: this.post
+        post: this.post.toJSON()
       };
     }
   });

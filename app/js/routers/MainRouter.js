@@ -54,8 +54,12 @@ function(app, BackBone, $, SingleLayout, DoubleLayout, Message, MessageBus, Topi
 
       if((typeof idOrCreate !== 'undefined') && (idOrCreate.toLowerCase() === 'create')){
         pageName = page + ' create';
-      } else if (typeof idOrCreate !== "undefined") {
-        layoutOptions.modelID = idOrCreate;
+      } else if((typeof idOrCreate !== "undefined") && (pageName === 'topics')){
+        layoutOptions.id = idOrCreate;
+        pageName = 'topic';
+      } else if((typeof idOrCreate !== "undefined") && (pageName === 'posts')){
+        layoutOptions.id = idOrCreate;
+        pageName = 'post';
       }
 
       // Trigger the `pageBeforeChange` event in the MessageBus

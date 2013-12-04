@@ -34,7 +34,7 @@ function(app, Message, MessageBus, BaseView, TopicsView, PostsView, TopicView, P
     initialize: function(options) {
       this.topics = options.topics;
       this.posts = options.posts;
-      this.id = options.modelID;
+      this.id = options.id;
     },
 
     postRender: function() {
@@ -43,7 +43,7 @@ function(app, Message, MessageBus, BaseView, TopicsView, PostsView, TopicView, P
       // We load different subViews, depending on which page this layout
       // represents
       this.listenTo(MessageBus, Message.PageChange, function(page){
-      
+        console.log(page);
         if (page === "posts") {
           this.addSubView({
             name: "PostsView",

@@ -1,9 +1,10 @@
 define([
   "text!templates/TopicTemplate.html",
   "helpers/BaseView",
+  "models/TopicModel",
   "underscore"
 ],
-function(template, BaseView, _) {
+function(template, BaseView, TopicModel, _) {
 
   "use strict";
 
@@ -11,13 +12,13 @@ function(template, BaseView, _) {
     template: _.template(template),
 
     initialize: function(args) {
-      this.id = args.id;
-      // TODO: Find topic in the TopicModel thru this.id and assign it to this.topic.
+      this.topic = new TopicModel(args);
+      this.topic.fetch();
     },
 
     serialize: function(){
       return {
-        topic: this.topic
+        topic: this.topic.toJSON()
       };
     }
   });
