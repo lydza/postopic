@@ -13,13 +13,17 @@ function(template, BaseView, TopicModel, _) {
 
     initialize: function(args) {
       this.topic = new TopicModel(args);
-      this.topic.fetch();
+      this.topic.fetch({
+        success: function(topic, response) {
+          console.log(topic.toJSON());
+          // TODO Figure out how to export this topics variable outside of 
+          // this and use it in the serialize method.
+        }
+      });
     },
 
     serialize: function(){
-      return {
-        topic: this.topic.toJSON()
-      };
+      return {};
     }
   });
 

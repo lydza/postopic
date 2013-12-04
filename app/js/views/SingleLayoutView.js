@@ -43,7 +43,6 @@ function(app, Message, MessageBus, BaseView, TopicsView, PostsView, TopicView, P
       // We load different subViews, depending on which page this layout
       // represents
       this.listenTo(MessageBus, Message.PageChange, function(page){
-        console.log(page);
         if (page === "posts") {
           this.addSubView({
             name: "PostsView",

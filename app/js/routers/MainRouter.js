@@ -20,8 +20,7 @@ function(app, BackBone, $, SingleLayout, DoubleLayout, Message, MessageBus) {
     routes: {
       "": "goToPage",
       ":page": "goToPage",
-      ":page/:create": "goToPage",
-      ":page/:id": "goToPage"
+      ":page/:idOrCreate": "goToPage"
     },
 
     // This will handle all page cases in this application. If we declared all
@@ -43,17 +42,17 @@ function(app, BackBone, $, SingleLayout, DoubleLayout, Message, MessageBus) {
       var layoutOptions = {
         el: "#main"
       };
-
-      if((typeof idOrCreate !== 'undefined') && (idOrCreate.toLowerCase() === 'create')){
+      layoutOptions.id = idOrCreate;
+      if(typeof idOrCreate !== 'undefined') {
+        if (idOrCreate.toLowerCase() === 'create'){
+        layoutOptions.id = null;
         pageName = page + ' create';
-      } else if((typeof idOrCreate !== "undefined") && (pageName === 'topics')){
-        layoutOptions.id = idOrCreate;
-        pageName = 'topic';
-      } else if((typeof idOrCreate !== "undefined") && (pageName === 'posts')){
-        layoutOptions.id = idOrCreate;
-        pageName = 'post';
+        } else if(pageName === 'topics'){
+          pageName = 'topic';
+        } else if(pageName === 'posts'){
+          pageName = 'post';
+        }
       }
-
       // Trigger the `pageBeforeChange` event in the MessageBus
       // This informs the existing views to destroy themselves (releasing all
       // reference to them).
