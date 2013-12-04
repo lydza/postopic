@@ -42,17 +42,13 @@ function(app, Message, MessageBus, BaseView, TopicsView, PostsView, _, template)
           name: "TopicsView",
           viewType: TopicsView,
           container: '.side-bar',
-          options: {
-            collection: this.topics
-          }
+          options: {}
         });
         this.addSubView({
           name: "PostsView",
           viewType: PostsView,
           container: '.content',
-          options: {
-            collection: this.posts
-          }
+          options: {}
         });
       });
     }

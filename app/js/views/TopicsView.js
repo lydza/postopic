@@ -1,9 +1,10 @@
 define([
   "text!templates/TopicsTemplate.html",
   "helpers/BaseView",
+  "collections/TopicsCollection",
   "underscore"
 ],
-function(template, BaseView, _) {
+function(template, BaseView, TopicsCollection, _) {
 
   "use strict";
 
@@ -11,7 +12,7 @@ function(template, BaseView, _) {
     template: _.template(template),
 
     initialize: function(args) {
-      this.collection = args.collection;
+      this.collection = new TopicsCollection(args);
       this.listenTo(this.collection, "reset", this.render);      
       this.collection.fetch();
     },

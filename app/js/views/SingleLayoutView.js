@@ -49,18 +49,14 @@ function(app, Message, MessageBus, BaseView, TopicsView, PostsView, TopicView, P
             name: "PostsView",
             viewType: PostsView,
             container: '.content',
-            options: {
-              collection: this.posts
-            }
+            options: {}
           });
         } else if (page === "topics") {
           this.addSubView({
             name: "TopicsView",
             viewType: TopicsView,
             container: '.content',
-            options: {
-              collection: this.topics
-            }
+            options: {}
           });
         } else if (page === "topic") {
           this.addSubView({

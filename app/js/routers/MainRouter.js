@@ -5,22 +5,16 @@ define([
   "views/SingleLayoutView",
   "views/DoubleLayoutView",
   "helpers/Message",
-  "helpers/MessageBus",
-  "collections/TopicsCollection",
-  "collections/PostsCollection"
+  "helpers/MessageBus"
   ],
 
-function(app, BackBone, $, SingleLayout, DoubleLayout, Message, MessageBus, TopicsCollection, PostsCollection) {
+function(app, BackBone, $, SingleLayout, DoubleLayout, Message, MessageBus) {
 
   "use strict";
 
   var Router = Backbone.Router.extend({
 
     initialize: function() {
-      // create this.topics
-      this.topics = new TopicsCollection;
-      // create this.posts
-      this.posts = new PostsCollection;
     },
 
     routes: {
@@ -47,9 +41,7 @@ function(app, BackBone, $, SingleLayout, DoubleLayout, Message, MessageBus, Topi
 
       // All of our views share these common options
       var layoutOptions = {
-        el: "#main",
-        topics: this.topics,
-        posts: this.posts
+        el: "#main"
       };
 
       if((typeof idOrCreate !== 'undefined') && (idOrCreate.toLowerCase() === 'create')){
