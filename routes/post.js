@@ -46,7 +46,7 @@ module.exports.create = function(data) {
               });
               return;
             }
-            console.log('Fount the topic associated with this post. It\'s been saved.');
+            console.log('Found the topic associated with this post. It\'s been saved.');
             Topic.update({_id: req.body.topicId}, { $set: {dateUpdated: Date.now()}}).exec();
             newPost.onCreate();
             res.json(newPost);
