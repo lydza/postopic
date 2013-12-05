@@ -85,7 +85,7 @@ function(app, Message, MessageBus, BaseView, TopicsView, PostsView, TopicView, P
          *                initialize function of the view.
          *
          */
-        console.log('Adding subViews to this layout.');
+
         if (page === "posts") {
           this.addSubView({
             name: "PostsView",

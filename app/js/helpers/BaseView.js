@@ -43,6 +43,7 @@ function(app, Backbone, _, $) {
      *
      */
     addSubView: function( subViewSpec ) {
+      console.log('Adding the subView ' + subViewSpec.name + ' to this layout.');
       subViewSpec.options = subViewSpec.options || {};
       subViewSpec.options.el = this.$template.find(subViewSpec.container).get(0);
       var subView = new subViewSpec.viewType( subViewSpec.options )

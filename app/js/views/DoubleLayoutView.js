@@ -41,11 +41,9 @@ function(app, Message, MessageBus, BaseView, TopicsView, PostsView, _, template)
      * Gets called as soon as the layout is created.
      *
      * The options are the layoutOptions that were passed in from the router.
-     * TODO: Remove the this.topics and this.posts. Doesn't get used.
      */
      
     initialize: function(options) {
-      console.log(options);
       this.topics = options.topics;
       this.posts = options.posts;
       console.log('Double Layout View initialized.');
@@ -84,7 +82,6 @@ function(app, Message, MessageBus, BaseView, TopicsView, PostsView, _, template)
          *                initialize function of the view.
          *
          */
-        console.log('Adding subViews to this layout.');
         
         this.addSubView({
           name: "TopicsView",
