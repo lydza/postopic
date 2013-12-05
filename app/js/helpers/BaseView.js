@@ -1,5 +1,8 @@
 define([
+  /* Main application */
   "app",
+  
+  /* Libraries */
   "backbone",
   "underscore",
   "jquery"
@@ -11,22 +14,34 @@ function(app, Backbone, _, $) {
 
   var BaseView = Backbone.View.extend({
     
-    // Gets called as soon as a new BaseView is created.
+    /* constructor:
+     *
+     * Gets called as soon as the view is created.
+     *
+     * Sets up the object.
+     */
     constructor: function() {
       this.subViews = {};
       Backbone.View.apply( this, arguments );
     },
-
-    // Adds a view within this view, i.e. a subView.
-    // When it is called, this is what needs to passed into it:
-    // {
-    //   name: "Alias for the view",
-    //   viewType: The actual Backbone View associated with this subView,
-    //   container: ".the-div/span/id that this view will be rendered in",
-    //   options: {
-    //     hash: holds options for this view. Gets passed into the viewType variable. Therefore one view can have different ways of rendering depending on the options passed into this hash. Can be empty.
-    //   }
-    // }
+    
+    /* 
+     * addSubView:
+     * 
+     * This adds a subview in the template of this BaseView 
+     *
+     * The subViewSpec hash that is being passed into the addSubView is 
+     * formatted as follows:
+     *   - name:      the alias for the subView
+     *   - viewType:  the type of view to be added. Should extend BaseView.
+     *   - container: area of the template that it will render in. 
+     *                Accepts jQuery-type identifiers.
+     *   - options:   hash that holds the variables that will be called 
+     *                when the new viewType is instantiated. If there are 
+     *                key-value pairs in here, they will available in the 
+     *                initialize function of the view.
+     *
+     */
     addSubView: function( subViewSpec ) {
       subViewSpec.options = subViewSpec.options || {};
       subViewSpec.options.el = this.$template.find(subViewSpec.container).get(0);
@@ -37,7 +52,11 @@ function(app, Backbone, _, $) {
       return subView;
     },
     
-    // Takes this view off the page.
+    /* destroy:
+     *
+     * Removes the view and its subsequent subViews. And removes all of its 
+     * event listers.
+     */
     destroy: function() {
       this.destroySubViews();
       this.stopListening();
@@ -45,7 +64,11 @@ function(app, Backbone, _, $) {
       return this;
     },
     
-    // Removes the subviews of this view
+    /* destroySubViews:
+     *
+     * Removes the subViews from this BaseView. The subViews are stored in a 
+     * hash and the .destroy() call is called one by one.
+     */
     destroySubViews: function() {
       var subViews = this.subViews;
       for ( var id in subViews ) {
@@ -57,27 +80,45 @@ function(app, Backbone, _, $) {
       return this;
     },
 
-    // Places this view onto the page
+    /* place:
+     *
+     * Places this view into the HTML.
+     */
     place: function() {
       this.$el.html(this.$template);
       this.postPlace();
       return this;
     },
     
-    // Something to do after the item has been placed on the page.
+    /* postPlace:
+     *
+     * Something to do after the item is placed in the DOM.
+     */
     postPlace: function() {},
     
-    // Something to do after the item has been rendered
+    /* postRender:
+     *
+     * Something to do after the item is rendered.
+     */
     postRender: function() {},
 
-    // Renders the view. Different from placing it in that it gets it ready to be placed on the page. It serializes the data for the template. Must be called before place()
+    /* render:
+     *
+     * Renders the view. Different from placing it in that it gets it ready 
+     * to be placed on the page. It serializes the data and passes it into 
+     * the template. Has to be called before place()
+     */
     render: function() {
       this.$template = $(this.template(this.serialize()));
       this.postRender();
       return this;
     },
     
-    // Used to serialize data for the template
+    /* serialize:
+     *
+     * Removes the view and its subsequent subViews. And removes all of its 
+     * event listers.
+     */
     serialize: function(){}
 
   });

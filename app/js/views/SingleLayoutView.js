@@ -1,48 +1,93 @@
 define([
-  // Application
+  /* Main application */
   "app",
 
-  // Framework Objects
+  /* Helpers */
   "helpers/Message",
   "helpers/MessageBus",
   "helpers/BaseView",
 
-  // Views
+  /* Views that will become this view's sub-views */
   "views/TopicsView",
   "views/PostsView",
+  
   "views/TopicView",
   "views/PostView",
+  
   "views/TopicCreateView",
   "views/PostCreateView",
 
-  // Libraries
+  /* Libraries */
   "underscore",
 
-  // Templates
+  /* Template */
   "text!templates/SingleLayoutTemplate.html"
 ],
 
-// Map dependencies from above array.
 function(app, Message, MessageBus, BaseView, TopicsView, PostsView, TopicView, PostView, TopicCreateView, PostCreateView, _, template) {
 
   "use strict";
-
+  
+  /* BaseView is an extended Backbone View. */
   return BaseView.extend({
 
+    /* Template:
+     *
+     * The underscore template function returns a function that takes in a 
+     * hash with the variables the template accepts. It returns the HTML 
+     * version with the variables in the hash placed.
+     *
+     */
     template: _.template(template),
     
+    /* Initialize:
+     *
+     * Gets called as soon as the layout is created.
+     *
+     * The options are the layoutOptions that were passed in from the router.
+     * TODO: Remove the this.topics and this.posts. Doesn't get used.
+     */
     initialize: function(options) {
       this.topics = options.topics;
       this.posts = options.posts;
       this.id = options.id;
+      console.log('Single Layout View initialized.');
     },
-
+    
+    /* postRender:
+     *
+     * Gets called after the orginal template gets rendered. In this case, the 
+     * function is added items to the rendered template.
+     *
+     */
     postRender: function() {
 
       // Listen for the pageChange event, which will tell us which page this is
       // We load different subViews, depending on which page this layout
       // represents
       this.listenTo(MessageBus, Message.PageChange, function(page){
+      
+        /* 
+         * This part decides which view to render based on the page requested.
+         * 
+         * this.addSubView() adds a subview in the template of the current 
+         * BaseView that is being returned by this file. The addSubView 
+         * function is declared in Baseview.
+         *
+         * The hash that is being passed into the addSubView is formatted as 
+         * follows:
+         *   - name:      the alias for the subView
+         *   - viewType:  the type of view to be added. Should extend BaseView.
+         *   - container: area of the template that it will render in. 
+         *                Accepts jQuery-type identifiers.
+         *   - options:   hash that holds the variables that will be called 
+         *                when the new viewType is instantiated. If there are 
+         *                key-value pairs in here, they will available in the 
+         *                initialize function of the view.
+         *
+         */
+        console.log('Adding subViews to this layout.');
+        
         if (page === "posts") {
           this.addSubView({
             name: "PostsView",
@@ -90,6 +135,8 @@ function(app, Message, MessageBus, BaseView, TopicsView, PostsView, TopicView, P
             options: {}
           });
         }
+        
+        console.log('Finished adding subViews.');
       });
     }
   });

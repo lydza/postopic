@@ -1,9 +1,16 @@
 define([
-  "app",  
+  /* Main application */
+  "app",
+  
+  /* Libraries */
   "backbone",
   "jquery",
+  
+  /* Major page-level layouts */
   "views/SingleLayoutView",
   "views/DoubleLayoutView",
+  
+  /* Helpers */
   "helpers/Message",
   "helpers/MessageBus"
   ],
@@ -14,35 +21,72 @@ function(app, BackBone, $, SingleLayout, DoubleLayout, Message, MessageBus) {
 
   var Router = Backbone.Router.extend({
 
+    /* Initialize:
+     *
+     * Gets called as soon as the router is created.
+     *
+     */
+     
     initialize: function() {
+      console.log('Router initialized.');
     },
 
+    /* Routes:
+     *
+     * Actual routes the application accepts.
+     * 
+     * The keys are the URL strings that are accepted, and the values are the 
+     * functions that are called when the URLs are matched. The ':' symbol in 
+     * the URL denotes a variable. That variable gets passed as an argument 
+     * into the function in the value.
+     *
+     */
+     
     routes: {
       "": "goToPage",
       ":page": "goToPage",
       ":page/:idOrCreate": "goToPage"
     },
 
-    // This will handle all page cases in this application. If we declared all
-    // of our routes individually, we'd end up with a lot of repeated code.
-    // Your mileage may vary.
+    /* goToPage:
+     *
+     * The function that gets called for all routes.
+     *
+     * This is the only function that gets called with all routes (all the 
+     * routes' key-value pairs have this value). It accepts the :page and 
+     * :idOrCreate variables that are declared in the routes' keys. 
+     *
+     */
+     
     goToPage: function(page, idOrCreate) {
-      // If we do not receive a page argument, just go home
+    
+      /* The default page is index */
+      
       if (!page || page === "index.html") {
         page = "index";
       }
       
-      // Declare a pageInstance that will become our view
+      /* This pageInstance variable will become the view */
+      
       var pageInstance = null;
 
-      // Convert page to Lowercase if not already
+      /* Make the pageName lowercase */
+      
       var pageName = page.toLowerCase();
 
-      // All of our views share these common options
+      /* Options that are used in our layouts */
+      
       var layoutOptions = {
         el: "#main"
       };
+      
+      /* 
+       * Initialize idOrCreate to be the options.id as a default. Not all views will use it. 
+       * TODO: Clean up this code.
+       */
+       
       layoutOptions.id = idOrCreate;
+      
       if(typeof idOrCreate !== 'undefined') {
         if (idOrCreate.toLowerCase() === 'create'){
         layoutOptions.id = null;
@@ -53,12 +97,27 @@ function(app, BackBone, $, SingleLayout, DoubleLayout, Message, MessageBus) {
           pageName = 'post';
         }
       }
+      
+      console.log('Going to page ' + pageName + '.');
+      
+      /* I don't know enough about the MessageBus and Message variables. >_<
+       * TODO: Learn more about it.
+       */
+       
       // Trigger the `pageBeforeChange` event in the MessageBus
       // This informs the existing views to destroy themselves (releasing all
       // reference to them).
+      
       MessageBus.trigger(Message.PageBeforeChange, pageName);
 
-      // Create a different layout based on the page name
+      /* This helps display a different page depending on the pageName. The 
+       * index view displays the double layout (two-sided layout) and the 
+       * single layout displays the single layout (one-sided layout). 
+       *
+       * The render function returns the object with the HTML generated. It is 
+       * not put into the DOM just yet.
+       */
+       
       switch (pageName) {
         case "index":
           pageInstance = new DoubleLayout(layoutOptions).render();
@@ -76,15 +135,20 @@ function(app, BackBone, $, SingleLayout, DoubleLayout, Message, MessageBus) {
       }
 
       // Direct the layout to remove itself on a `pageBeforeChange` event
+      
       pageInstance.listenTo(MessageBus, Message.PageBeforeChange, function() {
         pageInstance.destroy();
       });
 
       // Trigger the `pageChange` event in the MessageBus
       // This causes our layouts to add their subViews
+      
       MessageBus.trigger(Message.PageChange, pageName);
 
-      // Put our complete layout in the DOM
+      /* Places the pageInstance into the dom. The place method places it into 
+       * the dom.
+       */
+       
       pageInstance.place();
 
     }
