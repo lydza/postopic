@@ -16,12 +16,25 @@ function(Backbone) {
     initialize: function(args){
       this.id = args.id;
     },
+  
     defaults : {
-      name: 'No Name',
-      text: 'No Text',
-      author: 'Anonymous',
-      topicId: null,
-      date: null
+      post: {
+        name: "",
+        author: "",
+        text: "",
+        topicId: "",
+        date: "",
+        _id: "",
+        __v: 0
+      },
+      topic: {
+        name: "",
+        author: "",
+        dateUpdated: "",
+        dateCreated: "",
+        _id: "",
+        __v: 0
+      }
     },
   
     url : function() {

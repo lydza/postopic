@@ -36,6 +36,7 @@ function(_, BaseView, PostModel, template) {
      * all we have to do is save it in this view and pass it to the serialize method.
      */
     initialize: function(args) {
+      console.log(args);
       this.model = args.model;
     },
     

@@ -17,10 +17,15 @@ function(Backbone) {
       this.id = args.id;
     },
     defaults : {
-      name: 'No Name',
-      author: 'Anonymous',
-      dateCreated: null,
-      dateUpdated: null
+      posts: [],
+      topic: {
+        name: "Bubble Gum",
+        author: "Lidza",
+        dateUpdated: "2013-12-04T17:06:13.189Z",
+        dateCreated: "2013-12-03T22:02:37.020Z",
+        _id: "529e54fd4bf5345d1f000001",
+        __v: 0
+      }
     },
   
     url : function() {

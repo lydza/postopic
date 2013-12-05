@@ -139,7 +139,6 @@ function(app, BackBone, $, SingleLayout, DoubleLayout, Message, MessageBus, Post
                   topics.push(topic);
                 }.bind(this));
                 
-                console.log(topics);
                 var postsData = new PostsCollection();
         
                 postsData.fetch({
@@ -199,10 +198,9 @@ function(app, BackBone, $, SingleLayout, DoubleLayout, Message, MessageBus, Post
                 });
               },
               success: function(model, response, options){
-                console.log(model.toJSON());
                 this.renderAndPlace(type, {
                   el: '#main',
-                  collection: model
+                  model: model.toJSON()
                 });
               }.bind(this)
             });
@@ -246,7 +244,7 @@ function(app, BackBone, $, SingleLayout, DoubleLayout, Message, MessageBus, Post
               success: function(model, response, options){
                 this.renderAndPlace(type, {
                   el: '#main',
-                  collection: model.toJSON()
+                  model: model.toJSON()
                 });
               }.bind(this)
             });
@@ -269,7 +267,7 @@ function(app, BackBone, $, SingleLayout, DoubleLayout, Message, MessageBus, Post
       /* I don't know enough about the MessageBus and Message variables. >_<
        * TODO: Learn more about it.
        */
-      console.log(options);
+       
       // Trigger the `pageBeforeChange` event in the MessageBus
       // This informs the existing views to destroy themselves (releasing all
       // reference to them).

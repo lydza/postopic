@@ -45,6 +45,7 @@ function(app, Message, MessageBus, BaseView, TopicsView, PostsView, _, template)
      */
      
     initialize: function(options) {
+      console.log(options);
       this.topics = options.topics;
       this.posts = options.posts;
       console.log('Double Layout View initialized.');
@@ -89,13 +90,17 @@ function(app, Message, MessageBus, BaseView, TopicsView, PostsView, _, template)
           name: "TopicsView",
           viewType: TopicsView,
           container: '.side-bar',
-          options: {}
+          options: {
+            collection: this.topics
+          }
         });        
         this.addSubView({
           name: "PostsView",
           viewType: PostsView,
           container: '.content',
-          options: {}
+          options: {
+            collection: this.posts
+          }
         });
         
         console.log('Finished adding subViews.');
