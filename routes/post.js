@@ -118,6 +118,13 @@ module.exports.id = function(data) {
         });
         return;
       } else{
+        if(postResult === null){
+          console.log('There are no posts with this id.');
+          res.json({
+            error: 'There are no posts with this id.'
+          });
+          return;
+        }
         console.log('Found the post with the id ' + req.params.id + '. Now looking for the topic with the id ' + postResult.topicId + ' associated with it...');
         Topic.findOne({_id: postResult.topicId}).exec(function(err, topicResult){
           if(err){
