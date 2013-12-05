@@ -31,30 +31,24 @@ function(_, BaseView, PostModel, template) {
      *
      * Gets called as soon as the view is created.
      *
-     * args is the options hash that as passed in from the .addSubView() 
-     * function. This creates a new TopicsCollection and fetches its data from 
-     * the server.
+     * args is the hash that is passed in from the .addSubView() 
+     * method. The hash has the Post model data stored in args.model. So 
+     * all we have to do is save it in this view and pass it to the serialize method.
      */
     initialize: function(args) {
-      this.post = new PostModel(args);
-      this.post.fetch({
-        success: function(post, response) {
-          console.log(post.toJSON());
-          // TODO Figure out how to export this topics variable outside of 
-          // this and use it in the serialize method.
-        }
-      });
+      this.model = args.model;
     },
     
     /* Serialize:
      *
      * Function that returns the data to be put into the template.
      *
-     * After the data is retrieved from the fetch call it needs to be returned 
-     * here. Needs to be returned in a format that the template can process.
+     * The model in this view is already properly formatted to be 
+     * rendered. So it gets returned as-is.
      */
     serialize: function(){
-      return {};
+      console.log(this.model);
+      return this.model;
     }
   });
 

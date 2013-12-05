@@ -5,13 +5,10 @@ define([
   /* Helpers */
   "helpers/BaseView",
   
-  /* Collection that this view renders */
-  "collections/TopicsCollection",
-  
   /* Template */
   "text!templates/TopicsTemplate.html"
 ],
-function(_, BaseView, TopicsCollection, template) {
+function(_, BaseView, template) {
 
   "use strict";
   
@@ -31,38 +28,24 @@ function(_, BaseView, TopicsCollection, template) {
      *
      * Gets called as soon as the view is created.
      *
-     * args is the options hash that as passed in from the .addSubView() 
-     * function. This creates a new TopicsCollection, listens to its reset 
-     * event to re-render it, and fetches its data from the server.
-     * TODO: Remove the args variable. Does nothing.
+     * args is the hash that is passed in from the .addSubView() 
+     * method. The hash has the Topic Collection data stored in args.model. So 
+     * all we have to do is save it in this view and pass it to the serialize method.
      */
     initialize: function(args) {
-      this.collection = new TopicsCollection(args);
-      this.listenTo(this.collection, "reset", this.render);
-      this.collection.fetch({
-        success: function(collection, response) {
-          this.topics = [];
-          _.each(collection.models, function(model) {
-            this.topics.push(model.toJSON());
-          }.bind(this));
-          console.log('Success '+this.topics);
-          // TODO Figure out how to export the topics variable to be used 
-          // outside of this and use it in the serialize method.
-        }.bind(this)
-      });
-      
+      this.collection = args.collection;
     },
     
     /* Serialize:
      *
      * Function that returns the data to be put into the template.
      *
-     * After the data is retrieved from the fetch call it needs to be returned 
-     * here. Needs to be returned in a format that the template can process.
+     * The collection in this view is already properly formatted to be 
+     * rendered. So it gets returned as-is.
      */
     serialize: function(){
-      console.log(this.topics);
-      return {};
+      console.log(this.collection);
+      return this.collection;
     }
   });
 

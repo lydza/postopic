@@ -48,9 +48,8 @@ function(app, Message, MessageBus, BaseView, TopicsView, PostsView, TopicView, P
      * TODO: Remove the this.topics and this.posts. Doesn't get used.
      */
     initialize: function(options) {
-      this.topics = options.topics;
-      this.posts = options.posts;
-      this.id = options.id;
+      this.collection = options.collection;
+      this.model = options.model;
       console.log('Single Layout View initialized.');
     },
     
@@ -87,20 +86,23 @@ function(app, Message, MessageBus, BaseView, TopicsView, PostsView, TopicView, P
          *
          */
         console.log('Adding subViews to this layout.');
-        
         if (page === "posts") {
           this.addSubView({
             name: "PostsView",
             viewType: PostsView,
             container: '.content',
-            options: {}
+            options: {
+              collection: this.collection
+            }
           });
         } else if (page === "topics") {
           this.addSubView({
             name: "TopicsView",
             viewType: TopicsView,
             container: '.content',
-            options: {}
+            options: {
+              collection: this.collection
+            }
           });
         } else if (page === "topic") {
           this.addSubView({
@@ -108,7 +110,7 @@ function(app, Message, MessageBus, BaseView, TopicsView, PostsView, TopicView, P
             viewType: TopicView,
             container: '.content',
             options: {
-              id: this.id
+              model: this.model
             }
           });
         } else if (page === "post") {
@@ -117,7 +119,7 @@ function(app, Message, MessageBus, BaseView, TopicsView, PostsView, TopicView, P
             viewType: PostView,
             container: '.content',
             options: {
-              id: this.id
+              model: this.model
             }
           });
         } else if (page === "topic create") {
