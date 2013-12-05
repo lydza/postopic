@@ -95,9 +95,7 @@ module.exports.all = function(data) {
               });
             } else{
               console.log('Found ' + results.length + ' posts and all their associated topics.');
-              res.json({
-                posts: results
-              });
+              res.json(results);
             }
           }
         );
