@@ -87,15 +87,20 @@ function(app, BackBone, $, SingleLayout, DoubleLayout, Message, MessageBus) {
        
       layoutOptions.id = idOrCreate;
       
-      if(typeof idOrCreate !== 'undefined') {
-        if (idOrCreate.toLowerCase() === 'create'){
-        layoutOptions.id = null;
-        pageName = page + ' create';
-        } else if(pageName === 'topics'){
+      if((typeof idOrCreate !== 'undefined') &&(idOrCreate.toLowerCase() === 'create')){
+        pageName = pageName + ' create';
+      } 
+      if((typeof idOrCreate !== 'undefined') && (pageName === 'topics')){
           pageName = 'topic';
-        } else if(pageName === 'posts'){
+      } 
+      if((typeof idOrCreate !== 'undefined') && (pageName === 'posts')){
           pageName = 'post';
-        }
+      }
+      if((typeof idOrCreate === 'undefined') && (pageName === 'topics')){
+        pageName = 'topics';
+      }
+      if((typeof idOrCreate === 'undefined') && (pageName === 'posts')){
+        pageName = 'posts';
       }
       
       console.log('Going to page ' + pageName + '.');
