@@ -1,6 +1,28 @@
 # Welcome to PosTopic
 
-## It is kind of a sandbox project to get me, femininjaneer, to learn Node.js, Express.js, Jade, MongoDB, Mongoose, Async.js, Backbone.js, Lo-Dash.js and jQuery.
+## An application to learn Javascript technologies
 
-> This application is called PosTopic. You can add a topic, and post subsequent posts related to the topic. You can also share links to the application, so people can see that specific topic, post or posts by author.
-> This is a work in progress, Look at the TODO to see what still needs to be done for this app to be fully functioning.
+The purpose of the application is to add topics, and posts those topic. You can also share links to the application, so people can see that specific topic or post
+
+This is a work in progress.
+
+This application uses:
+
+Server-side:
+ - NodeJS
+ - ExpressJS
+ - Jade Templating
+ - AsyncJS
+ - MongoDB
+ - Mongoose
+
+Client-side:
+ - RequireJS
+ - BackboneJS
+ - Lo-Dash
+ - jQuery
+ - Bootstrap
+
+This is a very simple project, and the TODO.txt gives you an idea of what still needs to be done for the application to finally be finished.
+
+
