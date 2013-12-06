@@ -82,11 +82,12 @@ function(app, Message, MessageBus, BaseView, TopicsView, PostsView, _, template)
          *                initialize function of the view.
          *
          */
-        
+        console.log(this.topics);
+        console.log(this.posts);
         this.addSubView({
           name: "TopicsView",
           viewType: TopicsView,
-          container: '.side-bar',
+          container: '.left',
           options: {
             collection: this.topics
           }
@@ -94,7 +95,7 @@ function(app, Message, MessageBus, BaseView, TopicsView, PostsView, _, template)
         this.addSubView({
           name: "PostsView",
           viewType: PostsView,
-          container: '.content',
+          container: '.right',
           options: {
             collection: this.posts
           }

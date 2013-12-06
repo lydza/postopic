@@ -60,8 +60,11 @@ module.exports.all = function(data) {
                   error: err
                 });
               } else{
-                item.postCount = posts.length;
-                return callback(null, item);
+                var result = {
+                  topic: item,
+                  posts: posts
+                };
+                return callback(null, result);
               }
             });
           }, 

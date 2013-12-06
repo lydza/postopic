@@ -1,8 +1,15 @@
-  <H2>Posts Template</H2>
-  <ul class="nav nav-staccked">
+<div class="container">
+  <div class="page-title">
+    All Posts
+  </div>
+  <div class="list-group">
     <% _.each(posts, function( item ){ %>
-      <li>
-        <a href="posts/<%- item.post._id%>"><span class="glyphicon glyphicon-star-empty"></span> <%- item.post.name %> by <%- item.post.author %> under the topic <%- item.topic.name %></a>
-      </li>
+      <a href="posts/<%- item.post._id%>" class="list-group-item post">
+        <span class="post-name"><%- item.post.name %></span>
+        <span class="badge topic-name-in-post"><%- item.topic.name %></span>
+        </br>by <span class="post-author"><%- item.post.author %></span></br>
+        <div class="container post-text">"<%- item.post.text %>"</div>
+      </a>
     <% }); %>
-  </ul>
+  </div>
+</div>
