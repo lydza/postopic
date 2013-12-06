@@ -49,7 +49,7 @@ function(_, BaseView, PostModel, template) {
      */
     serialize: function(){
       console.log(this.model);
-      return this.model;
+      return {post: this.model};
     }
   });
 

@@ -82,8 +82,12 @@ module.exports.all = function(data) {
                   error: err
                 });
               } else{
-                item.topic = topic;
-                return callback(null, item);
+                
+                var result = {
+                  post: item,
+                  topic: topic
+                };
+                return callback(null, result);
               }
             });
           }, 

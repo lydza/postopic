@@ -45,7 +45,7 @@ function(_, BaseView, template) {
      */
     serialize: function(){
       console.log(this.collection);
-      return this.collection;
+      return {topics: this.collection};
     }
   });
 

@@ -47,8 +47,8 @@ function(_, BaseView, PostsCollection, template) {
      * rendered. So it gets returned as-is.
      */
     serialize: function(){
-      console.log(this.collection);
-      return this.collection;
+      console.log(this.collection[0]);
+      return {posts: this.collection};
     }
   });
 

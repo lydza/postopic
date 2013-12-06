@@ -48,7 +48,7 @@ function(_, BaseView, TopicModel, template) {
      */
     serialize: function(){
       console.log(this.model);
-      return this.model;
+      return {topic: this.model};
     }
   });
 

@@ -1,1 +1,8 @@
-<H2>Posts Template</H2>
+  <H2>Posts Template</H2>
+  <ul class="nav nav-staccked">
+    <% _.each(posts, function( item ){ %>
+      <li>
+        <a href="posts/<%- item.post._id%>"><span class="glyphicon glyphicon-star-empty"></span> <%- item.post.name %> by <%- item.post.author %> under the topic <%- item.topic.name %></a>
+      </li>
+    <% }); %>
+  </ul>
