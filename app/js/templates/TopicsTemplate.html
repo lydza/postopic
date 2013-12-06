@@ -1,14 +1,13 @@
-<div class="container">
-  <div class="page-title">
-    All Topics
-  </div>
-  <div class="list-group">
-    <% _.each(topics, function( item ){ %>
-      <a href="topics/<%- item.topic._id%>" class="list-group-item topic">
-        <span class="topic-name"><%- item.topic.name %></span>
-        <span class="badge post-count-in-topic"><%- item.posts.length %></span>
-        </br>by <span class="topic-author"><%- item.topic.author %></span></br>
-      </a>
-    <% }); %>
-  </div>
+<div class="page-title">
+  All Topics
 </div>
+<div class="list-group">
+  <% _.each(topics, function( item ){ %>
+    <a href="topics/<%- item.topic._id%>" class="list-group-item topic">
+      <span class="topic-name"><%- item.topic.name %></span>
+      <span class="badge post-count-in-topic"><%- item.posts.length %></span>
+      </br>by <span class="topic-author"><%- item.topic.author %></span></br>
+    </a>
+  <% }); %>
+</div>
+

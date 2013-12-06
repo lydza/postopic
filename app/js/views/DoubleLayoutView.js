@@ -82,8 +82,6 @@ function(app, Message, MessageBus, BaseView, TopicsView, PostsView, _, template)
          *                initialize function of the view.
          *
          */
-        console.log(this.topics);
-        console.log(this.posts);
         this.addSubView({
           name: "TopicsView",
           viewType: TopicsView,

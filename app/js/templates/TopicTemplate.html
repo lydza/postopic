@@ -3,7 +3,8 @@
     <%- topic.topic.name %>
   </div>
    by <span class="topic-author"><%- topic.topic.author %></span></br>
-  <div class="list-group">
+   </br> </br> Posts for this topic:
+  <div class="list-group container">
     <% _.each(topic.posts, function( item ){ %>
       <a href="http://localhost:3000/posts/<%- item._id%>" class="list-group-item post">
         <span class="post-name"><%- item.name %></span>
