@@ -8,8 +8,8 @@ define([
   "helpers/BaseView",
 
   /* Views that will become this view's sub-views */
-  "views/PostsView",
   "views/TopicsView",
+  "views/PostsView",
 
   /* Libraries */
   "underscore",
