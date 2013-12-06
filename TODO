@@ -1,39 +1,13 @@
-Specific Routes
- - /
-    - On the posts side, add a reference to the topic. Organize it by date (many query)
-    - On the Topic side, add a reference to the amount of posts that match this topic. Organize it by the amount of posts associated to them. In descending order. (many queries)
-
- - /posts
-    - Add the topic that this post falls under on the page (many queries)
- 
- - /topics
-    - Add the number of posts associated (many queries)
-
- - /post/:id
-    - Everything looks great here. :)
-
- - /topic/:id
-    - Everything looks great here. :)
-
- - /topic/create
-    - Once I change the date params in the Topic model, will need to make create it with the Date.now value. (Another query)
-
- - /post/create
-    - Everything looks great here. :)
-
-All routes
- - Make the data available to the view consistent. Make sure everything has an author, date and posts and topics (when applicable)
- - Make them all look better. Format the CSS a little better
+Bugs
+ - The create templates are not rendering. Need to fix this. >_<
 
 New Features
- - Ability to delete topics and posts. When topics are deleted, all posts associated with them must be deleted as well.
- - Ability to click on the author and see their topics and posts. Will query the database and display something like what's on the homepage
- - FORMS~! Available on every page. Won't have to use Postman to sent post requests to the server.
-    - '+ Post to this topic' next to the topics, and a div with an ability to post will appear. jQuery to the rescue!
-    - '+ Add to this conversation' next to the posts also with a div that will appear and disappear.
+ - Add ability to edit and delete topics and posts from the client-side.
+    - Delete: Access the model thru the PostView, destroy it, redirect to the homepage
+    - Edit: Open the create template with all fields pre-filled with data from the model that is being edited. When submit is clicked, or enter is pressed, Backbone will get the data from the form and save it.
 
-Implementation Details
- - Clean up code as much as possible.
- - Write tons of comments. No shame in putting tons of comments into something I'm learning.
- - Connect-flash to make the user experience better.
- - Once the data is rendered on the page, will add some interactivity, possibly make it run on Backbone.
+Upkeep/Implementation:
+ - KEEP MAKING IT LOOK PRETTY~!
+ - Clean up custom.css
+ - Refactor MainRoute.js. Particularly at getData()
+ - Make templates consistent.
