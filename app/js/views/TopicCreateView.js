@@ -4,11 +4,14 @@ define([
 
   /* Helpers */
   "helpers/BaseView",
+  
+  /* Models */
+  "models/TopicModel",
 
   /* Template */
   "text!templates/TopicCreateTemplate.html"
 ],
-function(_, BaseView, template) {
+function(_, BaseView, TopicModel, template) {
 
   "use strict";
   
@@ -22,6 +25,25 @@ function(_, BaseView, template) {
      * version with the variables in the hash placed.
      *
      */
+     
+    events: {
+      'submit form' : 'createTopic'
+    },
+    
+    createTopic: function(event){
+      event.preventDefault();
+      console.log('This worked!');
+      var newTopicModel = new TopicModel({
+        name : $("#name").val(),
+        author : $("#author").val(),
+      });
+      newTopicModel.save(newTopicModel.attributes, {
+        success: function(){
+          window.location.href = '/topics';
+        }.bind(this)
+      });
+    },
+    
     template: _.template(template),
   });
 
