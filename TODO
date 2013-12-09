@@ -1,11 +1,3 @@
-Bugs
- - The create templates are not rendering. Need to fix this. >_<
-
-New Features
- - Add ability to edit and delete topics and posts from the client-side.
-    - Delete: Access the model thru the PostView, destroy it, redirect to the homepage
-    - Edit: Open the create template with all fields pre-filled with data from the model that is being edited. When submit is clicked, or enter is pressed, Backbone will get the data from the form and save it.
-
 Upkeep/Implementation:
  - KEEP MAKING IT LOOK PRETTY~!
  - Clean up custom.css
