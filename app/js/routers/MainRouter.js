@@ -200,7 +200,7 @@ function(app, BackBone, $, SingleLayout, DoubleLayout, Message, MessageBus, Post
               success: function(model, response, options){
                 this.renderAndPlace(type, {
                   el: '#main',
-                  model: model.toJSON()
+                  model: model
                 });
               }.bind(this)
             });

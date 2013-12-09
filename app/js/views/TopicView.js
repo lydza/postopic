@@ -6,12 +6,15 @@ define([
   "helpers/BaseView",
   
   /* Model that this view renders */
-  "models/TopicModel",
+  "models/PostModel",
   
   /* Template */
-  "text!templates/TopicTemplate.html"
+  "text!templates/TopicTemplate.html",
+  "text!templates/TopicEditTemplate.html",
+  "text!templates/TopicDeleteTemplate.html",
+  "text!templates/PostCreateTemplate.html"
 ],
-function(_, BaseView, TopicModel, template) {
+function(_, BaseView, PostModel, mainTemplate, editTemplate, deleteTemplate, postCreateTemplate) {
 
   "use strict";
   
@@ -25,7 +28,7 @@ function(_, BaseView, TopicModel, template) {
      * version with the variables in the hash placed.
      *
      */
-    template: _.template(template),
+    template: _.template(mainTemplate),
     
     /* Initialize:
      *
@@ -37,6 +40,72 @@ function(_, BaseView, TopicModel, template) {
      */
     initialize: function(args) {
       this.model = args.model;
+      this.edit = _.template(editTemplate);
+      this.del = _.template(deleteTemplate);
+      this.newPost = _.template(postCreateTemplate);
+      this.modelJSON = this.model.toJSON();
+    },
+    
+    events: {
+      "click .edit"   : "editTopic",
+      "click .delete" : "deleteTopic",
+      "click .addPost": "addPost"
+    },
+    
+    editTopic: function(){
+      $("#topic").html(
+        this.edit(this.serialize())
+      );
+      $('form').submit(function(event){
+        event.preventDefault();
+        this.model.save({
+          name : $("#name").val(),
+          author : $("#author").val(),
+        },
+        { 
+          success: function(){
+            console.log('This topic has been updated.');
+            window.location.href = '/topics/' + this.modelJSON.id;
+          }.bind(this)
+        });
+      }.bind(this));
+    },
+    
+    deleteTopic: function(){
+      $("#topic").html(
+        this.del(this.serialize())
+      );
+      $('form').submit(function(event){
+        event.preventDefault();
+        this.model.destroy({ 
+          success: function(){
+            console.log('This topic has been deleted.');
+            window.location.href = '/topics';
+          }.bind(this)
+        });
+      }.bind(this));
+    },
+    
+    addPost: function(){
+      $("#topic").html(
+        this.newPost(this.serialize())
+      );
+      
+      console.log();
+      $('form').submit(function(event){
+        event.preventDefault();
+        var newPostModel = new PostModel({
+          name : $("#name").val(),
+          author : $("#author").val(),
+          text : $("#text").val(),
+          topicId : this.modelJSON.id
+        });
+        newPostModel.save(newPostModel.attributes, {
+          success: function(){
+            window.location.href = '/topics/' + this.modelJSON.id;
+          }.bind(this)
+        });
+      }.bind(this));
     },
     
     /* Serialize:
@@ -47,8 +116,10 @@ function(_, BaseView, TopicModel, template) {
      * rendered. So it gets returned as-is.
      */
     serialize: function(){
-      console.log(this.model);
-      return {topic: this.model};
+      console.log(this.modelJSON);
+      return {
+        topic: this.modelJSON
+      };
     }
   });
 

@@ -1,7 +1,10 @@
 <div class="container">
-  <div class="subtitle text-center">
+  <div class="subtitle text-center" id="topic">
     <%- topic.topic.name %>
    by <span class="topic-author"><%- topic.topic.author %></span></br>
+    <button class="edit"><span class="glyphicon glyphicon-pencil"></span></button>
+    <button class="delete"><span class="glyphicon glyphicon-remove"></span></button>
+    <button class="addPost"><span class="glyphicon glyphicon-plus-sign"></span></button>
   </div>
   <div class="subtitle">Posts for this topic:</div>
   <div class="list-group container">
