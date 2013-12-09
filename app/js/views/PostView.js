@@ -9,9 +9,11 @@ define([
   "models/PostModel",
   
   /* Template */
-  "text!templates/PostTemplate.html"
+  "text!templates/PostTemplate.html",
+  "text!templates/PostEditTemplate.html",
+  "text!templates/PostDeleteTemplate.html"
 ],
-function(_, BaseView, PostModel, template) {
+function(_, BaseView, PostModel, mainTemplate, editTemplate, deleteTemplate) {
 
   "use strict";
 
@@ -25,7 +27,7 @@ function(_, BaseView, PostModel, template) {
      * version with the variables in the hash placed.
      *
      */
-    template: _.template(template),
+    template: _.template(mainTemplate),
     
     /* Initialize:
      *
@@ -38,6 +40,50 @@ function(_, BaseView, PostModel, template) {
     initialize: function(args) {
       console.log(args);
       this.model = args.model;
+      this.edit = _.template(editTemplate);
+      this.del = _.template(deleteTemplate);
+      this.modelJSON = this.model.toJSON();
+    },
+    
+    events: {
+      "click .edit"   : "editPost",
+      "click .delete" : "deletePost"
+    },
+    
+    editPost: function(){
+      $("#post").html(
+        this.edit(this.serialize())
+      );
+      $('form').submit(function(event){
+        event.preventDefault();
+        this.model.save({
+          name : $("#name").val(),
+          author : $("#author").val(),
+          text : $("#text").val(),
+          topicId : this.modelJSON.post.topicId
+        },
+        { 
+          success: function(){
+            console.log('This post has been updated.');
+            window.location.href = '/posts/' + this.modelJSON.post._id;
+          }.bind(this)
+        });
+      }.bind(this));
+    },
+    
+    deletePost: function(){
+      $("#post").html(
+        this.del(this.serialize())
+      );
+      $('form').submit(function(event){
+        event.preventDefault();
+        this.model.destroy({ 
+          success: function(){
+            console.log('This post has been deleted.');
+            window.location.href = '/posts';
+          }.bind(this)
+        });
+      }.bind(this));
     },
     
     /* Serialize:
@@ -49,7 +95,9 @@ function(_, BaseView, PostModel, template) {
      */
     serialize: function(){
       console.log(this.model);
-      return {post: this.model};
+      return {
+        post: this.modelJSON
+      };
     }
   });
 

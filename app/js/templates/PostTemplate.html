@@ -2,7 +2,7 @@
   <div class="subtitle text-center">
     Post
   </div>
-  <div class="list-group-item post">
+  <div class="list-group-item post" id="post">
     <div class="row">
       <div class="col-lg-11">
         <span class="post-name"><%- post.post.name %></span></br>
@@ -10,8 +10,8 @@
         <div class="post-text">"<%- post.post.text %>"</div>
       </div>
       <div class="col-lg-1 text-right">
-        <button><span class="glyphicon glyphicon-pencil edit"></span></button>
-        <button><span class="glyphicon glyphicon-remove delete"></span></button>
+        <button class="edit"><span class="glyphicon glyphicon-pencil"></span></button>
+        <button class="delete"><span class="glyphicon glyphicon-remove"></span></button>
       </div>
     </div>
   </div>

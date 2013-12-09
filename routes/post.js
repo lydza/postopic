@@ -194,7 +194,7 @@ module.exports.id.del = function(data) {
     console.log('\nHttp Method:   DELETE \nRoute:         /posts/' + req.params.id + ' \nAction:        Deletes one post');
     async.parallel([
       function(callback){
-        Post.find({topicId: req.params.id}, null, {}, callback);
+        Post.find({_id: req.params.id}, null, {}, callback);
       }
     ], 
     function(err, results){
