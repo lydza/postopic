@@ -1,9 +1,9 @@
 <div class="container">
-  <div class="page-title">
+  <div class="subtitle text-center">
     <%- topic.topic.name %>
-  </div>
    by <span class="topic-author"><%- topic.topic.author %></span></br>
-   </br> </br> Posts for this topic:
+  </div>
+  <div class="subtitle">Posts for this topic:</div>
   <div class="list-group container">
     <% _.each(topic.posts, function( item ){ %>
       <a href="http://localhost:3000/posts/<%- item._id%>" class="list-group-item post">

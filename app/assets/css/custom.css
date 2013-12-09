@@ -14,7 +14,7 @@ body {
   
 }
 
-.post, .topic{
+.post, .topic, .subtitle{
   font-family: 'Simonetta', cursive;
 }
 
@@ -57,4 +57,7 @@ body {
 .topic-name-in-post {
   font-family: 'Belleza';
   font-size: 1.2em;
+}
+.subtitle {
+  font-size: 1.7em;
 }
