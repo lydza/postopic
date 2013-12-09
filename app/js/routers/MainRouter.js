@@ -153,7 +153,6 @@ function(app, BackBone, $, SingleLayout, DoubleLayout, Message, MessageBus, Post
                       posts.push(post);
                     }.bind(this));
                     this.renderAndPlace(type, {
-                      el: '#main',
                       posts: posts,
                       topics: topics
                     });
@@ -180,7 +179,6 @@ function(app, BackBone, $, SingleLayout, DoubleLayout, Message, MessageBus, Post
                   topics.push(topic);
                 }.bind(this));
                 this.renderAndPlace(type, {
-                  el: '#main',
                   collection: topics
                 });
               }.bind(this)
@@ -199,7 +197,6 @@ function(app, BackBone, $, SingleLayout, DoubleLayout, Message, MessageBus, Post
               },
               success: function(model, response, options){
                 this.renderAndPlace(type, {
-                  el: '#main',
                   model: model
                 });
               }.bind(this)
@@ -223,7 +220,6 @@ function(app, BackBone, $, SingleLayout, DoubleLayout, Message, MessageBus, Post
                   posts.push(post);
                 }.bind(this));
                 this.renderAndPlace(type, {
-                  el: '#main',
                   collection: posts
                 });
               }.bind(this)
@@ -243,7 +239,6 @@ function(app, BackBone, $, SingleLayout, DoubleLayout, Message, MessageBus, Post
               },
               success: function(model, response, options){
                 this.renderAndPlace(type, {
-                  el: '#main',
                   model: model
                 });
               }.bind(this)
@@ -264,6 +259,9 @@ function(app, BackBone, $, SingleLayout, DoubleLayout, Message, MessageBus, Post
      */
      
     renderAndPlace: function(page, options){
+    
+      options = options || {};
+      options.el = '#main';
       /* I don't know enough about the MessageBus and Message variables. >_<
        * TODO: Learn more about it.
        */
