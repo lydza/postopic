@@ -122,14 +122,14 @@ function(app, Message, MessageBus, BaseView, TopicsView, PostsView, TopicView, P
               model: this.model
             }
           });
-        } else if (page === "topic create") {
+        } else if (page === "topics create") {
           this.addSubView({
             name: "TopicCreateView",
             viewType: TopicCreateView,
             container: '.content',
             options: {}
           });
-        } else if (page === "post create") {
+        } else if (page === "posts create") {
           this.addSubView({
             name: "PostCreateView",
             viewType: PostCreateView,

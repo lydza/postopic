@@ -291,10 +291,10 @@ function(app, BackBone, $, SingleLayout, DoubleLayout, Message, MessageBus, Post
           break;
         case "topics":
         case "topic":
-        case "topic create":
+        case "topics create":
         case "posts":
         case "post":
-        case "post create":
+        case "posts create":
           pageInstance = new SingleLayout(options).render();
           break;
         default:
