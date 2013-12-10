@@ -15,6 +15,8 @@ define([
   "views/PostView",
   
   "views/TopicCreateView",
+  
+  "views/ErrorView",
 
   /* Libraries */
   "underscore",
@@ -23,7 +25,7 @@ define([
   "text!templates/SingleLayoutTemplate.html"
 ],
 
-function(app, Message, MessageBus, BaseView, TopicsView, PostsView, TopicView, PostView, TopicCreateView, _, template) {
+function(app, Message, MessageBus, BaseView, TopicsView, PostsView, TopicView, PostView, TopicCreateView, ErrorView, _, template) {
 
   "use strict";
   
@@ -49,6 +51,7 @@ function(app, Message, MessageBus, BaseView, TopicsView, PostsView, TopicView, P
     initialize: function(options) {
       this.collection = options.collection;
       this.model = options.model;
+      this.error = options.error;
       console.log('Single Layout View initialized.');
     },
     
@@ -127,6 +130,15 @@ function(app, Message, MessageBus, BaseView, TopicsView, PostsView, TopicView, P
             viewType: TopicCreateView,
             container: '.content',
             options: {}
+          });
+        } else if(page === 'error'){
+          this.addSubView({
+            name: "ErrorView",
+            viewType: ErrorView,
+            container: '.content',
+            options: {
+              error: this.error
+            }
           });
         }
         

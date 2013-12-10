@@ -127,7 +127,7 @@ function(app, BackBone, $, SingleLayout, DoubleLayout, Message, MessageBus, Post
 
             topicsData.fetch({
               error: function(collection, response, options){
-                this.renderAndPlace({
+                this.renderAndPlace('error', {
                   error: "There was an error getting the topics collection from the database."
                 });
               },
@@ -141,7 +141,7 @@ function(app, BackBone, $, SingleLayout, DoubleLayout, Message, MessageBus, Post
         
                 postsData.fetch({
                   error: function(collection, response, options){
-                    this.renderAndPlace({
+                    this.renderAndPlace('error', {
                       error: "There was an error getting the posts collection from the database."
                     });
                   },
@@ -167,7 +167,7 @@ function(app, BackBone, $, SingleLayout, DoubleLayout, Message, MessageBus, Post
         
             data.fetch({
               error: function(collection, response, options){
-                this.renderAndPlace({
+                this.renderAndPlace('error', {
                   error: "There was an error getting the topics collection from the database."
                 });
               },
@@ -189,7 +189,7 @@ function(app, BackBone, $, SingleLayout, DoubleLayout, Message, MessageBus, Post
         
             data.fetch({
               error: function(model, response, options){
-                this.renderAndPlace({
+                this.renderAndPlace('error', {
                   error: "There was an error getting this topic model from the database."
                 });
               },
@@ -208,7 +208,7 @@ function(app, BackBone, $, SingleLayout, DoubleLayout, Message, MessageBus, Post
         
             data.fetch({
               error: function(collection, response, options){
-                this.renderAndPlace({
+                this.renderAndPlace('error', {
                   error: "There was an error getting the posts collection from the database."
                 });
               },
@@ -231,7 +231,7 @@ function(app, BackBone, $, SingleLayout, DoubleLayout, Message, MessageBus, Post
             
             data.fetch({
               error: function(model, response, options){
-                this.renderAndPlace({
+                this.renderAndPlace('error', {
                   error: "There was an error getting this topic model from the database."
                 });
               },
@@ -260,6 +260,7 @@ function(app, BackBone, $, SingleLayout, DoubleLayout, Message, MessageBus, Post
     
       options = options || {};
       options.el = '#main';
+
       /* I don't know enough about the MessageBus and Message variables. >_<
        * TODO: Learn more about it.
        */
@@ -282,8 +283,8 @@ function(app, BackBone, $, SingleLayout, DoubleLayout, Message, MessageBus, Post
        */
       
       switch (page) {
-        case "index":
-          pageInstance = new DoubleLayout(options).render();
+        case "error":
+          pageInstance = new SingleLayout(options).render();
           break;
         case "topics":
         case "topic":
