@@ -12,6 +12,8 @@
  *****************************************************************************/
 
 module.exports.create = function(data) {
+
+  /* Set up variables */
   var Post = data.database.model.post;
   var Topic = data.database.model.topic;
   var async = data.helper.async;
@@ -24,6 +26,8 @@ module.exports.create = function(data) {
       dateCreated: Date.now()
     });
     topic.save(function (err, newTopic) {
+      
+      /* Error handling */
       if (err) {
         console.log('There was an error saving this new topic to the database:\n' + err);
         res.json({
@@ -37,12 +41,16 @@ module.exports.create = function(data) {
 };
 
 module.exports.all = function(data) {
+
+  /* Set up variables */
   var Post = data.database.model.post;
   var Topic = data.database.model.topic;
   var async = data.helper.async;
   return function(req, res){
     console.log('\nHttp Method:   GET \nRoute:         /topics \nAction:        Shows all topics');
     Topic.find().sort({date: 'desc'}).exec(function(err, results){
+      
+      /* Error handling */
       if(err){
         console.log('There was an error finding all posts:' + err);
         res.json({
@@ -54,6 +62,8 @@ module.exports.all = function(data) {
           results, 
           function(item, callback){
             Post.find({topicId: item._id}).exec(function(err, posts){
+              
+              /* Error handling */
               if(err){
                 console.log('There was an error finding a topic with the ID ' + item.topicId + ':\n' + err);
                 res.json({
@@ -69,6 +79,8 @@ module.exports.all = function(data) {
             });
           }, 
           function(err, results){
+            
+            /* Error handling */
             if(err){
               console.log('There was an error mapping posts to their topics:\n' + err);
               res.json({
@@ -86,6 +98,8 @@ module.exports.all = function(data) {
 };
 
 module.exports.id = function(data) {
+
+  /* Set up variables */
   var Post = data.database.model.post;
   var Topic = data.database.model.topic;
   var async = data.helper.async;
@@ -102,6 +116,8 @@ module.exports.id = function(data) {
     function(err, results){
       var topic = results[0][0];
       var posts = results[1];
+      
+      /* Error handling */
       if(err){
         console.log('There was an error getting the topic and/or its associated posts: ' + err);
         res.json({
@@ -119,6 +135,8 @@ module.exports.id = function(data) {
 };
 
 module.exports.all.del = function(data) {
+
+  /* Set up variables */
   var Post = data.database.model.post;
   var Topic = data.database.model.topic;
   var async = data.helper.async;
@@ -135,6 +153,8 @@ module.exports.all.del = function(data) {
     function(err, results){
       var topics = results[0];
       var posts = results[1];
+      
+      /* Error handling */
       if(err){
         console.log('There was an error getting the topic and/or its associated posts: ' + err);
         res.json({
@@ -162,6 +182,8 @@ module.exports.all.del = function(data) {
 };
 
 module.exports.id.del = function(data) {
+
+  /* Set up variables */
   var Post = data.database.model.post;
   var Topic = data.database.model.topic;
   var async = data.helper.async;
@@ -178,6 +200,8 @@ module.exports.id.del = function(data) {
     function(err, results){
       var topic = results[0][0];
       var posts = results[1];
+      
+      /* Error handling */
       if(err){
         console.log('There was an error getting the topic and/or its associated posts: ' + err);
         res.json({
@@ -204,6 +228,8 @@ module.exports.id.del = function(data) {
 };
 
 module.exports.id.update = function(data) {
+
+  /* Set up variables */
   var Post = data.database.model.post;
   var Topic = data.database.model.topic;
   var async = data.helper.async;
