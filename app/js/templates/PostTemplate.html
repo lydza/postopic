@@ -2,27 +2,29 @@
   <div class="subtitle text-center">
     Post
   </div>
-  <div class="list-group-item post" id="post">
-    <div class="row">
-      <div class="col-lg-11">
-        <span class="post-name"><%- post.post.name %></span></br>
-         by <span class="post-author"><%- post.post.author %></span></br></br>
-        <div class="post-text">"<%- post.post.text %>"</div>
-      </div>
-      <div class="col-lg-1 text-right">
-        <button class="edit"><span class="glyphicon glyphicon-pencil"></span></button>
-        <button class="delete"><span class="glyphicon glyphicon-remove"></span></button>
-      </div>
+  <div id="post">
+    <div class="list-group-item post">
+      <div class="row">
+        <div class="col-lg-11">
+          <span class="post-name"><%- post.post.name %></span></br>
+           by <span class="post-author"><%- post.post.author %></span></br></br>
+          <div class="post-text">"<%- post.post.text %>"</div>
+        </div>
+        <div class="col-lg-1 text-right">
+            <button class="btn btn-default btn-xs edit"><span class="glyphicon glyphicon-pencil"></span></button>
+          <button class="btn btn-default btn-xs delete"><span class="glyphicon glyphicon-remove"></span></button>
+        </div>
+        </div>
     </div>
-  </div>
-  </br></br>
-  <div class="row">
-    <div class="col-lg-2 col-lg-offset-10">
-      <div class="subtitle">In the topic:</div>
-      <a href="http://localhost:3000/topics/<%- post.topic._id%>" class="list-group-item topic">
-        <span class="topic-name"><%- post.topic.name %></span>
-        </br>by <span class="topic-author"><%- post.topic.author %></span></br>
-      </a>
+    </br></br>
+      <div class="row">
+      <div class="col-lg-2 col-lg-offset-10">
+        <div class="subtitle">In the topic:</div>
+        <a href="http://localhost:3000/topics/<%- post.topic._id%>" class="list-group-item topic">
+          <span class="topic-name"><%- post.topic.name %></span>
+          </br>by <span class="topic-author"><%- post.topic.author %></span></br>
+        </a>
+      </div>
     </div>
   </div>
 </div>
