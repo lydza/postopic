@@ -29,10 +29,6 @@ var Topic = require('./models/Topic.js');
 // Database Connection
 
 var db = require('./db.js');
-db.on('error', console.error.bind(console, 'connection error:'));
-db.once('open', function callback () {
-  console.log('Connected to database.');
-});
 
 // Info to Pass to Routes
 
