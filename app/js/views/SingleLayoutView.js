@@ -15,7 +15,6 @@ define([
   "views/PostView",
   
   "views/TopicCreateView",
-  "views/PostCreateView",
 
   /* Libraries */
   "underscore",
@@ -24,7 +23,7 @@ define([
   "text!templates/SingleLayoutTemplate.html"
 ],
 
-function(app, Message, MessageBus, BaseView, TopicsView, PostsView, TopicView, PostView, TopicCreateView, PostCreateView, _, template) {
+function(app, Message, MessageBus, BaseView, TopicsView, PostsView, TopicView, PostView, TopicCreateView, _, template) {
 
   "use strict";
   
@@ -126,13 +125,6 @@ function(app, Message, MessageBus, BaseView, TopicsView, PostsView, TopicView, P
           this.addSubView({
             name: "TopicCreateView",
             viewType: TopicCreateView,
-            container: '.content',
-            options: {}
-          });
-        } else if (page === "posts create") {
-          this.addSubView({
-            name: "PostCreateView",
-            viewType: PostCreateView,
             container: '.content',
             options: {}
           });

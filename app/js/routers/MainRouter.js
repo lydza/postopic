@@ -83,23 +83,21 @@ function(app, BackBone, $, SingleLayout, DoubleLayout, Message, MessageBus, Post
        * TODO: Clean up this code.
        */
       
-      if((typeof idOrCreate !== 'undefined') &&(idOrCreate.toLowerCase() === 'create')){
-        pageName = pageName + ' create';
+      if((typeof idOrCreate !== 'undefined') &&(idOrCreate.toLowerCase() === 'create') && (pageName === 'topics')){
+        pageName = 'topics create';
         this.renderAndPlace(pageName);
-      } 
-      if((typeof idOrCreate !== 'undefined') && (pageName === 'topics')){
+      } else if((typeof idOrCreate !== 'undefined') && (pageName === 'topics')){
         this.getData('topic', idOrCreate);
-      } 
-      if((typeof idOrCreate !== 'undefined') && (pageName === 'posts')){
+      } else if((typeof idOrCreate !== 'undefined') && (pageName === 'posts')){
         this.getData('post', idOrCreate);
-      }
-      if((typeof idOrCreate === 'undefined') && (pageName === 'topics')){
+      } else if((typeof idOrCreate === 'undefined') && (pageName === 'topics')){
         this.getData(pageName);
-      }
-      if((typeof idOrCreate === 'undefined') && (pageName === 'posts')){
+      } else if((typeof idOrCreate === 'undefined') && (pageName === 'posts')){
         this.getData(pageName);
-      }
-      if(pageName === 'index'){
+      } else if(pageName === 'index'){
+        this.getData(pageName);
+      } else {
+        pageName='index';
         this.getData(pageName);
       }
       
@@ -292,7 +290,6 @@ function(app, BackBone, $, SingleLayout, DoubleLayout, Message, MessageBus, Post
         case "topics create":
         case "posts":
         case "post":
-        case "posts create":
           pageInstance = new SingleLayout(options).render();
           break;
         default:
