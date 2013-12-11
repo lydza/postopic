@@ -8,13 +8,7 @@ body {
   font-size: 6em;
 }
 
-.page-title {
-  font-family: 'Belleza', cursive;
-  font-size: 2em;
-  
-}
-
-.post, .topic, .subtitle{
+.post, .topic, .subtitle, label{
   font-family: 'Simonetta', cursive;
 }
 
@@ -30,34 +24,6 @@ body {
   font-size: 1.2em;
 }
 
-.post-date {
-
-}
-
-.topic {
-
-}
-
-.topic-name {
-
-}
-
-.topic-author {
-
-}
-
-.topic-dateCreated {
-
-}
-
-.topic-dateUpdated {
-
-}
-
-.topic-name-in-post {
-  font-family: 'Belleza';
-  font-size: 1.2em;
-}
 .subtitle {
   font-size: 1.7em;
 }
