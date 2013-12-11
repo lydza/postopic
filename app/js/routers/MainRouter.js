@@ -114,6 +114,8 @@ function(app, BackBone, $, SingleLayout, DoubleLayout, Message, MessageBus, Post
      * After getting the data, it sends the type variable and the data to the 
      * renderAndPlace function.
      *
+     * TODO: Clean up this code.
+     *
      */
     
     getData: function(type, id){

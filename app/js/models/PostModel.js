@@ -1,22 +1,31 @@
 define([
 
-  // Libraries
+  /* Libraries */
   "backbone"
 
 ],
-
-// Map dependencies from above array.
 function(Backbone) {
 
   "use strict";
 
-  // Default model
   return Backbone.Model.extend({
-    
+    /* Initialize:
+     *
+     * Gets called as soon as a new model is created.
+     *
+     * args has the ID of the model. This ID is the personal idetifier of this 
+     * model. It is used in the url when getting its data.
+     */    
     initialize: function(args){
       this.id = args.id;
     },
-  
+
+    /* Defaults:
+     *
+     * Default values for the model
+     *
+     * Data that fills in the blanks of the data that comes in.
+     */
     defaults : {
       post: {
         name: "",
@@ -36,10 +45,12 @@ function(Backbone) {
         __v: 0
       }
     },
-  
+
+    /* URL:
+     *
+     * Used when sending requests to the server.
+     */
     url : function() {
-      // Important! It's got to know where to send its REST calls. 
-      // In this case, POST to '/donuts' and PUT to '/donuts/:id'
       return this.id ? '/api/posts/' + this.id : '/api/posts'; 
     } 
   });

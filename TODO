@@ -1,5 +1,3 @@
 Upkeep/Implementation:
- - KEEP MAKING IT LOOK PRETTY~!
- - Clean up custom.css
  - Refactor MainRoute.js. Particularly at getData()
- - Make templates consistent.
+ - Refactor all the code. Look for places where it can be more efficient.

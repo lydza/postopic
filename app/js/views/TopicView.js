@@ -39,29 +39,46 @@ function(_, BaseView, PostModel, mainTemplate, editTemplate, deleteTemplate, pos
      * all we have to do is save it in this view and pass it to the serialize method.
      */
     initialize: function(args) {
-      this.model = args.model;
-      this.edit = _.template(editTemplate);
-      this.del = _.template(deleteTemplate);
-      this.newPost = _.template(postCreateTemplate);
+      this.model     = args.model;
+      this.edit      = _.template(editTemplate);
+      this.del       = _.template(deleteTemplate);
+      this.newPost   = _.template(postCreateTemplate);
       this.modelJSON = this.model.toJSON();
     },
     
+    /* Events:
+     *
+     * Events that are being listened to in this view
+     *
+     * The hash's keys are the events, and their values are the functions that 
+     * will be called when those events happen.
+     * 
+     */
     events: {
       "click .edit"   : "editTopic",
       "click .delete" : "deleteTopic",
       "click .addPost": "addPost"
     },
     
+    /* editTopic:
+     *
+     * Gets called when the 'edit' class on the page is clicked.
+     *
+     * Displays the TopicEditTemplate, and captures the result of the form, 
+     * and updates the model with that data.
+     */
     editTopic: function(){
       $("#topic").html(
         this.edit(this.serialize())
       );
       $('form').submit(function(event){
         event.preventDefault();
+        
         this.model.save({
-          name : $("#name").val(),
+          name   : $("#name").val(),
           author : $("#author").val(),
         },
+        
         { 
           success: function(){
             console.log('This topic has been updated.');
@@ -71,12 +88,20 @@ function(_, BaseView, PostModel, mainTemplate, editTemplate, deleteTemplate, pos
       }.bind(this));
     },
     
+    /* deleteTopic:
+     *
+     * Gets called when the 'delete' class on the page is clicked.
+     *
+     * Displays the TopicDeleteTemplate, and captures the submit action of the 
+     * form, and deletes the model when its clicked.
+     */
     deleteTopic: function(){
       $("#topic").html(
         this.del(this.serialize())
       );
       $('form').submit(function(event){
         event.preventDefault();
+        
         this.model.destroy({ 
           success: function(){
             console.log('This topic has been deleted.');
@@ -86,25 +111,34 @@ function(_, BaseView, PostModel, mainTemplate, editTemplate, deleteTemplate, pos
       }.bind(this));
     },
     
+    /* addPost:
+     *
+     * Gets called when the 'addPost' class on the page is clicked.
+     *
+     * Displays the PostCreateTemplate, and captures the result of the form, 
+     * and creates a new model with that data.
+     */
     addPost: function(){
       $("#topic").html(
         this.newPost(this.serialize())
       );
       
-      console.log();
       $('form').submit(function(event){
         event.preventDefault();
+        
         var newPostModel = new PostModel({
-          name : $("#name").val(),
-          author : $("#author").val(),
-          text : $("#text").val(),
+          name    : $("#name").val(),
+          author  : $("#author").val(),
+          text    : $("#text").val(),
           topicId : this.modelJSON.id
         });
+        
         newPostModel.save(newPostModel.attributes, {
           success: function(){
             window.location.href = '/topics/' + this.modelJSON.id;
           }.bind(this)
         });
+        
       }.bind(this));
     },
     
