@@ -6,6 +6,9 @@
     <button class="btn btn-default btn-s delete"><span class="glyphicon glyphicon-remove"></span></button>
     <button class="btn btn-default btn-s addPost"><span class="glyphicon glyphicon-plus-sign"></span></button>
   </div>
+  <% if(topic.posts.length === 0){%>
+  <div class="subtitle">There are no posts for this topic</div>
+  <% } else{ %>
   <div class="subtitle">Posts for this topic:</div>
   <div class="list-group container">
     <% _.each(topic.posts, function( item ){ %>
@@ -16,4 +19,5 @@
       </a>
     <% }); %>
   </div>
+  <%}%>
 </div>
