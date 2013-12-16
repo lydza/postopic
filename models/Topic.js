@@ -4,6 +4,7 @@ var mongoose = require('mongoose');
 
 var topicSchema = mongoose.Schema({
   name: String,
+  slug: String,
   author: String,
   dateCreated: Date,
   dateUpdated: Date

@@ -2,12 +2,12 @@
  *
  * Post routes - Holds all routes that begin with /post.
  * 
- * create    | POST   '/api/posts'        | creates a new post
- * all       | GET    '/api/posts'        | displays all posts
- * id        | GET    '/api/posts/:id'    | displays a specific post
- * all.del   | DELETE '/api/posts'        | deletes all posts
- * id.del    | DELETE '/api/posts/:id'    | deletes this specific post
- * id.update | PUT    '/api/posts/:id'    | updates a specific post
+ * create    | POST   '/api/posts'          | creates a new post
+ * all       | GET    '/api/posts'          | displays all posts
+ * id        | GET    '/api/posts/:slug'    | displays a specific post
+ * all.del   | DELETE '/api/posts'          | deletes all posts
+ * id.del    | DELETE '/api/posts/:slug'    | deletes this specific post
+ * id.update | PUT    '/api/posts/:slug'    | updates a specific post
  * 
  *****************************************************************************/
 
@@ -17,19 +17,23 @@ module.exports.create = function(data) {
   var Post = data.database.model.post;
   var Topic = data.database.model.topic;
   var async = data.helper.async;
+  var slug = data.helper.slug;
   
   /* Return a request/response function */
   return function(req, res){
     console.log('\nHttp Method:   POST \nRoute:         /posts/ \nAction:        Creates a new post');
 
     /* Create a new Post with the variables passed into the request */
+    var uniqueSlug = findUniqueSlug(data, slug((req.body.name).toLowerCase(), '_'), 0);
+    
+    console.log('5. uniqueSlug: ' + findUniqueSlug(data, slug((req.body.name).toLowerCase(), '_'), 0));
     var post = new Post({
       name: req.body.name,
+      slug: uniqueSlug,
       author: req.body.author,
       text: req.body.text,
       topicId: req.body.topicId,
       date: Date.now()
-   
     });
     
     /* Find a topic with this ID */    
@@ -75,6 +79,45 @@ module.exports.create = function(data) {
     });
   };
 };
+
+function findUniqueSlug(data, slug, number){
+  var Post = data.database.model.post;
+  var testSlug;
+  
+  if(number === 0){
+    testSlug = slug;
+  } else {
+    testSlug = slug + number;
+  }
+  
+  var returnSlug;
+  Post.findOne({slug: testSlug}).exec(function(err, postResult){
+    /* Error handling */
+    console.log('1. testSlug: ' + testSlug);
+    console.log('2. postResult: ' + postResult);
+    if(err){
+      console.log('There was an error finding the topic associated with this post: \n' + err);
+      res.json({
+        error: err
+      });
+    } else {
+      if(postResult === null){
+        console.log('3. execute if null');
+        if(number == 0){
+          returnSlug = slug;
+        } else{
+          returnSlug = slug + number;
+        }
+      }
+      else {
+        returnSlug = findUniqueSlug(data, slug, number+1);
+      }
+    }
+    
+    console.log('4. returnSlug: ' + returnSlug);
+    return returnSlug;
+  });
+}
 
 module.exports.all = function(data) {
 
@@ -149,27 +192,27 @@ module.exports.id = function(data) {
   
   /* Return a response function */
   return function(req, res){
-    console.log('\nHttp Method:   GET \nRoute:         /posts/' + req.params.id + ' \nAction:        Shows one post');
-    Post.findOne({_id: req.params.id}).exec(function(err, postResult){
+    console.log('\nHttp Method:   GET \nRoute:         /posts/' + req.params.slug + ' \nAction:        Shows one post');
+    Post.findOne({slug: req.params.slug}).exec(function(err, postResult){
       
       /* Error handling */
       if(err){
-        console.log('There was an error finding the post with the id' + req.params.id + ': \n' + err);
+        console.log('There was an error finding the post with the slug' + req.params.slug + ': \n' + err);
         res.json({
           error: err
         });
         return;
       } else{
       
-        /* Checks to see if there is no post with this ID */
+        /* Checks to see if there is no post with this slug */
         if(postResult === null){
-          console.log('There are no posts with this id.');
+          console.log('There are no posts with this slug.');
           res.json({
-            error: 'There are no posts with this id.'
+            error: 'There are no posts with this slug.'
           });
           return;
         }
-        console.log('Found the post with the id ' + req.params.id + '. Now looking for the topic with the id ' + postResult.topicId + ' associated with it...');
+        console.log('Found the post with the slug ' + req.params.slug + '. Now looking for the topic with the id ' + postResult.topicId + ' associated with it...');
         
         /* Looks for a topic with the topicId */
         Topic.findOne({_id: postResult.topicId}).exec(function(err, topicResult){
@@ -245,10 +288,10 @@ module.exports.id.del = function(data) {
   
   /* Return a response function */
   return function(req, res){
-    console.log('\nHttp Method:   DELETE \nRoute:         /posts/' + req.params.id + ' \nAction:        Deletes one post');
+    console.log('\nHttp Method:   DELETE \nRoute:         /posts/' + req.params.slug + ' \nAction:        Deletes one post');
     async.parallel([
       function(callback){
-        Post.find({_id: req.params.id}, null, {}, callback);
+        Post.find({slug: req.params.slug}, null, {}, callback);
       }
     ],
     function(err, results){
@@ -256,14 +299,14 @@ module.exports.id.del = function(data) {
       
       /* Error handling */
       if(err){
-        console.log('There was an error getting the post with the id ' + req.params.id + ' post: ' + err);
+        console.log('There was an error getting the post with the slug ' + req.params.slug + ': ' + err);
         res.json({
           error: err
         });
         return;
       } else{
         if(post === undefined){
-          console.log('There is no post with the ID ' + req.params.id + '.');
+          console.log('There is no post with the slug ' + req.params.slug + '.');
           res.json({
             error: 'This post does not exist.'
           });
@@ -288,14 +331,14 @@ module.exports.id.update = function(data) {
   
   /* Return a response function */
   return function(req, res){
-    console.log('\nHttp Method:   PUT \nRoute:         /posts/' + req.params.id + ' \nAction:        Updates one post');
+    console.log('\nHttp Method:   PUT \nRoute:         /posts/' + req.params.slug + ' \nAction:        Updates one post');
     var post = {
       name: req.body.name,
       author: req.body.author,
       text: req.body.text,
       topicId: req.body.topicId   
     };
-    Post.update({_id: req.params.id}, { $set: post}, {multi: false}, function(err, updatedPost){
+    Post.update({slug: req.params.slug}, { $set: post}, {multi: false}, function(err, updatedPost){
       
       /* Error handling */
       if(err){

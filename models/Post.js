@@ -4,6 +4,7 @@ var mongoose = require('mongoose');
 
 var postSchema = mongoose.Schema({
   name: String,
+  slug: String,
   text: String,
   author: String,
   topicId: String,

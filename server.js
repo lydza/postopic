@@ -20,6 +20,7 @@ var index = require('./routes/index');
 // Helpers
 
 var async = require('async');
+var slug = require('slug');
 
 // Models
 
@@ -40,7 +41,8 @@ var routerData = {
     }
   },
   helper: {
-    async: async
+    async: async,
+    slug: slug
   }
 };
 
@@ -84,11 +86,11 @@ app.del('/api/topics', topic.all.del(routerData));
 app.put('/api/topics/:id', topic.id.update(routerData));
 
 app.get('/api/posts', post.all(routerData));
-app.get('/api/posts/:id', post.id(routerData));
+app.get('/api/posts/:slug', post.id(routerData));
 app.post('/api/posts', post.create(routerData));
-app.del('/api/posts/:id', post.id.del(routerData));
+app.del('/api/posts/:slug', post.id.del(routerData));
 app.del('/api/posts', post.all.del(routerData));
-app.put('/api/posts/:id', post.id.update(routerData));
+app.put('/api/posts/:slug', post.id.update(routerData));
 
 app.all('*', index.render());
 

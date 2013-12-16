@@ -9,7 +9,8 @@
     "express": "3.4.4",
     "jade": "*",
     "mongoose": "~3.8.0",
-    "async": "*"
+    "async": "*",
+    "slug": "*"
   },
   "devDependencies": {
     "nodemon": "*"
