@@ -1,8 +1,0 @@
-Upkeep/Implementation:
- - Refactor MainRoute.js. Particularly at getData()
- - Refactor all the code. Look for places where it can be more efficient.
-
-  - Add pagination (add code that makes the posts and topics return a limited number of results and create an offset that multiplies the limit by the offset to get the next set of results. Make sure the views catch the page that it is currently on, and total amount of results so the pages can display that amount, and have the correct number of pages)
-  - Add slugs (short dash-separated titles for topics and posts. create a row in the table that holds this data, and when it catches the slug from the URL, query the database for that. Also, find a way to turn titles into slugs when creating a new post or topic [make it dash-seprated and figure out the logistics of special characters], and after the string has been "sluggified", query the database for it, and add a number to it if it already exists)
-  - Integrate Grunt to the code (will make running tasks a lot easier)
-  - 
