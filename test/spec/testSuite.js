@@ -3,7 +3,11 @@ define(function() {
 
 	/* return an array of specs to be run */
 	return {
-		specs: ['spec/exampleTest'
+		specs: ['spec/collections/posts.js',
+		'spec/collections/topics.js',
+		'spec/exampleTest.js',
+		'spec/models/post.js',
+		'spec/models/topic.js'
 		]
 	};
 });
