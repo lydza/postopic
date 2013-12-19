@@ -10,6 +10,7 @@ function(Communicator, Backbone, Model){
     initialize: function() {
       console.log("initialize a Posts collection");
     },
-    model: Model
+    model: Model,
+    url: '/api/posts'
   });
 });

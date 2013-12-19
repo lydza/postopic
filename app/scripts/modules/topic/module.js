@@ -29,7 +29,19 @@ function(Communicator, Model, Collection, ItemView, CompositeView){
       /* API/Controller for the routes */
       var API = {
         showAllTopics: function(){
-          Application.mainRegion.show(new Topic.CompositeView());
+/* 
+            data = new Topic.Collection();
+        
+            data.fetch({
+              error: function(collection, response, options){
+                // add error handling
+              },
+              success: function(collection, response, options){
+                var view = new This.CompositeView({collection: collection});
+                Application.mainRegion.show(view);
+              }.bind(this)
+            });
+*/
           console.log("All Topics");
         },
         showOneTopic: function(id){
