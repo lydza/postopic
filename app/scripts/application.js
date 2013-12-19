@@ -1,12 +1,11 @@
 define([
 	'backbone',
-	'jquery',
 	'communicator',
 	'modules/post/module',
 	'modules/topic/module'
 ],
 
-function( Backbone, $, Communicator, PostModule, TopicModule ) {
+function( Backbone, Communicator, PostModule, TopicModule ) {
   'use strict';
 
 	var App = new Backbone.Marionette.Application();
