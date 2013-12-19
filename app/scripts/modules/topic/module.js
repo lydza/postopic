@@ -33,7 +33,14 @@ function(Communicator, Model, Collection, ItemView, CompositeView){
           console.log("All Topics");
         },
         showOneTopic: function(id){
-          Application.mainRegion.show(new Topic.ItemView());
+          var data = new Topic.Model(id);
+            data.fetch({
+              error: function(model, response, options){},
+              success: function(model, response, options){
+                Application.mainRegion.show(new Topic.ItemView({model: model}));
+                console.log(model.toJSON());
+              }.bind(this)
+            });
           console.log("One Topic");
         }
       };

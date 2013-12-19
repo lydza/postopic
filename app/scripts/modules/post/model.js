@@ -6,7 +6,8 @@ define([
 function(Communicator, Backbone){
 
   return Backbone.Model.extend({
-  	initialize: function() {
+  	initialize: function(arg) {
+  	  this.id = arg
    		console.log("initialize a Post model");
   	},
     defaults : {

@@ -1,0 +1,29 @@
+body {
+  background-image: url('../images/pixel_weave.png');
+  background-repeat: repeat;
+}
+
+.site-name {
+  font-family: 'Tangerine', cursive;
+  font-size: 6em;
+}
+
+.post, .topic, .subtitle, label{
+  font-family: 'Simonetta', cursive;
+}
+
+.post-name, .topic-name {
+  font-size: 1.5em;
+}
+
+.post-author, .topic-author {
+  font-size: 1em;
+}
+
+.post-text {
+  font-size: 1.2em;
+}
+
+.subtitle {
+  font-size: 1.7em;
+}

@@ -33,7 +33,13 @@ function(Communicator, Model, Collection, ItemView, CompositeView){
           console.log("All Posts");
         },
         showOnePost: function(id){
-          Application.mainRegion.show(new Post.ItemView());
+          var data = new Post.Model(id);
+            data.fetch({
+              error: function(model, response, options){},
+              success: function(model, response, options){
+                Application.mainRegion.show(new Post.ItemView({model: model}));
+              }.bind(this)
+            });
           console.log("One Post");
         }
       };
