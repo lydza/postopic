@@ -1,70 +1,24 @@
 define([
-  'communicator'
+  'communicator',
+  'modules/post/model',
+  'modules/post/collection',
+  'modules/post/itemView',
+  'modules/post/compositeView'
 ],
 
-function(Communicator){
+function(Communicator, Model, Collection, ItemView, CompositeView){
   return function(){
+    /* Initalizers TODO: Put it into an initializer function. O */
     var App = Communicator.reqres.request("application");
-    
+
     App.module("Post", function(Post, Application, Backbone, Marionette, $, _){
-
-      /* Model */
-      Post.Model = Backbone.Model.extend({
-    		initialize: function() {
-    			console.log("initialize a Post model");
-    		},
-        defaults : {
-          post: {
-            name: "",
-            author: "",
-            text: "",
-            topicId: "",
-            date: "",
-            _id: "",
-            __v: 0
-          },
-          topic: {
-            name: "",
-            author: "",
-            dateUpdated: "",
-            dateCreated: "",
-            _id: "",
-            __v: 0
-          }
-        },
-        url : function() {
-          return this.id ? '/api/posts/' + this.id : '/api/posts'; 
-        }
-      });
-
-
-      /* Collection */
-      Post.Collection = Backbone.Collection.extend({
-    		initialize: function() {
-    			console.log("initialize a Posts collection");
-    		},
-    		model: Post.Model
-    	});
+      /* Set up some Variables used in this module */
       
+      Post.Model = Model;
+      Post.Collection = Collection;
+      Post.ItemView = ItemView;
+      Post.CompositeView = CompositeView;
       
-      /* ItemView */
-      Post.ItemView = Backbone.Marionette.ItemView.extend({
-        template: "#post-item"
-      });
-      
-      
-      /* CompositeView */
-      Post.CompositeView = Backbone.Marionette.CompositeView.extend({
-        template: "#post-composite",
-        itemView: Post.ItemView,
-        itemViewContainer: "ul",
-  
-        initialize: function(){
-          console.log("Rendering CompositeView");
-        }
-      });
-
-      /* Router */
       Post.Router = Marionette.AppRouter.extend({
         appRoutes: {
           "posts": "showAllPosts",
@@ -84,9 +38,8 @@ function(Communicator){
         }
       };
       
-            
       /* Add Application initializer */
-      Application.addInitializer(function(){    
+      Application.on("initialize:before",function(){
         var MyRouter = new Post.Router({
           controller: API
         });
