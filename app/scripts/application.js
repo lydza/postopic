@@ -1,11 +1,12 @@
 define([
 	'backbone',
+	'jquery',
 	'communicator',
 	'modules/post/module',
 	'modules/topic/module'
 ],
 
-function( Backbone, Communicator, PostModule, TopicModule ) {
+function( Backbone, $, Communicator, PostModule, TopicModule ) {
   'use strict';
 
 	var App = new Backbone.Marionette.Application();
@@ -25,7 +26,11 @@ function( Backbone, Communicator, PostModule, TopicModule ) {
 	/* Add initializers here */
 	App.addInitializer( function () {
 		Communicator.mediator.trigger("APP:START");
-	});	
+	});
+	
+	App.on("initialize:after", function(){
+	  Backbone.history.start({ pushState: true, root: "/" });
+	});
 
 	return App;
 });

@@ -75,11 +75,11 @@ function(Communicator){
       /* API/Controller for the routes */
       var API = {
         showAllTopics: function(){
-          Application.mainRegion.show(Topic.CompositeView);
+          Application.mainRegion.show(new Topic.CompositeView());
           console.log("All Topics");
         },
         showOneTopic: function(id){
-          Application.mainRegion.show(Topic.ItemView);
+          Application.mainRegion.show(new Topic.ItemView());
           console.log("One Topic");
         }
       };
@@ -87,12 +87,8 @@ function(Communicator){
             
       /* Add Application initializer */
       Application.addInitializer(function(){    
-        var MyRouter = new Marionette.AppRouter({
-          controller: API,
-          appRoutes: {
-            "topics": "showAllTopics",
-            "topic/:id": "showOneTopic"
-          }
+        var MyRouter = new Topic.Router({
+          controller: API
         });
       });
     });

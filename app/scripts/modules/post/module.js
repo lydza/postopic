@@ -75,11 +75,11 @@ function(Communicator){
       /* API/Controller for the routes */
       var API = {
         showAllPosts: function(){
-          Application.mainRegion.show(Post.CompositeView);
+          Application.mainRegion.show(new Post.CompositeView());
           console.log("All Posts");
         },
         showOnePost: function(id){
-          Application.mainRegion.show(Post.ItemView);
+          Application.mainRegion.show(new Post.ItemView());
           console.log("One Post");
         }
       };
@@ -87,12 +87,8 @@ function(Communicator){
             
       /* Add Application initializer */
       Application.addInitializer(function(){    
-        var MyRouter = new Marionette.AppRouter({
-          controller: API,
-          appRoutes: {
-            "posts": "showAllPosts",
-            "post/:id": "showOnePost"
-          }
+        var MyRouter = new Post.Router({
+          controller: API
         });
       });
     });
