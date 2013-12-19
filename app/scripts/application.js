@@ -1,8 +1,8 @@
 define([
 	'backbone',
 	'communicator',
-	'modules/post/PostModule',
-	'modules/topic/TopicModule'
+	'modules/post/module',
+	'modules/topic/module'
 ],
 
 function( Backbone, Communicator, PostModule, TopicModule ) {
