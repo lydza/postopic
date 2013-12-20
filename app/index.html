@@ -79,7 +79,7 @@
               <div class="row">
                 <div class="col-lg-2 col-lg-offset-10">
                   <div class="subtitle">In the topic:</div>
-                  <a href="http://localhost:3000/topics/<%- topic._id%>" class="list-group-item topic">
+                  <a href="http://localhost:9000/topics/<%- topic._id%>" class="list-group-item topic">
                     <span class="topic-name"><%- topic.name %></span>
                     </br>by <span class="topic-author"><%- topic.author %></span></br>
                   </a>
@@ -111,7 +111,7 @@
               <div class="subtitle">Posts for this topic:</div>
             <div class="list-group container">
               <% _.each(posts, function( item ){ %>
-                <a href="http://localhost:3000/posts/<%- item._id%>" class="list-group-item post">
+                <a href="http://localhost:9000/posts/<%- item._id%>" class="list-group-item post">
                   <span class="post-name"><%- item.name %></span>
                   </br>by <span class="post-author"><%- item.author %></span></br>
                   <div class="container post-text">"<%- item.text %>"</div>

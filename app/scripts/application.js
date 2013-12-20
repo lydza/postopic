@@ -28,7 +28,7 @@ function( Backbone, Communicator, PostModule, TopicModule ) {
 	});
 	
 	App.on("initialize:after", function(){
-	  Backbone.history.start({ pushState: true, root: "/" });
+	  Backbone.history.start();
 	});
 
 	return App;
