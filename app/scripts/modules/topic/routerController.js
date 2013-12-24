@@ -54,6 +54,23 @@ function(Communicator, Backbone){
       console.log("Create Topic");
     };
     
+    /* Events listening to these routes */
+    Communicator.command.setHandler("pageChange:topics", function(){
+      console.log("Topics Route");
+    });
+    Communicator.command.setHandler("pageChange:topic:show", function(id){
+      console.log("Topic Show Route: " + id);
+    });
+    Communicator.command.setHandler("pageChange:topic:edit", function(id){
+      console.log("Topic Edit Route: " + id);
+    });
+    Communicator.command.setHandler("pageChange:topic:delete", function(id){
+      console.log("Topic Delete Route: " + id);
+    });
+    Communicator.command.setHandler("pageChange:topic:newPost", function(id){
+      console.log("Topic New Post Route: " + id);
+    });
+    
     /* API/Controller for the routes */
     return {
       showAllTopics: allTopicsRoute,

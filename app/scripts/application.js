@@ -28,20 +28,53 @@ function( Backbone, $, Communicator, PostModule, TopicModule ) {
 		Communicator.mediator.trigger("APP:START");
 	});
 	
+	var triggerPageChange = function(url)
+	{
+	  console.log("Trigger Page change");
+    if (url === "topics"){
+        Communicator.command.execute("pageChange:topics");
+     } else if(url === "posts"){
+        Communicator.command.execute("pageChange:posts");
+      } else if (url.indexOf("topic/create") === 0) {
+        Communicator.command.execute("pageChange:topic:create");
+      } else if ((url.indexOf("topic/") === 0) && (url.indexOf("/delete") > 0)) {
+        var topic = url.substring(7,url.indexOf("/delete"));
+        Communicator.command.execute("pageChange:topic:delete", topic);
+      } else if(url.indexOf("topic/") === 0 && url.indexOf("/new_post") > 0) {
+        var topic = url.substring(7,url.indexOf("/new_post"));
+        Communicator.command.execute("pageChange:topic:newPost", topic);
+      } else if (url.indexOf("topic/") === 0 && url.indexOf("/show") > 0) {
+        var topic = url.substring(7,url.indexOf("/show"));
+        Communicator.command.execute("pageChange:topic:show", topic);
+      } else if (url.indexOf("topic/") === 0 && url.indexOf("/edit") > 0) {
+        var topic = url.substring(7,url.indexOf("/edit"));
+        Communicator.command.execute("pageChange:topic:edit", topic);
+      } else if ((url.indexOf("post/") === 0) && (url.indexOf("/delete") > 0)) {
+        var post = url.substring(6,url.indexOf("/delete"));
+        Communicator.command.execute("pageChange:post:delete", post);
+      } else if ((url.indexOf("post/") === 0) && (url.indexOf("/show") > 0)) {
+        var post = url.substring(6,url.indexOf("/show"));
+        Communicator.command.execute("pageChange:post:show", post);
+      } else if ((url.indexOf("post/") === 0) && (url.indexOf("/edit") > 0)) {
+        var post = url.substring(6,url.indexOf("/edit"));
+        Communicator.command.execute("pageChange:post:edit", post);
+      } else{
+        console.log("No route");
+      }
+
+    };
+	
 	App.on("initialize:after", function(){
     Backbone.history.start({ pushState: true, root: "/" });
     $(document).on("click", "a:not([data-bypass])", function(evt) {
       var href = $(this).attr("href");
       if (href && href.indexOf("http://localhost:9000/") === 0) {
         evt.preventDefault();
-        console.log(href.substring(22));
-        Communicator.command.execute("pageChange:"+href.substring(22));
+        window.history.pushState(null, null, href);
+        triggerPageChange(href.substring(22));
       }
     });
 	});
   
-  Communicator.command.setHandler("pageChange:posts", function(){
-    console.log("The Post command was executed");
-  });
 	return App;
 });

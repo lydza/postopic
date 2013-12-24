@@ -54,6 +54,20 @@ function(Communicator, Backbone){
       console.log("Create Post");
     };
     
+    /* Events listening to these routes */
+    Communicator.command.setHandler("pageChange:posts", function(){
+      console.log("Posts Route");
+    });
+    Communicator.command.setHandler("pageChange:post:show", function(id){
+      console.log("Post Show Route: " + id);
+    });
+    Communicator.command.setHandler("pageChange:post:edit", function(id){
+      console.log("Post Edit Route: " + id);
+    });
+    Communicator.command.setHandler("pageChange:post:delete", function(id){
+      console.log("Post Delete Route: " + id);
+    });
+    
     /* API/Controller for the routes */
     return {
       showAllPosts: allPostsRoute,
