@@ -29,143 +29,72 @@
     </head>
 
     <body>
-          <div class="container">
-            <div class="text-right subtitle">
-              <a href="http://localhost:9000/topic/create">
-                <button class="btn btn-default btn-s">
-                  <span class="glyphicon glyphicon-plus"></span>
-                  Add a new topic
-                </button>
-              </a>
-            </div>
-            <div class="text-center">
-              <div class="site-name">
-                <a href="http://localhost:9000/">
-                  PosTopic
-                </a>
-              </div>
-            </div>
-            <div class="text-center">
-              <a href="http://localhost:9000/posts">
-                Show Posts test
-              </a>
-              </br>
-              <a href="http://localhost:9000/post/52af327d5ea371ac79000001/show">
-                Show Post test
-              </a>
-              </br>
-              <a href="http://localhost:9000/post/52af327d5ea371ac79000001/delete">
-                Delete Post test
-              </a>
-              </br>
-              <a href="http://localhost:9000/post/52af327d5ea371ac79000001/edit">
-                Edit Post test
-              </a>
-              </br>
-              <a href="http://localhost:9000/topics">
-                Show Topics test
-              </a>
-              </br>
-              <a href="http://localhost:9000/topic/5296293cba85b47555000001/show">
-                Show Topic test
-              </a>
-              </br>
-              <a href="http://localhost:9000/topic/5296293cba85b47555000001/delete">
-                Delete Topic test
-              </a>
-              </br>
-              <a href="http://localhost:9000/topic/5296293cba85b47555000001/edit">
-                Edit Topic test
-              </a>
-              </br>
-              <a href="http://localhost:9000/topic/5296293cba85b47555000001/new_post">
-                New Post in Topic test
-              </a>
-            </div>
-            <div id="main-region"></div>
+      <div class="container">
+        <div class="text-right subtitle">
+          <a href="http://localhost:9000/topic/create">
+            <button class="btn btn-default btn-s">
+              <span class="glyphicon glyphicon-plus"></span>
+              Add a new topic
+            </button>
+          </a>
+        </div>
+        <div class="text-center">
+          <div class="site-name">
+            <a href="http://localhost:9000/">
+              PosTopic
+            </a>
           </div>
-        
-        <script type="text/template" id="post-composite">
-          <div class="text-center subtitle">
-            All Posts
-          </div>
-          <ul class="list-group"></ul>
-
-        </script>
-        
-        <script type="text/template" id="post-item">
-          <div class="container">
-            <div class="subtitle text-center">
-              Post
-            </div>
-            <div id="post">
-              <div class="list-group-item col-sm-8 col-sm-offset-2 post">
-                <div class="row">
-                  <div class="col-lg-11">
-                    <span class="post-name"><%- post.name %></span></br>
-                     by <span class="post-author"><%- post.author %></span></br></br>
-                    <div class="post-text">"<%- post.text %>"</div>
-                  </div>
-                  <div class="col-lg-1 text-right">
-                      <button class="btn btn-default btn-xs edit"><span class="glyphicon glyphicon-pencil"></span></button>
-                    <button class="btn btn-default btn-xs delete"><span class="glyphicon glyphicon-remove"></span></button>
-                  </div>
-                  </div>
-              </div>
-              </br></br>
-              <div class="row">
-                <div class="col-lg-2 col-lg-offset-10">
-                  <div class="subtitle">In the topic:</div>
-                  <a href="http://localhost:9000/topics/<%- topic._id%>" class="list-group-item topic">
-                    <span class="topic-name"><%- topic.name %></span>
-                    </br>by <span class="topic-author"><%- topic.author %></span></br>
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </script>
-        
-        <script type="text/template" id="topic-composite">
-          <div class="text-center subtitle">
-            All Topics
-          </div>
-          <ul class="list-group"></ul>
-        </script>
-        
-        <script type="text/template" id="topic-item">
-          <div class="container">
-            <div id="topic">
-              <div class="subtitle text-center"><%- topic.name %> by <%- topic.author %></span>
-              </br>
-              <button class="btn btn-default btn-s edit"><span class="glyphicon glyphicon-pencil"></span></button>
-              <button class="btn btn-default btn-s delete"><span class="glyphicon glyphicon-remove"></span></button>
-              <button class="btn btn-default btn-s addPost"><span class="glyphicon glyphicon-plus-sign"></span></button>
-            </div>
-            <% if(posts.length === 0){%>
-            <div class="subtitle">There are no posts for this topic</div>
-              <% } else{ %>
-              <div class="subtitle">Posts for this topic:</div>
-            <div class="list-group container">
-              <% _.each(posts, function( item ){ %>
-                <a href="http://localhost:9000/posts/<%- item._id%>" class="list-group-item post">
-                  <span class="post-name"><%- item.name %></span>
-                  </br>by <span class="post-author"><%- item.author %></span></br>
-                  <div class="container post-text">"<%- item.text %>"</div>
-                </a>
-              <% }); %>
-            </div>
-            <%}%>
-          </div>
-        </script>
+        </div>
+        <div class="text-center">
+          <a href="http://localhost:9000/posts">
+            Show Posts test
+          </a>
+          </br>
+          <a href="http://localhost:9000/post/52af327d5ea371ac79000001/show">
+            Show Post test
+          </a>
+          </br>
+          <a href="http://localhost:9000/post/52af327d5ea371ac79000001/delete">
+            Delete Post test
+          </a>
+          </br>
+          <a href="http://localhost:9000/post/52af327d5ea371ac79000001/edit">
+            Edit Post test
+          </a>
+          </br>
+          <a href="http://localhost:9000/topics">
+            Show Topics test
+          </a>
+          </br>
+          <a href="http://localhost:9000/topic/5296293cba85b47555000001/show">
+            Show Topic test
+          </a>
+          </br>
+          <a href="http://localhost:9000/topic/5296293cba85b47555000001/delete">
+            Delete Topic test
+          </a>
+          </br>
+          <a href="http://localhost:9000/topic/5296293cba85b47555000001/edit">
+            Edit Topic test
+          </a>
+          </br>
+          <a href="http://localhost:9000/topic/5296293cba85b47555000001/new_post">
+            New Post in Topic test
+          </a>
+        </div>
+        <div id="main-region"></div>
+      </div>
+      <script type="text/template" id="placeholder">
+        Something!!
+      </script>
         
         <!-- build:js scripts/main.js -->
         <script data-main="scripts/init" src="bower_components/requirejs/require.js"></script>
         <!-- endbuild -->
 
         <script>document.write('<script src="http://'
-            + (location.host || 'localhost').split(':')[0]
-            + ':35729/livereload.js?snipver=1"><\/script>');
+          + (location.host || 'localhost').split(':')[0]
+          + ':35729/livereload.js?snipver=1"><\/script>');
         </script>
     </body>
 </html>

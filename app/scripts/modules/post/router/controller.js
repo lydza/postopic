@@ -20,7 +20,7 @@ function(Communicator, Backbone){
         },
 
         success: function(collection, response, options){
-          var view = new App.Post.CompositeView({collection: collection});
+          var view = new App.Post.View.ShowAll({collection: collection});
           App.mainRegion.show(view);
         }.bind(this)
 
@@ -40,7 +40,7 @@ function(Communicator, Backbone){
           },
 
           success: function(model, response, options){
-            App.mainRegion.show(new App.Post.ItemView({model: model}));
+            App.mainRegion.show(new App.Post.View.ShowOne({model: model}));
             console.log(model.toJSON());
           }.bind(this)
 

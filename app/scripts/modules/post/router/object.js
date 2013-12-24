@@ -1,9 +1,8 @@
 define([
-  'communicator', 
   'backbone'
 ],
 
-function(Communicator, Backbone){
+function(Backbone){
   return Backbone.Marionette.AppRouter.extend({
     appRoutes: {
       "posts"      : "showAllPosts",

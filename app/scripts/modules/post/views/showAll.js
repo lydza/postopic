@@ -1,13 +1,13 @@
 define([
   'backbone',
-  'modules/post/itemView'
+  'hbs!modules/post/templates/ShowAll',
+  'modules/post/views/ShowOneInAll'
 ],
 
-function(Backbone, ItemView){
-
+function(Backbone, ShowAllTemplate, ShowOneInAllView){
   return Backbone.Marionette.CompositeView.extend({
-    template: "#post-composite",
-    itemView: ItemView,
+    template: ShowAllTemplate,
+    itemView: ShowOneInAllView,
     itemViewContainer: "ul",
     initialize: function(){
       console.log("Rendering CompositeView");
