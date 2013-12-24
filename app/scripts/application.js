@@ -1,11 +1,12 @@
 define([
 	'backbone',
+	'jquery',
 	'communicator',
 	'modules/post/module',
 	'modules/topic/module'
 ],
 
-function( Backbone, Communicator, PostModule, TopicModule ) {
+function( Backbone, $, Communicator, PostModule, TopicModule ) {
   'use strict';
 
 	var App = new Backbone.Marionette.Application();
@@ -28,8 +29,19 @@ function( Backbone, Communicator, PostModule, TopicModule ) {
 	});
 	
 	App.on("initialize:after", function(){
-	  Backbone.history.start();
+    Backbone.history.start({ pushState: true, root: "/" });
+    $(document).on("click", "a:not([data-bypass])", function(evt) {
+      var href = $(this).attr("href");
+      if (href && href.indexOf("http://localhost:9000/") === 0) {
+        evt.preventDefault();
+        console.log(href.substring(22));
+        Communicator.command.execute("pageChange:"+href.substring(22));
+      }
+    });
 	});
-
+  
+  Communicator.command.setHandler("pageChange:posts", function(){
+    console.log("The Post command was executed");
+  });
 	return App;
 });
