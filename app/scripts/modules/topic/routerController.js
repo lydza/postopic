@@ -4,17 +4,7 @@ define([
 ],
 
 function(Communicator, Backbone){
-  return function(){
-    var App = Communicator.reqres.request("application");
-
-    /* Main router for the application */
-    var Router = Backbone.Marionette.AppRouter.extend({
-      appRoutes: {
-        "topics"      : "showAllTopics",
-        "topic/create": "createTopic",
-        "topic/:id"   : "showOneTopic"
-      }
-    });
+  return function(App){
     
     /* Functions that are called when the Router routes are matched */
     var allTopicsRoute = function(){
@@ -65,18 +55,10 @@ function(Communicator, Backbone){
     };
     
     /* API/Controller for the routes */
-    var API = {
+    return {
       showAllTopics: allTopicsRoute,
       showOneTopic: oneTopicRoute,
       createTopic: createTopicRoute
     };
-     
-    /* Add Application initializer */
-    App.on("initialize:before",function(){
-      console.log("Got the router");
-      var MyRouter = new Router({
-        controller: API
-      });
-    });
    };
 });

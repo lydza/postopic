@@ -4,13 +4,13 @@ define([
   'modules/post/collection',
   'modules/post/itemView',
   'modules/post/compositeView',
-  'modules/post/router'
+  'modules/post/routerObject',
+  'modules/post/routerController'
 ],
 
-function(Communicator, Model, Collection, ItemView, CompositeView, Router){
-  return function(){
-    /* Initalizers TODO: Put it into an initializer function. O */
-    var App = Communicator.reqres.request("application");
+function(Communicator, Model, Collection, ItemView, CompositeView, RouterObject, RouterController){
+  return function(App){
+    var routerController = RouterController(App);
 
     App.module("Post", function(Post, Application, Backbone, Marionette, $, _){
       /* Set up some Variables used in this module */
@@ -21,7 +21,12 @@ function(Communicator, Model, Collection, ItemView, CompositeView, Router){
       Post.CompositeView = CompositeView;
       // TODO: Create a createview
       /* Initialize the router */
-      Router();
+      App.on("initialize:before",function(){
+        console.log("Got the router");
+        var PostRouter = new RouterObject({
+          controller: routerController
+        });
+      });
     });
   };
 });

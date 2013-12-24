@@ -1,10 +1,9 @@
 define([
-  'communicator',
   'backbone',
   'modules/post/model'
 ],
 
-function(Communicator, Backbone, Model){
+function(Backbone, Model){
 
   return Backbone.Collection.extend({
     initialize: function() {

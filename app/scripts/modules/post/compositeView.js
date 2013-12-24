@@ -1,10 +1,9 @@
 define([
-  'communicator',
   'backbone',
   'modules/post/itemView'
 ],
 
-function(Communicator, Backbone, ItemView){
+function(Backbone, ItemView){
 
   return Backbone.Marionette.CompositeView.extend({
     template: "#post-composite",

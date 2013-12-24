@@ -1,8 +1,8 @@
 define([
-  'communicator'
+  'backbone'
 ],
 
-function(Communicator){
+function(Backbone){
 
   return Backbone.Marionette.ItemView.extend({
     template: "#post-item"

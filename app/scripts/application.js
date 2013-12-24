@@ -20,8 +20,8 @@ function( Backbone, $, Communicator, PostModule, TopicModule ) {
     return App;
   });
   
-  PostModule();
-  TopicModule();
+  PostModule(App);
+  TopicModule(App);
   
 	/* Add initializers here */
 	App.addInitializer( function () {
