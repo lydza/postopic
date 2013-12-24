@@ -58,6 +58,9 @@ function(Communicator, Backbone){
     Communicator.command.setHandler("pageChange:topics", function(){
       console.log("Topics Route");
     });
+    Communicator.command.setHandler("pageChange:topic:create", function(){
+      console.log("Topic Create Route");
+    });
     Communicator.command.setHandler("pageChange:topic:show", function(id){
       console.log("Topic Show Route: " + id);
     });
