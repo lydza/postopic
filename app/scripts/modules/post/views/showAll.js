@@ -1,6 +1,6 @@
 define([
   'backbone',
-  'hbs!modules/post/templates/ShowAll',
+  'hbs!modules/post/templates/showAll',
   'modules/post/views/showOneInAll'
 ],
 
