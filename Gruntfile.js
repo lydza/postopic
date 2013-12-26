@@ -12,37 +12,26 @@ var mountFolder = function (connect, dir) {
 // templateFramework: 'handlebars'
 
 module.exports = function (grunt) {
-    // load all grunt tasks
     require('matchdep').filterDev('grunt-*').forEach(grunt.loadNpmTasks);
-    // show elapsed time at the end
     require('time-grunt')(grunt);
 
-    // configurable paths
-    var yeomanConfig = {
-        app: 'app',
-        dist: 'dist'
-    };
-
     grunt.initConfig({
-        yeoman: yeomanConfig,
-
-        // watch list
+        yeoman: {
+          app: 'app',
+          dist: 'dist'
+        },
         watch: {
-            
             compass: {
                 files: ['<%= yeoman.app %>/styles/{,*/}*.{scss,sass}'],
                 tasks: ['compass']
             },
-            
             livereload: {
                 files: [
-                    
                     '<%= yeoman.app %>/*.html',
                     '{.tmp,<%= yeoman.app %>}/styles/{,**/}*.css',
                     '{.tmp,<%= yeoman.app %>}/scripts/{,**/}*.js',
                     '{.tmp,<%= yeoman.app %>}/templates/{,**/}*.hbs',
                     '<%= yeoman.app %>/images/{,*/}*.{png,jpg,jpeg,gif,webp}',
-                    
                     'test/spec/{,**/}*.js'
                 ],
                 tasks: ['exec'],
@@ -50,7 +39,7 @@ module.exports = function (grunt) {
                     livereload: true
                 }
             }
-            /* not used at the moment
+            /* not used moment at the
             handlebars: {
                 files: [
                     '<%= yeoman.app %>/templates/*.hbs'
@@ -58,8 +47,6 @@ module.exports = function (grunt) {
                 tasks: ['handlebars']
             }*/
         },
-
-        // testing server
         connect: {
             testserver: {
                 options: {
@@ -68,20 +55,14 @@ module.exports = function (grunt) {
                 }
             }
         },
-
-        // mocha command
         exec: {
             mocha: {
                 command: 'mocha-phantomjs http://localhost:<%= connect.testserver.options.port %>/test',
                 stdout: true
             }
         },
-
-        
-        // express app
         express: {
             options: {
-                // Override defaults here
                 port: '9000'
             },
             dev: {
@@ -100,21 +81,15 @@ module.exports = function (grunt) {
                 }
             }
         },
-        
-
-        // open app and test page
         open: {
             server: {
                 path: 'http://localhost:<%= express.options.port %>'
             }
         },
-
         clean: {
             dist: ['.tmp', '<%= yeoman.dist %>/*'],
             server: '.tmp'
         },
-
-        // linting
         jshint: {
             options: {
                 jshintrc: '.jshintrc',
@@ -127,9 +102,6 @@ module.exports = function (grunt) {
                 'test/spec/{,*/}*.js'
             ]
         },
-
-        
-        // compass
         compass: {
             options: {
                 sassDir: '<%= yeoman.app %>/styles',
@@ -147,9 +119,6 @@ module.exports = function (grunt) {
                 }
             }
         },
-        
-
-        // require
         requirejs: {
             dist: {
                 // Options: https://github.com/jrburke/r.js/blob/master/build/example.build.js
@@ -181,14 +150,12 @@ module.exports = function (grunt) {
                 }
             }
         },
-
         useminPrepare: {
             html: '<%= yeoman.app %>/index.html',
             options: {
                 dest: '<%= yeoman.dist %>'
             }
         },
-
         usemin: {
             html: ['<%= yeoman.dist %>/{,*/}*.html'],
             css: ['<%= yeoman.dist %>/styles/{,*/}*.css'],
@@ -196,7 +163,6 @@ module.exports = function (grunt) {
                 dirs: ['<%= yeoman.dist %>']
             }
         },
-
         imagemin: {
             dist: {
                 files: [{
@@ -207,7 +173,6 @@ module.exports = function (grunt) {
                 }]
             }
         },
-
         cssmin: {
             dist: {
                 files: {
@@ -218,7 +183,6 @@ module.exports = function (grunt) {
                 }
             }
         },
-
         htmlmin: {
             dist: {
                 options: {
@@ -240,7 +204,6 @@ module.exports = function (grunt) {
                 }]
             }
         },
-
         copy: {
             dist: {
                 files: [{
@@ -257,14 +220,11 @@ module.exports = function (grunt) {
                 }]
             }
         },
-
         bower: {
             all: {
                 rjsConfig: '<%= yeoman.app %>/scripts/main.js'
             }
         },
-
-        // handlebars
         handlebars: {
             compile: {
                 options: {
@@ -282,16 +242,11 @@ module.exports = function (grunt) {
         grunt.file.write('.tmp/scripts/templates.js', 'this.JST = this.JST || {};');
     });
 
-    // starts express server with live testing via testserver
     grunt.registerTask('default', function (target) {
-
-        // what is this??
         if (target === 'dist') {
             return grunt.task.run(['build', 'open', 'connect:dist:keepalive']);
         }
-
         grunt.option('force', true);
-
         grunt.task.run([
             'clean:server',
             'compass:server',
@@ -303,7 +258,6 @@ module.exports = function (grunt) {
         ]);
     });
 
-    // todo fix these
     grunt.registerTask('test', [
         'clean:server',
         'createDefaultTemplate',
