@@ -1,7 +1,7 @@
 define([
   'backbone',
   'hbs!modules/post/templates/ShowAll',
-  'modules/post/views/ShowOneInAll'
+  'modules/post/views/showOneInAll'
 ],
 
 function(Backbone, ShowAllTemplate, ShowOneInAllView){
