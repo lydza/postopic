@@ -1,13 +1,13 @@
 define([
   'backbone',
-  'modules/topic/itemView'
+  'hbs!modules/topic/templates/showAll',
+  'modules/topic/views/showOneInAll'
 ],
 
-function(Backbone, ItemView){
-
+function(Backbone, ShowAllTemplate, ShowOneInAllView){
   return Backbone.Marionette.CompositeView.extend({
-    template: "#topic-composite",
-    itemView: ItemView,
+    template: ShowAllTemplate,
+    itemView: ShowOneInAllView,
     itemViewContainer: "ul",
     initialize: function(){
       console.log("Rendering CompositeView");
