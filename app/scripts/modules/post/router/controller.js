@@ -85,10 +85,12 @@ function(Communicator, Backbone, $){
     };
     
     var editPostPageChange = function(){
+      App.mainRegion.show(new App.Post.View.EditOne());
       console.log("Edit Post");
     };
     
     var deletePostPageChange = function(){
+      App.mainRegion.show(new App.Post.View.DeleteOne());
       console.log("Delete Post");
     };
     
