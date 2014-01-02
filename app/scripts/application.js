@@ -3,10 +3,11 @@ define([
 	'jquery',
 	'communicator',
 	'modules/post/module',
-	'modules/topic/module'
+	'modules/topic/module',
+	'helpers/loadingView'
 ],
 
-function( Backbone, $, Communicator, PostModule, TopicModule ) {
+function( Backbone, $, Communicator, PostModule, TopicModule, LoadingView ) {
   'use strict';
 
 	var App = new Backbone.Marionette.Application();
@@ -30,6 +31,7 @@ function( Backbone, $, Communicator, PostModule, TopicModule ) {
 	
 	var triggerPageChange = function(url)
 	{
+	  App.mainRegion.show(new LoadingView());
 	  console.log("Trigger Page change");
     if (url === "topics"){
         Communicator.command.execute("pageChange:topics");
