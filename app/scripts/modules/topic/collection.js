@@ -10,6 +10,6 @@ function(Backbone, Model){
       console.log("initialize a Topics collection");
     },
     model: Model,
-    url: 'api/topics/'
+    url: '/api/topics/'
   });
 });

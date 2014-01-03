@@ -46,7 +46,7 @@ function(Communicator, Backbone, $){
     };
     
     var showOneTopicRoute = function(id){
-      var oneTopicPromise = getOneTopic();
+      var oneTopicPromise = getOneTopic(id);
       $.when(oneTopicPromise).done(function(topic){
         console.log(topic.toJSON());
         App.mainRegion.show(new App.Topic.View.ShowOne({model: topic}));
@@ -54,13 +54,32 @@ function(Communicator, Backbone, $){
       console.log("One Topic");
     };
     
-    var editTopicRoute = function(id ){
+    var editTopicRoute = function(id){
       console.log("Edit Topic");
-      App.mainRegion.show(new App.Topic.View.EditOne({model: topic}));
+      var oneTopicPromise = getOneTopic(id);
+      $.when(oneTopicPromise).done(function(topic){
+        console.log(topic.toJSON());
+        App.mainRegion.show(new App.Topic.View.EditOne({model: topic}));
+      });
     };
     
     var deleteTopicRoute = function(){
       console.log("Delete Topic");
+      var oneTopicPromise = getOneTopic(id);
+      $.when(oneTopicPromise).done(function(topic){
+        console.log(topic.toJSON());
+        App.mainRegion.show(new App.Topic.View.DeleteOne({model: topic}));
+      });
+    };
+    
+    var createTopicRoute = function(){
+      console.log("Create Topic");
+      App.mainRegion.show(new App.Topic.View.CreateOne());
+    };
+    
+    var newPostInTopicRoute = function(id){
+      App.mainRegion.show(new App.Post.View.CreateOne(id));
+      console.log("New Post in Topic");
     };
     
     /* Functions for internal page changes */
@@ -84,16 +103,40 @@ function(Communicator, Backbone, $){
       console.log("One Topic");
     };
     
-    var editTopicPageChange = function(){
-      App.mainRegion.show(new App.Topic.View.EditOne());
+    var editTopicPageChange = function(id){
+      var oneTopicPromise = getOneTopic(id);
+      $.when(oneTopicPromise).done(function(topic){
+        console.log(topic.toJSON());
+        App.mainRegion.close();
+        App.mainRegion.show(new App.Topic.View.EditOne({model: topic}));
+      });
       console.log("Edit Topic");
     };
     
-    var deleteTopicPageChange = function(){
-      App.mainRegion.show(new App.Topic.View.DeleteOne());
+    var deleteTopicPageChange = function(id){
+      var oneTopicPromise = getOneTopic(id);
+      $.when(oneTopicPromise).done(function(topic){
+        console.log(topic.toJSON());
+        App.mainRegion.close();
+        App.mainRegion.show(new App.Topic.View.DeleteOne({model: topic}));
+      });
       console.log("Delete Topic");
     };
     
+    var createTopicPageChange = function(){
+      App.mainRegion.show(new App.Topic.View.CreateOne());
+      console.log("Create Topic");
+    };
+    
+    var newPostInTopicPageChange = function(id){
+      var oneTopicPromise = getOneTopic(id);
+      $.when(oneTopicPromise).done(function(topic){
+        console.log(topic.toJSON());
+        App.mainRegion.close();
+        App.mainRegion.show(new App.Post.View.CreateOne({model: topic}));
+      });
+      console.log("Delete Topic");
+    };
     /* Events listening to these routes */
     Communicator.command.setHandler("pageChange:topics", function(){
       console.log("Topics Route");
@@ -105,11 +148,19 @@ function(Communicator, Backbone, $){
     });
     Communicator.command.setHandler("pageChange:topic:edit", function(id){
       console.log("Topic Edit Route: " + id);
-      editTopicPageChange();
+      editTopicPageChange(id);
     });
     Communicator.command.setHandler("pageChange:topic:delete", function(id){
       console.log("Topic Delete Route: " + id);
-      deleteTopicPageChange();
+      deleteTopicPageChange(id);
+    });
+    Communicator.command.setHandler("pageChange:topic:create", function(){
+      console.log("Topic Create Route");
+      createTopicPageChange();
+    });
+    Communicator.command.setHandler("pageChange:topic:newPost", function(id){
+      console.log("Topic Add New Post Route: " + id);
+      newPostInTopicPageChange(id);
     });
     
     /* API/Controller for the routes */
@@ -117,7 +168,9 @@ function(Communicator, Backbone, $){
       showAllTopics: showAllTopicsRoute,
       showOneTopic: showOneTopicRoute,
       editTopic : editTopicRoute,
-      deleteTopic : deleteTopicRoute
+      deleteTopic : deleteTopicRoute,
+      createOneTopic : createTopicRoute,
+      newPostInTopic : newPostInTopicRoute
     };
    };
 });
