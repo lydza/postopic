@@ -79,11 +79,11 @@ if ('development' == app.get('env')) {
  *****************************************************************************/
 
 app.get('/api/topics', topic.all(routerData));
-app.get('/api/topics/:id', topic.id(routerData));
+app.get('/api/topics/:slug', topic.id(routerData));
 app.post('/api/topics', topic.create(routerData));
-app.del('/api/topics/:id', topic.id.del(routerData));
+app.del('/api/topics/:slug', topic.id.del(routerData));
 app.del('/api/topics', topic.all.del(routerData));
-app.put('/api/topics/:id', topic.id.update(routerData));
+app.put('/api/topics/:slug', topic.id.update(routerData));
 
 app.get('/api/posts', post.all(routerData));
 app.get('/api/posts/:slug', post.id(routerData));
