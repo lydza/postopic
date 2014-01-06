@@ -6,6 +6,7 @@ var postSchema = mongoose.Schema({
   name: String,
   text: String,
   author: String,
+  slug: String,
   topicId: String,
   date: Date
 });

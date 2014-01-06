@@ -11,7 +11,8 @@
     "socket.io": "~0.9.14",
     "baucis": "~0.4.6",
     "express-hbs": "~0.2.0",
-    "underscore": "~1.4.4"
+    "underscore": "~1.4.4",
+    "slug": "~0.4.0"
   },
   
   "devDependencies": {
