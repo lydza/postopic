@@ -41,7 +41,8 @@ function addUniqueSlug(data, slug, number){
     if(err){
       console.log('There was an error finding a topic associated with this slug: \n' + err);
       res.json({
-        error: err
+        error: 'There was an error finding a topic associated with this slug.',
+        errorMessage: err
       });
     } else {
       if(topicResult === null){
@@ -72,10 +73,11 @@ function saveTopic(data, slug){
   topic.save(function (err, newTopic) {
     
     /* Error handling */
-    if (err) {
+    if(err) {
       console.log('There was an error saving this new topic to the database:\n' + err);
       res.json({
-        error: err
+        error: 'There was an error saving this new topic to the database.',
+        errorMessage: err
       });
     }
     newTopic.onCreate();
@@ -97,7 +99,8 @@ module.exports.all = function(data) {
       if(err){
         console.log('There was an error finding all posts:' + err);
         res.json({
-          error: err
+          error: 'There was an error finding all posts.',
+          errorMessage: err
         });
         return;
       } else{
@@ -110,7 +113,8 @@ module.exports.all = function(data) {
               if(err){
                 console.log('There was an error finding a topic with the ID ' + item.topicId + ':\n' + err);
                 res.json({
-                  error: err
+                  error: 'There was an error finding a topic with the ID: ' + item.topicId,
+                  errorMessage: err
                 });
               } else{
                 var result = {
@@ -127,7 +131,8 @@ module.exports.all = function(data) {
             if(err){
               console.log('There was an error mapping posts to their topics:\n' + err);
               res.json({
-                error: err
+                error: 'There was an error mapping posts to their topics',
+                errorMessage: err
               });
             } else{
               console.log('Found ' + results.length + ' topics and the amount of posts that belong to them.');
@@ -156,7 +161,8 @@ module.exports.slug = function(data) {
       if(err){
         console.log('There was an error finding a topic with this slug:' + err);
         res.json({
-          error: err
+          error: 'There was an error finding a topic with this slug.',
+          errorMessage: err
         });
       } else{
         Post.find({topicId: topic._id}).exec(function(err, posts){
@@ -164,7 +170,8 @@ module.exports.slug = function(data) {
           if(err){
             console.log('There was an error finding posts with the topicId ' + topic._id + ':\n' + err);
             res.json({
-              error: err
+              error: 'There was an error finding posts with the topicId ' + topic._id ,
+              errorMessage: err
             });
           } else{
             res.json({
@@ -200,15 +207,17 @@ module.exports.all.del = function(data) {
       
       /* Error handling */
       if(err){
-        console.log('There was an error getting the all topics and/or all posts: ' + err);
+        console.log('There was an error getting all topics and/or all posts: ' + err);
         res.json({
-          error: err
+          error: 'There was an error getting all topics and/or all posts.',
+          errorMessage: err
         });
       } else{
         if(topics === undefined){
           console.log('There are no topics to delete.');
           res.json({
-            error: 'There are no topics to delete.'
+            error: 'There are no topics to delete.',
+            errorMessage: 'There are no topics to delete.'
           });
         } else{
           console.log('Deleting ' + topics.length + ' topics and ' + posts.length + ' posts.');
@@ -240,7 +249,8 @@ module.exports.slug.del = function(data) {
       if(err){
         console.log('There was an error finding this topic:' + err);
         res.json({
-          error: err
+          error: 'There was an error finding a topic associated with this slug',
+          errorMessage: err
         });
       } else{
         Post.find({topicId: topic._id}).exec(function(err, posts){
@@ -248,7 +258,8 @@ module.exports.slug.del = function(data) {
           if(err){
             console.log('There was an error finding posts for the topic with the ID ' + topic._id + ':\n' + err);
             res.json({
-              error: err
+              error: 'There was an error finding posts for the topic with the ID ' + topic._id,
+              errorMessage: err
             });
           } else{
             console.log('Deleting the topic' + topic.name + ' and its ' + posts.length + ' posts.');

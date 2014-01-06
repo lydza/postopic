@@ -41,9 +41,10 @@ function addUniqueSlug(data, slug, number){
   Post.findOne({slug: testSlug}).exec(function(err, postResult){
     /* Error handling */
     if(err){
-      console.log('There was an error finding the topic associated with this post: \n' + err);
+      console.log('There was an error finding a post associated with this slug: \n' + err);
       res.json({
-        error: err
+        error: 'There was an error finding a post associated with this slug',
+        errorMessage: err
       });
     } else {
       if(postResult === null){
@@ -79,7 +80,8 @@ function savePost(data, slug){
     if(err){
       console.log('There was an error finding the topic associated with this post: \n' + err);
       res.json({
-        error: err
+        error: 'There was an error finding the topic associated with this post.',
+        errorMessage: err
       });
     } else{
     
@@ -87,7 +89,7 @@ function savePost(data, slug){
       if(topicResult === null){
         console.log('There is no topic associated with this post. Can\'t add it to the database.');
         res.json({
-          error: 'There is no topic associated with this post. Can\'t add it to the database.'
+          error: 'There is no topic associated with this post. Can\'t add it to the daatabase.',
         });
       } else {
           
@@ -95,10 +97,11 @@ function savePost(data, slug){
         post.save(function (err, newPost) {
 
         /* Error handling */
-          if (err) {
+          if(err) {
             console.log('There was an error saving this new post to the database: ' + err);
             res.json({
-              error: err
+              error: 'There was an error saving this new post to the database.',
+              errorMessage: err
             });
             return;
           }
@@ -133,7 +136,8 @@ module.exports.all = function(data) {
       if(err){
         console.log('There was an error finding all posts:' + err);
         res.json({
-          error: err
+          error: 'There was an error finding all posts.',
+          errorMessage: err
         });
         return;
       } else{
@@ -148,7 +152,8 @@ module.exports.all = function(data) {
               if(err){
                 console.log('There was an error finding a topic with the ID ' + item.topicId + ':\n' + err);
                 res.json({
-                  error: err
+                  error: 'There was an error finding a topic with the ID ' + item.topicId,
+                  errorMessage: err
                 });
               } else{
                 /* 'result' holds the hash that will be passed to the following function */
@@ -166,7 +171,8 @@ module.exports.all = function(data) {
             if(err){
               console.log('There was an error mapping posts to their topics:\n' + err);
               res.json({
-                error: err
+                error: 'There was an error mapping posts to their topics.',
+                errorMessage: err
               });
             } else{
               console.log('Found ' + results.length + ' posts and all their associated topics.');
@@ -195,7 +201,8 @@ module.exports.slug = function(data) {
       if(err){
         console.log('There was an error finding the post with the slug' + req.params.slug + ': \n' + err);
         res.json({
-          error: err
+          error: 'There was an error finding the topic with the slug ' + req.params.slug,
+          errorMessage: err
         });
         return;
       } else{
@@ -217,7 +224,8 @@ module.exports.slug = function(data) {
           if(err){
             console.log('There was an error finding the topic associated with this post: \n' + err);
             res.json({
-              error: err
+              error: 'There was an error finding the topic associated with this post',
+              errorMessage: err
             });
           } else{
             console.log('Found the topic associated with this post.');
@@ -254,7 +262,8 @@ module.exports.all.del = function(data) {
       if(err){
         console.log('There was an error getting all posts: ' + err);
         res.json({
-          error: err
+          error: 'There was an error getting all posts.',
+          errorMessage: err
         });
       } else{
         if(posts.length === 0){
@@ -297,14 +306,16 @@ module.exports.slug.del = function(data) {
       if(err){
         console.log('There was an error getting a post with the slug ' + req.params.slug + ': ' + err);
         res.json({
-          error: err
+          error: 'There was an error getting a post with this slug ' + req.params.slug,
+          errorMessage: err
         });
         return;
       } else{
         if(post === undefined){
           console.log('There is no post with the slug ' + req.params.slug + '.');
           res.json({
-            error: 'This post does not exist.'
+            error: 'This post does not exist.',
+            errorMessage: 'This post does not exist.'
           });
           return;
         } else{
@@ -340,7 +351,8 @@ module.exports.slug.update = function(data) {
       if(err){
         console.log('There was an error updating the post with the slug: ' + req.body.slug + '/n' + err);
         res.json({
-          error: err
+          error: 'There was an error updating the post with the slug ' + req.body.slug,
+          errorMessage: err
         });
       } else{
         res.json({});
