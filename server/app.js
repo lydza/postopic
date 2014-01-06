@@ -79,18 +79,18 @@ if ('development' == app.get('env')) {
  *****************************************************************************/
 
 app.get('/api/topics', topic.all(routerData));
-app.get('/api/topics/:slug', topic.id(routerData));
+app.get('/api/topics/:slug', topic.slug(routerData));
 app.post('/api/topics', topic.create(routerData));
-app.del('/api/topics/:slug', topic.id.del(routerData));
+app.del('/api/topics/:slug', topic.slug.del(routerData));
 app.del('/api/topics', topic.all.del(routerData));
-app.put('/api/topics/:slug', topic.id.update(routerData));
+app.put('/api/topics/:slug', topic.slug.update(routerData));
 
 app.get('/api/posts', post.all(routerData));
-app.get('/api/posts/:slug', post.id(routerData));
+app.get('/api/posts/:slug', post.slug(routerData));
 app.post('/api/posts', post.create(routerData));
-app.del('/api/posts/:slug', post.id.del(routerData));
+app.del('/api/posts/:slug', post.slug.del(routerData));
 app.del('/api/posts', post.all.del(routerData));
-app.put('/api/posts/:slug', post.id.update(routerData));
+app.put('/api/posts/:slug', post.slug.update(routerData));
 
 app.all('*', index.render());
 

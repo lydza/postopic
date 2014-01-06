@@ -2,12 +2,12 @@
  *
  * Topic routes - Holds all routes that begin with /topic
  * 
- * create    | POST   '/api/topics'        | creates a new topic
- * all       | GET    '/api/topics'        | displays all topic
- * id        | GET    '/api/topics/:id'    | displays a specific topic
- * all.del   | DELETE '/api/topics'        | deletes all topics
- * id.del    | DELETE '/api/topics/:id'    | deletes this specific topic
- * id.update | PUT    '/api/topics/:id'    | updates a specific topic
+ * create    | POST   '/api/topics'          | creates a new topic
+ * all       | GET    '/api/topics'          | displays all topic
+ * id        | GET    '/api/topics/:slug'    | displays a specific topic
+ * all.del   | DELETE '/api/topics'          | deletes all topics
+ * id.del    | DELETE '/api/topics/:slug'    | deletes this specific topic
+ * id.update | PUT    '/api/topics/:slug'    | updates a specific topic
  * 
  *****************************************************************************/
 

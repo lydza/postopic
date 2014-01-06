@@ -4,10 +4,10 @@
  * 
  * create    | POST   '/api/posts'          | creates a new post
  * all       | GET    '/api/posts'          | displays all posts
- * id        | GET    '/api/posts/:slug'    | displays a specific post
+ * slug        | GET    '/api/posts/:slug'    | displays a specific post
  * all.del   | DELETE '/api/posts'          | deletes all posts
- * id.del    | DELETE '/api/posts/:slug'    | deletes this specific post
- * id.update | PUT    '/api/posts/:slug'    | updates a specific post
+ * slug.del    | DELETE '/api/posts/:slug'    | deletes this specific post
+ * slug.update | PUT    '/api/posts/:slug'    | updates a specific post
  * 
  *****************************************************************************/
 
@@ -179,7 +179,7 @@ module.exports.all = function(data) {
   };
 };
 
-module.exports.id = function(data) {
+module.exports.slug = function(data) {
 
   /* Set up variables */
   var Post = data.database.model.post;
@@ -275,7 +275,7 @@ module.exports.all.del = function(data) {
   };
 };
 
-module.exports.id.del = function(data) {
+module.exports.slug.del = function(data) {
   
   /* Set up variables */
   var Post = data.database.model.post;
@@ -318,7 +318,7 @@ module.exports.id.del = function(data) {
   };
 };
 
-module.exports.id.update = function(data) {
+module.exports.slug.update = function(data) {
   
   /* Set up variables */
   var Post = data.database.model.post;
