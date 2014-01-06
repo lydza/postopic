@@ -1,11 +1,11 @@
 /******************************************************************************
  *
- * Post routes - Holds all routes that begin with /post.
+ * Post routes - Holds all routes that begin with /posts
  * 
- * create    | POST   '/api/posts'          | creates a new post
- * all       | GET    '/api/posts'          | displays all posts
+ * create      | POST   '/api/posts'          | creates a new post
+ * all         | GET    '/api/posts'          | displays all posts
  * slug        | GET    '/api/posts/:slug'    | displays a specific post
- * all.del   | DELETE '/api/posts'          | deletes all posts
+ * all.del     | DELETE '/api/posts'          | deletes all posts
  * slug.del    | DELETE '/api/posts/:slug'    | deletes this specific post
  * slug.update | PUT    '/api/posts/:slug'    | updates a specific post
  * 
@@ -295,7 +295,7 @@ module.exports.slug.del = function(data) {
       
       /* Error handling */
       if(err){
-        console.log('There was an error getting the post with the slug ' + req.params.slug + ': ' + err);
+        console.log('There was an error getting a post with the slug ' + req.params.slug + ': ' + err);
         res.json({
           error: err
         });
@@ -338,6 +338,7 @@ module.exports.slug.update = function(data) {
       
       /* Error handling */
       if(err){
+        console.log('There was an error updating the post with the slug: ' + req.body.slug + '/n' + err);
         res.json({
           error: err
         });

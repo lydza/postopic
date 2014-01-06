@@ -1,13 +1,13 @@
 /******************************************************************************
  *
- * Topic routes - Holds all routes that begin with /topic
+ * Topic routes - Holds all routes that begin with /topics
  * 
- * create    | POST   '/api/topics'          | creates a new topic
- * all       | GET    '/api/topics'          | displays all topic
- * id        | GET    '/api/topics/:slug'    | displays a specific topic
- * all.del   | DELETE '/api/topics'          | deletes all topics
- * id.del    | DELETE '/api/topics/:slug'    | deletes this specific topic
- * id.update | PUT    '/api/topics/:slug'    | updates a specific topic
+ * create      | POST   '/api/topics'          | creates a new topic
+ * all         | GET    '/api/topics'          | displays all topic
+ * slug        | GET    '/api/topics/:slug'    | displays a specific topic
+ * all.del     | DELETE '/api/topics'          | deletes all topics
+ * slug.del    | DELETE '/api/topics/:slug'    | deletes this specific topic
+ * slug.update | PUT    '/api/topics/:slug'    | updates a specific topic
  * 
  *****************************************************************************/
 
@@ -39,7 +39,7 @@ function addUniqueSlug(data, slug, number){
   Topic.findOne({slug: testSlug}).exec(function(err, topicResult){
     /* Error handling */
     if(err){
-      console.log('There was an error finding the topic associated with this post: \n' + err);
+      console.log('There was an error finding a topic associated with this slug: \n' + err);
       res.json({
         error: err
       });
@@ -140,7 +140,7 @@ module.exports.all = function(data) {
   };
 };
 
-module.exports.id = function(data) {
+module.exports.slug = function(data) {
 
   /* Set up variables */
   var Post = data.database.model.post;
@@ -154,7 +154,7 @@ module.exports.id = function(data) {
       console.log(topic);
       /* Error handling */
       if(err){
-        console.log('There was an error finding all posts:' + err);
+        console.log('There was an error finding a topic with this slug:' + err);
         res.json({
           error: err
         });
@@ -162,7 +162,7 @@ module.exports.id = function(data) {
         Post.find({topicId: topic._id}).exec(function(err, posts){
           /* Error handling */
           if(err){
-            console.log('There was an error finding a topic with the ID ' + topic._id + ':\n' + err);
+            console.log('There was an error finding posts with the topicId ' + topic._id + ':\n' + err);
             res.json({
               error: err
             });
@@ -200,7 +200,7 @@ module.exports.all.del = function(data) {
       
       /* Error handling */
       if(err){
-        console.log('There was an error getting the topic and/or its associated posts: ' + err);
+        console.log('There was an error getting the all topics and/or all posts: ' + err);
         res.json({
           error: err
         });
@@ -211,7 +211,7 @@ module.exports.all.del = function(data) {
             error: 'There are no topics to delete.'
           });
         } else{
-          console.log('Deleting ' + topics.length + ' topics and their ' + posts.length + ' posts.');
+          console.log('Deleting ' + topics.length + ' topics and ' + posts.length + ' posts.');
           topics.forEach(function(topic){
             topic.remove();
           });
@@ -225,7 +225,7 @@ module.exports.all.del = function(data) {
   };
 };
 
-module.exports.id.del = function(data) {
+module.exports.slug.del = function(data) {
 
   /* Set up variables */
   var Post = data.database.model.post;
@@ -251,7 +251,7 @@ module.exports.id.del = function(data) {
               error: err
             });
           } else{
-            console.log('Deleting the topic' + topic.name + ' and its ' + posts.length + 'posts.');
+            console.log('Deleting the topic' + topic.name + ' and its ' + posts.length + ' posts.');
             topic[0].remove();
             posts.forEach(function(post){
               post.remove();
@@ -264,7 +264,7 @@ module.exports.id.del = function(data) {
   };
 };
 
-module.exports.id.update = function(data) {
+module.exports.slug.update = function(data) {
 
   /* Set up variables */
   var Post = data.database.model.post;
@@ -277,6 +277,7 @@ module.exports.id.update = function(data) {
       author: req.body.author,
       dateUpdated: Date.now()
     };
+    console.log('Updating the topic with the slug: ' + req.params.slug);
     Topic.update({slug: req.params.slug}, { $set: topic}).exec();
     res.json({});
   };
