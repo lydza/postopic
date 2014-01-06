@@ -1,44 +1,18 @@
 define([
   'communicator', 
   'backbone',
-  'jquery'
+  'jquery',
+  'modules/topic/router/helper'
 ],
 
-function(Communicator, Backbone, $){
+function(Communicator, Backbone, $, RouterHelper){
   return function(App){
-  
-    /* Functions for getting data */    
-    var getAllTopics = function(){
-      var data = new App.Topic.Collection();
-      var defer = $.Deferred();
-      data.fetch({
-        error: function(){
-          // TODO: add error handling
-        },
-        success: function(collection, response){
-          defer.resolve(collection);
-        }
-      });
-      return defer.promise();
-    };
-    var getOneTopic = function(id){
-      var data = new App.Topic.Model(id);
-      var defer = $.Deferred();
-      data.fetch({
-        error: function(){
-          // TODO: add error handling
-        },
-        success: function(topic, response){
-          defer.resolve(topic);
-        }
-      });
-      return defer.promise();
-    };
+    
+    var HelperFunctions = RouterHelper(App);
     
     /* Incoming routes from URLs */
     var showAllTopicsRoute = function(){
-      var allTopicsPromise = getAllTopics();
-      $.when(allTopicsPromise).done(function(topics){
+      $.when(HelperFunctions.getAllTopics()).done(function(topics){
         console.log(topics);
           App.mainRegion.show(new App.Topic.View.ShowAll({collection: topics}));
       });
@@ -46,9 +20,8 @@ function(Communicator, Backbone, $){
     };
     
     var showOneTopicRoute = function(id){
-      var oneTopicPromise = getOneTopic(id);
-      $.when(oneTopicPromise).done(function(topic){
-        console.log(topic.toJSON());
+      $.when(HelperFunctions.getOneTopic(id)).done(function(topic){
+        console.log(topic);
         App.mainRegion.show(new App.Topic.View.ShowOne({model: topic}));
       });
       console.log("One Topic");
@@ -56,18 +29,16 @@ function(Communicator, Backbone, $){
     
     var editTopicRoute = function(id){
       console.log("Edit Topic");
-      var oneTopicPromise = getOneTopic(id);
-      $.when(oneTopicPromise).done(function(topic){
-        console.log(topic.toJSON());
+      $.when(HelperFunctions.getOneTopic(id)).done(function(topic){
+        console.log(topic);
         App.mainRegion.show(new App.Topic.View.EditOne({model: topic}));
       });
     };
     
     var deleteTopicRoute = function(){
       console.log("Delete Topic");
-      var oneTopicPromise = getOneTopic(id);
-      $.when(oneTopicPromise).done(function(topic){
-        console.log(topic.toJSON());
+      $.when(HelperFunctions.getOneTopic(id)).done(function(topic){
+        console.log(topic);
         App.mainRegion.show(new App.Topic.View.DeleteOne({model: topic}));
       });
     };
@@ -78,46 +49,41 @@ function(Communicator, Backbone, $){
     };
     
     var newPostInTopicRoute = function(id){
-      App.mainRegion.show(new App.Post.View.CreateOne(id));
+      $.when(HelperFunctions.getOneTopic(id)).done(function(topic){
+        console.log(topic);
+        App.mainRegion.show(new App.Post.View.CreateOne({model: topic}));
+      });
       console.log("New Post in Topic");
     };
     
     /* Functions for internal page changes */
     var showAllTopicsPageChange = function(){
-      var allTopicsPromise = getAllTopics();
-      $.when(allTopicsPromise).done(function(topics){
+      $.when(HelperFunctions.getAllTopics()).done(function(topics){
         console.log(topics);
-        App.mainRegion.close();
-        App.mainRegion.show(new App.Topic.View.ShowAll({collection: topics}));
+          App.mainRegion.show(new App.Topic.View.ShowAll({collection: topics}));
       });
       console.log("All Topics");
     };
     
     var showOneTopicPageChange = function(id){
-      var oneTopicPromise = getOneTopic(id);
-      $.when(oneTopicPromise).done(function(topic){
-        console.log(topic.toJSON());
-        App.mainRegion.close();
+      $.when(HelperFunctions.getOneTopic(id)).done(function(topic){
+        console.log(topic);
         App.mainRegion.show(new App.Topic.View.ShowOne({model: topic}));
       });
       console.log("One Topic");
     };
     
     var editTopicPageChange = function(id){
-      var oneTopicPromise = getOneTopic(id);
-      $.when(oneTopicPromise).done(function(topic){
-        console.log(topic.toJSON());
-        App.mainRegion.close();
+      $.when(HelperFunctions.getOneTopic(id)).done(function(topic){
+        console.log(topic);
         App.mainRegion.show(new App.Topic.View.EditOne({model: topic}));
       });
       console.log("Edit Topic");
     };
     
     var deleteTopicPageChange = function(id){
-      var oneTopicPromise = getOneTopic(id);
-      $.when(oneTopicPromise).done(function(topic){
-        console.log(topic.toJSON());
-        App.mainRegion.close();
+      $.when(HelperFunctions.getOneTopic(id)).done(function(topic){
+        console.log(topic);
         App.mainRegion.show(new App.Topic.View.DeleteOne({model: topic}));
       });
       console.log("Delete Topic");
@@ -129,10 +95,8 @@ function(Communicator, Backbone, $){
     };
     
     var newPostInTopicPageChange = function(id){
-      var oneTopicPromise = getOneTopic(id);
-      $.when(oneTopicPromise).done(function(topic){
-        console.log(topic.toJSON());
-        App.mainRegion.close();
+      $.when(HelperFunctions.getOneTopic(id)).done(function(topic){
+        console.log(topic);
         App.mainRegion.show(new App.Post.View.CreateOne({model: topic}));
       });
       console.log("Delete Topic");
