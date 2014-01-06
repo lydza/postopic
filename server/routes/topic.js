@@ -113,10 +113,7 @@ module.exports.id = function(data) {
         Post.find({topicId: req.params.id}, null, {}, callback);
       }
     ], 
-    function(err, results){
-      var topic = results[0][0];
-      var posts = results[1];
-      
+    function(err, results){      
       /* Error handling */
       if(err){
         console.log('There was an error getting the topic and/or its associated posts: ' + err);
@@ -126,8 +123,8 @@ module.exports.id = function(data) {
       } else{
         console.log('Found ' + posts.length + ' posts for thie topic ' + topic.name + '.');
         res.json({
-          posts: posts,
-          topic: topic
+          posts: results[1],
+          topic: results[0]
         });
       }
     });
