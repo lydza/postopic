@@ -178,7 +178,6 @@ module.exports.all = function(data) {
               });
             } else{
               console.log('Found ' + results.length + ' posts and all their associated topics.');
-              console.log(limit);
               
               returnValue = {
                 posts: results.splice(offset, limit),
