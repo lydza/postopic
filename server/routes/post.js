@@ -124,11 +124,12 @@ module.exports.all = function(data) {
   var Post = data.database.model.post;
   var Topic = data.database.model.topic;
   var async = data.helper.async;
+  var limit = 2;
   
   /* Return a response function */
   return function(req, res){
     console.log('\nHttp Method:   GET \nRoute:         /posts \nAction:        Shows all posts');
-
+    var offset = req.params.page * limit - 1;
     /* Find all Posts sorted in descending order by date */
     Post.find().sort({date: 'desc'}).exec(function(err, results){
 
@@ -167,6 +168,7 @@ module.exports.all = function(data) {
           }, 
           function(err, results){
             
+            
             /* Error handling */
             if(err){
               console.log('There was an error mapping posts to their topics:\n' + err);
@@ -176,7 +178,13 @@ module.exports.all = function(data) {
               });
             } else{
               console.log('Found ' + results.length + ' posts and all their associated topics.');
-              res.json(results);
+              console.log(limit);
+              
+              returnValue = {
+                posts: results.splice(offset, limit),
+                numberOfPages: results.length / limit
+              };
+              res.json(returnValue);
             }
           }
         );
