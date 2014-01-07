@@ -91,8 +91,12 @@ module.exports.all = function(data) {
   var Post = data.database.model.post;
   var Topic = data.database.model.topic;
   var async = data.helper.async;
+  var limit = 2;
+  
   return function(req, res){
     console.log('\nHttp Method:   GET \nRoute:         /topics \nAction:        Shows all topics');
+    var offset = req.params.page * limit - 1;
+    
     Topic.find().sort({date: 'desc'}).exec(function(err, results){
       
       /* Error handling */
@@ -136,7 +140,11 @@ module.exports.all = function(data) {
               });
             } else{
               console.log('Found ' + results.length + ' topics and the amount of posts that belong to them.');
-              res.json(results);
+              returnValue = {
+                topics: results.splice(offset, limit),
+                numberOfPages: results.length / limit
+              };
+              res.json(returnValue);
             }
           }
         );
