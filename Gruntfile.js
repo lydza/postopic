@@ -75,17 +75,18 @@ module.exports = function (grunt) {
       },
       all: [
         'Gruntfile.js',
-        '<%= yeoman.app %>/scripts/{,*/}*.js',
-        '!<%= yeoman.app %>/scripts/vendor/*',
-        'test/spec/{,*/}*.js'
+        '<%= yeoman.app %>/scripts/*.js'
+//        '<%= yeoman.app %>/scripts/{,*/}*.js',
+//        '!<%= yeoman.app %>/scripts/vendor/*',
+//        'test/spec/{,*/}*.js'
       ]
     },
     requirejs: {
       compile: {
         options: {
-          baseUrl: "<%= yeoman.app %>/scripts/",
+          baseUrl: '<%= yeoman.app %>/scripts/',
           mainConfigFile: '<%= yeoman.app %>/scripts/init.js',
-          out: "<%= yeoman.dist %>/scripts/"
+          out: '<%= yeoman.dist %>/scripts/'
         }
       }
     },
@@ -141,7 +142,7 @@ module.exports = function (grunt) {
       'watch'
     ]);
   });
-  
+
   grunt.registerTask('test', [
     'clean:server',
     'createDefaultTemplate',
