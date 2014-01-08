@@ -19,5 +19,6 @@
     "strict": true,
     "trailing": true,
     "smarttabs": true,
-    "maxerr": 1000
+    "maxerr": 1000,
+    "globals": { "define": false }
 }
