@@ -83,9 +83,9 @@ module.exports = function (grunt) {
     requirejs: {
       compile: {
         options: {
-          baseUrl: '<%= yeoman.app %>/scripts/',
+          baseUrl: '<%= yeoman.app %>/scripts',
           mainConfigFile: '<%= yeoman.app %>/scripts/init.js',
-          out: '<%= yeoman.dist %>/scripts/'
+          out: '<%= yeoman.dist %>'
         }
       }
     },
