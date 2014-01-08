@@ -19,7 +19,7 @@ module.exports = function (grunt) {
           '<%= yeoman.app %>/images/{,*/}*.{png,jpg,jpeg,gif,webp}',
           'test/spec/{,**/}*.js'
         ],
-        tasks: ['exec'],
+        tasks: ['exec', 'jshint'],
         options: {
           livereload: true
         }
