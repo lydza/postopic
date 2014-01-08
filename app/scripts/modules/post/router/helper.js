@@ -1,6 +1,9 @@
-define([],
+define([
+  'jquery'
+],
 
-function(){
+function($){
+  'use strict';
   return function(App){
     var getAllPosts = function(){
       var data = new App.Post.Collection();
@@ -28,7 +31,6 @@ function(){
       });
       return defer.promise();
     };
-    
     return {
       getOnePost: getOnePost,
       getAllPosts: getAllPosts

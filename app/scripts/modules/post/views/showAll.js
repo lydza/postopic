@@ -5,12 +5,13 @@ define([
 ],
 
 function(Backbone, ShowAllTemplate, ShowOneInAllView){
+  'use strict';
   return Backbone.Marionette.CompositeView.extend({
     template: ShowAllTemplate,
     itemView: ShowOneInAllView,
-    itemViewContainer: "ul",
+    itemViewContainer: 'ul',
     initialize: function(){
-      console.log("Rendering CompositeView");
+      console.log('Rendering CompositeView');
     }
   });
 });
