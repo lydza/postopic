@@ -4,7 +4,7 @@ define([
 ],
 
 function(Backbone, DeleteOneTemplate){
-
+  'use strict';
   return Backbone.Marionette.ItemView.extend({
     template: DeleteOneTemplate
   });

@@ -1,6 +1,9 @@
-define([],
+define([
+  'jquery'
+],
 
-function(){
+function($){
+  'use strict';
   return function(App){
     var getAllTopics = function(){
       var data = new App.Topic.Collection();
@@ -28,7 +31,7 @@ function(){
       });
       return defer.promise();
     };
-    
+
     return {
       getOneTopic: getOneTopic,
       getAllTopics: getAllTopics

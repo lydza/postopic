@@ -4,7 +4,7 @@ define([
 ],
 
 function(Backbone, ShowOneInAllTemplate){
-
+  'use strict';
   return Backbone.Marionette.ItemView.extend({
     template: ShowOneInAllTemplate
   });

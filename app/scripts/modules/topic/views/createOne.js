@@ -4,7 +4,7 @@ define([
 ],
 
 function(Backbone, CreateOneTemplate){
-
+  'use strict';
   return Backbone.Marionette.ItemView.extend({
     template: CreateOneTemplate
   });
