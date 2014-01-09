@@ -8,27 +8,42 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 
-        <title></title>
+        <title>PosTopic</title>
 
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width">
 
-        <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
-        
-        <link rel="stylesheet" href="styles/main.css">
         <link rel="stylesheet" href="styles/bootstrap.min.css">
         <link rel="stylesheet" href="styles/custom.css">
         <link href='http://fonts.googleapis.com/css?family=Simonetta' rel='stylesheet' type='text/css'>
         <link href='http://fonts.googleapis.com/css?family=Tangerine' rel='stylesheet' type='text/css'>
         
-
-        <!-- build:js scripts/vendor/modernizr.js -->
         <script src="bower_components/modernizr/modernizr.js"></script>
-        <!-- endbuild -->
 
     </head>
 
     <body>
+      <!-- Main structure of the application -->
+      <div class="container">
+        <header>
+          <h1>PosTopic</h1>
+          <nav>
+            <ul class="nav nav-pills">
+              <li><a href="http://localhost:9000/">Home</a></li>
+              <li><a href="http://localhost:9000/posts">Posts</a></li>
+              <li><a href="http://localhost:9000/topics">Topics</a></li>
+              <li><a href="http://localhost:9000/topic/create">New Topic</a></li>
+            </ul>
+          </nav>
+        </header>
+        <section class="container" id="main-region"></section>
+        <footer>
+        </footer>
+      </div>
+      <!-- End Main structure of the application -->
+
+
+      <!--
       <div class="container">
         <div class="text-right subtitle">
           <a href="http://localhost:9000/topic/create">
@@ -84,13 +99,9 @@
         </div>
         <div id="main-region"></div>
       </div>
-      <script type="text/template" id="placeholder">
-        Something!!
-      </script>
-        
-        <!-- build:js scripts/main.js -->
+      -->
+
         <script data-main="scripts/init" src="bower_components/requirejs/require.js"></script>
-        <!-- endbuild -->
 
         <script>document.write('<script src="http://'
           + (location.host || 'localhost').split(':')[0]
