@@ -20,25 +20,25 @@ function(Communicator, Backbone, $, RouterHelper){
       console.log('All Posts');
     };
 
-    var showOnePostRoute = function(id){
-      $.when(HelperFunctions.getOnePost(id)).done(function(post){
+    var showOnePostRoute = function(slug){
+      $.when(HelperFunctions.getOnePost(slug)).done(function(post){
         console.log(post);
         App.mainRegion.show(new App.Post.View.ShowOne({model: post}));
       });
       console.log('One Post');
     };
 
-    var editPostRoute = function(id){
+    var editPostRoute = function(slug){
       console.log('Edit Post');
-      $.when(HelperFunctions.getOnePost(id)).done(function(post){
+      $.when(HelperFunctions.getOnePost(slug)).done(function(post){
         console.log(post.toJSON());
         App.mainRegion.close();
         App.mainRegion.show(new App.Post.View.EditOne({model: post}));
       });
     };
 
-    var deletePostRoute = function(id){
-      $.when(HelperFunctions.getOnePost(id)).done(function(post){
+    var deletePostRoute = function(slug){
+      $.when(HelperFunctions.getOnePost(slug)).done(function(post){
         console.log(post.toJSON());
         App.mainRegion.close();
         App.mainRegion.show(new App.Post.View.DeleteOne({model: post}));
@@ -56,8 +56,8 @@ function(Communicator, Backbone, $, RouterHelper){
       console.log('All Posts');
     };
 
-    var showOnePostPageChange = function(id){
-      $.when(HelperFunctions.getOnePost(id)).done(function(post){
+    var showOnePostPageChange = function(slug){
+      $.when(HelperFunctions.getOnePost(slug)).done(function(post){
         console.log(post);
         App.mainRegion.close();
         App.mainRegion.show(new App.Post.View.ShowOne({model: post}));
@@ -65,8 +65,8 @@ function(Communicator, Backbone, $, RouterHelper){
       console.log('One Post');
     };
 
-    var editPostPageChange = function(id){
-      $.when(HelperFunctions.getOnePost(id)).done(function(post){
+    var editPostPageChange = function(slug){
+      $.when(HelperFunctions.getOnePost(slug)).done(function(post){
         console.log(post);
         App.mainRegion.close();
         App.mainRegion.show(new App.Post.View.EditOne({model: post}));
@@ -74,8 +74,8 @@ function(Communicator, Backbone, $, RouterHelper){
       console.log('Edit Post');
     };
 
-    var deletePostPageChange = function(id){
-      $.when(HelperFunctions.getOnePost(id)).done(function(post){
+    var deletePostPageChange = function(slug){
+      $.when(HelperFunctions.getOnePost(slug)).done(function(post){
         console.log(post);
         App.mainRegion.close();
         App.mainRegion.show(new App.Post.View.DeleteOne({model: post}));
@@ -88,16 +88,16 @@ function(Communicator, Backbone, $, RouterHelper){
       console.log('Posts Route');
       showAllPostsPageChange();
     });
-    Communicator.command.setHandler('pageChange:post:show', function(id){
-      console.log('Post Show Route: ' + id);
-      showOnePostPageChange(id);
+    Communicator.command.setHandler('pageChange:post:show', function(slug){
+      console.log('Post Show Route: ' + slug);
+      showOnePostPageChange(slug);
     });
-    Communicator.command.setHandler('pageChange:post:edit', function(id){
-      console.log('Post Edit Route: ' + id);
+    Communicator.command.setHandler('pageChange:post:edit', function(slug){
+      console.log('Post Edit Route: ' + slug);
       editPostPageChange();
     });
-    Communicator.command.setHandler('pageChange:post:delete', function(id){
-      console.log('Post Delete Route: ' + id);
+    Communicator.command.setHandler('pageChange:post:delete', function(slug){
+      console.log('Post Delete Route: ' + slug);
       deletePostPageChange();
     });
 

@@ -18,8 +18,8 @@ function($){
       });
       return defer.promise();
     };
-    var getOnePost = function(id){
-      var data = new App.Post.Model(id);
+    var getOnePost = function(slug){
+      var data = new App.Post.Model(slug);
       var defer = $.Deferred();
       data.fetch({
         error: function(){

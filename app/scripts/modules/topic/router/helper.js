@@ -18,8 +18,8 @@ function($){
       });
       return defer.promise();
     };
-    var getOneTopic = function(id){
-      var data = new App.Topic.Model(id);
+    var getOneTopic = function(slug){
+      var data = new App.Topic.Model(slug);
       var defer = $.Deferred();
       data.fetch({
         error: function(){

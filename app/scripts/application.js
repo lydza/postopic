@@ -42,25 +42,25 @@ function( Backbone, $, Communicator, PostModule, TopicModule, LoadingView ) {
     } else if (url.indexOf('topic/create') === 0) {
       Communicator.command.execute('pageChange:topic:create');
     } else if ((url.indexOf('topic/') === 0) && (url.indexOf('/delete') > 0)) {
-      topic = url.substring(7,url.indexOf('/delete'));
+      topic = url.substring(6,url.indexOf('/delete'));
       Communicator.command.execute('pageChange:topic:delete', topic);
     } else if(url.indexOf('topic/') === 0 && url.indexOf('/new_post') > 0) {
-      topic = url.substring(7,url.indexOf('/new_post'));
+      topic = url.substring(6,url.indexOf('/new_post'));
       Communicator.command.execute('pageChange:topic:newPost', topic);
     } else if (url.indexOf('topic/') === 0 && url.indexOf('/show') > 0) {
-      topic = url.substring(7,url.indexOf('/show'));
+      topic = url.substring(6,url.indexOf('/show'));
       Communicator.command.execute('pageChange:topic:show', topic);
     } else if (url.indexOf('topic/') === 0 && url.indexOf('/edit') > 0) {
-      topic = url.substring(7,url.indexOf('/edit'));
+      topic = url.substring(6,url.indexOf('/edit'));
       Communicator.command.execute('pageChange:topic:edit', topic);
     } else if ((url.indexOf('post/') === 0) && (url.indexOf('/delete') > 0)) {
-      post = url.substring(6,url.indexOf('/delete'));
+      post = url.substring(5,url.indexOf('/delete'));
       Communicator.command.execute('pageChange:post:delete', post);
     } else if ((url.indexOf('post/') === 0) && (url.indexOf('/show') > 0)) {
-      post = url.substring(6,url.indexOf('/show'));
+      post = url.substring(5,url.indexOf('/show'));
       Communicator.command.execute('pageChange:post:show', post);
     } else if ((url.indexOf('post/') === 0) && (url.indexOf('/edit') > 0)) {
-      post = url.substring(6,url.indexOf('/edit'));
+      post = url.substring(5,url.indexOf('/edit'));
       Communicator.command.execute('pageChange:post:edit', post);
     } else{
       console.log('No route');

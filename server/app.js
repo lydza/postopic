@@ -87,7 +87,7 @@ app.put('/api/topic/:slug', topic.slug.update(routerData));
 
 app.get('/api/posts/:page', post.all(routerData));
 app.get('/api/post/:slug', post.slug(routerData));
-app.post('/api/posts', post.create(routerData));
+app.post('/api/post', post.create(routerData));
 app.del('/api/post/:slug', post.slug.del(routerData));
 app.del('/api/posts', post.all.del(routerData));
 app.put('/api/post/:slug', post.slug.update(routerData));

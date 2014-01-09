@@ -6,7 +6,7 @@ function(Backbone){
   'use strict';
   return Backbone.Model.extend({
     initialize: function(arg) {
-      this.id = arg;
+      this.slug = arg;
       console.log('initialize a Post model');
     },
     defaults : {
@@ -15,6 +15,7 @@ function(Backbone){
         author: '',
         text: '',
         topicId: '',
+        slug: '',
         date: '',
         _id: '',
         __v: 0
@@ -22,6 +23,7 @@ function(Backbone){
       topic: {
         name: '',
         author: '',
+        slug: '',
         dateUpdated: '',
         dateCreated: '',
         _id: '',
@@ -29,7 +31,7 @@ function(Backbone){
       }
     },
     url : function() {
-      return this.id ? '/api/posts/' + this.id : '/api/posts';
+      return this.slug ? '/api/post/' + this.slug : '/api/post';
     }
   });
 });

@@ -6,7 +6,7 @@ function(Backbone){
   'use strict';
   return Backbone.Model.extend({
     initialize: function(arg) {
-      this.id=arg;
+      this.slug=arg;
       console.log('initialize a Topic model');
     },
     defaults : {
@@ -21,7 +21,7 @@ function(Backbone){
       }
     },
     url : function() {
-      return this.id ? '/api/topics/' + this.id : '/api/topics';
+      return this.slug ? '/api/topic/' + this.slug : '/api/topic';
     }
   });
 });

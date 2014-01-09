@@ -20,25 +20,25 @@ function(Communicator, Backbone, $, RouterHelper){
       console.log('All Topics');
     };
 
-    var showOneTopicRoute = function(id){
-      $.when(HelperFunctions.getOneTopic(id)).done(function(topic){
+    var showOneTopicRoute = function(slug){
+      $.when(HelperFunctions.getOneTopic(slug)).done(function(topic){
         console.log(topic);
         App.mainRegion.show(new App.Topic.View.ShowOne({model: topic}));
       });
       console.log('One Topic');
     };
 
-    var editTopicRoute = function(id){
+    var editTopicRoute = function(slug){
       console.log('Edit Topic');
-      $.when(HelperFunctions.getOneTopic(id)).done(function(topic){
+      $.when(HelperFunctions.getOneTopic(slug)).done(function(topic){
         console.log(topic);
         App.mainRegion.show(new App.Topic.View.EditOne({model: topic}));
       });
     };
 
-    var deleteTopicRoute = function(id){
+    var deleteTopicRoute = function(slug){
       console.log('Delete Topic');
-      $.when(HelperFunctions.getOneTopic(id)).done(function(topic){
+      $.when(HelperFunctions.getOneTopic(slug)).done(function(topic){
         console.log(topic);
         App.mainRegion.show(new App.Topic.View.DeleteOne({model: topic}));
       });
@@ -49,8 +49,8 @@ function(Communicator, Backbone, $, RouterHelper){
       App.mainRegion.show(new App.Topic.View.CreateOne());
     };
 
-    var newPostInTopicRoute = function(id){
-      $.when(HelperFunctions.getOneTopic(id)).done(function(topic){
+    var newPostInTopicRoute = function(slug){
+      $.when(HelperFunctions.getOneTopic(slug)).done(function(topic){
         console.log(topic);
         App.mainRegion.show(new App.Post.View.CreateOne({model: topic}));
       });
@@ -66,24 +66,24 @@ function(Communicator, Backbone, $, RouterHelper){
       console.log('All Topics');
     };
 
-    var showOneTopicPageChange = function(id){
-      $.when(HelperFunctions.getOneTopic(id)).done(function(topic){
+    var showOneTopicPageChange = function(slug){
+      $.when(HelperFunctions.getOneTopic(slug)).done(function(topic){
         console.log(topic);
         App.mainRegion.show(new App.Topic.View.ShowOne({model: topic}));
       });
       console.log('One Topic');
     };
 
-    var editTopicPageChange = function(id){
-      $.when(HelperFunctions.getOneTopic(id)).done(function(topic){
+    var editTopicPageChange = function(slug){
+      $.when(HelperFunctions.getOneTopic(slug)).done(function(topic){
         console.log(topic);
         App.mainRegion.show(new App.Topic.View.EditOne({model: topic}));
       });
       console.log('Edit Topic');
     };
 
-    var deleteTopicPageChange = function(id){
-      $.when(HelperFunctions.getOneTopic(id)).done(function(topic){
+    var deleteTopicPageChange = function(slug){
+      $.when(HelperFunctions.getOneTopic(slug)).done(function(topic){
         console.log(topic);
         App.mainRegion.show(new App.Topic.View.DeleteOne({model: topic}));
       });
@@ -95,8 +95,8 @@ function(Communicator, Backbone, $, RouterHelper){
       console.log('Create Topic');
     };
 
-    var newPostInTopicPageChange = function(id){
-      $.when(HelperFunctions.getOneTopic(id)).done(function(topic){
+    var newPostInTopicPageChange = function(slug){
+      $.when(HelperFunctions.getOneTopic(slug)).done(function(topic){
         console.log(topic);
         App.mainRegion.show(new App.Post.View.CreateOne({model: topic}));
       });
@@ -107,25 +107,25 @@ function(Communicator, Backbone, $, RouterHelper){
       console.log('Topics Route');
       showAllTopicsPageChange();
     });
-    Communicator.command.setHandler('pageChange:topic:show', function(id){
-      console.log('Topic Show Route: ' + id);
-      showOneTopicPageChange(id);
+    Communicator.command.setHandler('pageChange:topic:show', function(slug){
+      console.log('Topic Show Route: ' + slug);
+      showOneTopicPageChange(slug);
     });
-    Communicator.command.setHandler('pageChange:topic:edit', function(id){
-      console.log('Topic Edit Route: ' + id);
-      editTopicPageChange(id);
+    Communicator.command.setHandler('pageChange:topic:edit', function(slug){
+      console.log('Topic Edit Route: ' + slug);
+      editTopicPageChange(slug);
     });
-    Communicator.command.setHandler('pageChange:topic:delete', function(id){
-      console.log('Topic Delete Route: ' + id);
-      deleteTopicPageChange(id);
+    Communicator.command.setHandler('pageChange:topic:delete', function(slug){
+      console.log('Topic Delete Route: ' + slug);
+      deleteTopicPageChange(slug);
     });
     Communicator.command.setHandler('pageChange:topic:create', function(){
       console.log('Topic Create Route');
       createTopicPageChange();
     });
-    Communicator.command.setHandler('pageChange:topic:newPost', function(id){
-      console.log('Topic Add New Post Route: ' + id);
-      newPostInTopicPageChange(id);
+    Communicator.command.setHandler('pageChange:topic:newPost', function(slug){
+      console.log('Topic Add New Post Route: ' + slug);
+      newPostInTopicPageChange(slug);
     });
 
     /* API/Controller for the routes */
