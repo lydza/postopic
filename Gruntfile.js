@@ -76,16 +76,17 @@ module.exports = function (grunt) {
       all: [
         'Gruntfile.js',
         '<%= yeoman.app %>/scripts/{,**/}*.js',
-        '!<%= yeoman.app %>/scripts/vendor/*'
-//        'test/spec/{,*/}*.js'
+        '!<%= yeoman.app %>/scripts/vendor/*',
+        'test/spec/{,*/}*.js'
       ]
     },
     requirejs: {
       compile: {
         options: {
+          name: 'main',
           baseUrl: '<%= yeoman.app %>/scripts',
           mainConfigFile: '<%= yeoman.app %>/scripts/init.js',
-          out: '<%= yeoman.dist %>'
+          out: '<%= yeoman.dist %>/r.js'
         }
       }
     },
