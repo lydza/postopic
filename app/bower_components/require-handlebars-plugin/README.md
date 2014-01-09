@@ -2,33 +2,35 @@
 
 ## Version
 
-Handlebars : `v1.0.rc.1`
+Handlebars : `v1.1.2`
 
-hbs.js     : `v0.4.0`
+hbs.js     : `v0.7.0`
 
 ## Requirements
 
 Should work in both the java and node build environments.
 
-Require.js >= 1.x.x (I recommend 2+)
+Require.js >= 2.1.x (The last tag to work for Require < 2.1 is the `0.3.3` tag)
 
 ## Usage
 
-Write a template ( path: `App/Template/One.handlebars` ):
+Write a template ( path: `App/Template/One.hbs` ):
 
 ```html
 <div class="best plugin ever">
   This is my {{ adjective }} template.
 
   {{! To include a partial: }}
-  {{! Use underscores instead of slashes in your path, }}
-  {{! and leave off the extension. }}
+  {{! just provide the path to the partial without the extension }}
 
-  {{> App_Template_CoolPartial }}
+  {{> App/Template/CoolPartial }}
+
+  {{! the path can also be relative to the current template: }}
+  {{> ./coolPartial }}
 </div>
 ```
 
-Here's the partial (optional) ( path : `App/Template/CoolPartial.handlebars` )
+Here's the partial (optional) ( path : `App/Template/CoolPartial.hbs` )
 
 ```html
 <div>
@@ -37,15 +39,23 @@ Here's the partial (optional) ( path : `App/Template/CoolPartial.handlebars` )
 </div>
 ```
 
-Include the `hbs.js` plugin and the `Handlebars.js` file in the same directory as your require.js script is. Usually, this is similar to the following.
+## Installation
+Clone this repo or use `bower` to add `require-handlebars-plugin` to your project (typically in you `lib/` directory) and make sure you tell `requirejs` about the new `hbs` plugin by editing your `requirejs.conf.js` file (you can also pass a few options):
 
-```sh
-~/Code/scripts/require.js
-~/Code/scripts/hbs.js
-~/Code/scripts/Handlebars.js
-~/Code/scripts/App/Template/One.handlebars
-~/Code/scripts/App/Template/CoolPartial.handlebars
-```
+    require.config({
+    	paths: {
+    		hbs: 'lib/require-handlebars-plugin/hbs'
+    	},
+    	hbs: { // optional
+    		helpers: true,            // default: true
+    		i18n: false,              // default: false
+    		templateExtension: 'hbs', // default: 'hbs'
+    		partialsUrl: ''           // default: ''
+		}
+    });
+
+`partialsUrl`: base url for loading partials so that you don't have to provide the full path every time you need to load a partial within a template.
+
 
 Then require your templates like so:
 
@@ -55,6 +65,7 @@ require(['hbs!App/Template/One'], function ( tmplOne ) {
   document.body.innerHTML = tmplOne({adjective: "favorite"});
 });
 ```
+
 
 And then the output into your body would be as follows:
 
@@ -71,7 +82,9 @@ And then the output into your body would be as follows:
 
 YAY!
 
-# I18n
+# i18n
+
+**Note for [jam](http://jamjs.org/) users**: i18n is not currently supported in `jam compile` due to configuration issues. This is being worked on.
 
 I added a build-time/run-time helper for internationalization. The best way to see how this works is the demo.
 
@@ -120,7 +133,7 @@ Then in your templates, you can just do:
 The system will make sure these modules are pulled in automatically from that directory. But if in your app, you need a rounding module (perhaps in a view/datanormalization place), you could do this:
 
 ```javascript
-require(['template/helpers/roundNumber'], function ( roundNumber ){
+require(['template/helpers/roundNumber'], function ( roundNumber ) {
   var threeFourths = (3/4);
   alert( roundNumber( threeFourths ));
 });
@@ -221,7 +234,7 @@ Then visit `http://127.0.0.1:8000/demo.html` for the dev version.
 
 And visit `http://127.0.0.1:8000/demo-build.html` for the production build version.
 
-You should be able to see all of the templates and individual files in your network panel in dev mode, and just 2 minified files in build mode. 
+You should be able to see all of the templates and individual files in your network panel in dev mode, and just 2 minified files in build mode.
 
 # Config
 
@@ -247,6 +260,8 @@ require.config({
 
     templateExtension: "html" // Set the extension automatically appended to templates
                               // ('hbs' by default)
+
+    compileOptions: {}        // options object which is passed to Handlebars compiler
   }
 
 })
@@ -256,7 +271,7 @@ require.config({
 
 ## Partial Collision
 
-This plugin registers every single template as a partial with it's modified module name (Slashes replaced with underscores, and no file extension). 
+This plugin registers every single template as a partial with it's modified module name and no file extension.
 
 `App/Template/One.handlebars` is registered as `App_Template_One`
 
@@ -265,14 +280,6 @@ I'd encourage you to _not_ call registerPartials in your code, and just use the 
 ## Templates not loading cross-domain
 
 In dev mode, loading the templates requires that you are on the same domain as your templates. This is standard same origin policy stuff. Once you build, though, it won't matter since there are no additional requests. Usually a few cleverly placed host overrides get you through the dev mode hurdles.
-
-## My helper isn't working
-
-Unfortunately my logic forces a circular dependency right now. The work-around is to add your helper to `template/helpers/all.js` much like the file that is in the demo. When a work-around is found, I'll update that and get it out. This could also be a 'watched' folder and a generated 'all.js' file. Note:: the all.js goes away in the build, so no worries on production size and unneeded helpers.
-
-## Doesn't work with my version of Handlebars
-
-This is a barely modified version of handlebars 1.0.beta.4 (which _still_ went out to the world with a non-updated version tag 1.0.2beta, whoops). Some of the functionality in here is new, but none of it should be specific exactly to what makes this work. Though, I did take out the code that tries to identify node.js and act differently, since we want it to be picked up by `require.js` and not the built-in node.js `require` keyword. I also turned it into a proper amd module, which makes it "require-able". There's nothing too crazy, though, so I'd suggest just using it to save yourself time. Or don't.
 
 # Other Templating Languages
 
