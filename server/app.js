@@ -54,9 +54,7 @@ var routerData = {
  
 var app = express();
 app.set('port', process.env.PORT || 3000);
-app.set('views', path.join(__dirname, 'public'));
 app.set('env', 'development');
-app.set('view engine', 'jade');
 app.use(express.static(path.join(__dirname, '../app')));
 app.use(express.favicon());
 app.use(express.logger('dev'));

@@ -5,157 +5,130 @@ module.exports = function (grunt) {
   require('time-grunt')(grunt);
 
   grunt.initConfig({
-    yeoman: {
+    postopic: {
       app: 'app',
-      dist: 'dist'
-    },
+      dest: 'dest',
+      tmp: '.tmp'
+    },//postopic hash
     watch: {
       livereload: {
         files: [
-          '<%= yeoman.app %>/*.html',
-          '{.tmp,<%= yeoman.app %>}/styles/{,**/}*.css',
-          '{.tmp,<%= yeoman.app %>}/scripts/{,**/}*.js',
-          '{.tmp,<%= yeoman.app %>}/scripts/{,**/}*.hbs',
-          '<%= yeoman.app %>/images/{,*/}*.{png,jpg,jpeg,gif,webp}',
-          'test/spec/{,**/}*.js'
-        ],
+          '<%= postopic.app %>/*.html',
+          '{<%= postopic.tmp %>,<%= postopic.app %>}/styles/{,**/}*.css',
+          '{<%= postopic.tmp %>,<%= postopic.app %>}/scripts/{,**/}*.js',
+          '{<%= postopic.tmp %>,<%= postopic.app %>}/scripts/{,**/}*.hbs',
+          '<%= postopic.app %>/images/{,*/}*.{png,jpg,jpeg,gif,webp}'
+          //'test/spec/{,**/}*.js'
+        ],//watch:livereload:files
         tasks: ['exec', 'jshint'],
         options: {
           livereload: true
-        }
-      }
-    },
+        }//watch:livereload:options
+      }//watch:livereload
+    },//watch
     connect: {
       testserver: {
         options: {
           port: 1234,
           base: '.'
-        }
-      }
-    },
+        }//connect:testserver:options
+      }//connect:testserver
+    },//connect
     exec: {
       mocha: {
         command: 'mocha-phantomjs http://localhost:<%= connect.testserver.options.port %>/test',
         stdout: true
-      }
-    },
+      }//exec:mocha
+    },//exec
     express: {
       options: {
         port: '9000'
-      },
+      },//express:options
       dev: {
         options: {
           script: 'server/app.js'
-        }
-      },
+        }//express:dev:options
+      },//express:dev
       prod: {
         options: {
           script: 'server/app.js'
-        }
-      },
+        }//express:prod:options
+      },//express:prod
       test: {
         options: {
           script: 'server/app.js'
-        }
-      }
-    },
+        }//express:test:options
+      }//express:test
+    },//express
     open: {
       server: {
         path: 'http://localhost:<%= express.options.port %>'
-      }
-    },
+      }//open:server
+    },//open
     clean: {
-      dist: ['.tmp', '<%= yeoman.dist %>/*'],
-      server: '.tmp'
-    },
+      dest: '<%= postopic.dest %>',
+      tmp: '<%= postopic.tmp %>'
+    },//clean
     jshint: {
       options: {
         jshintrc: '.jshintrc',
         reporter: require('jshint-stylish')
-      },
+      },//jshint:options
       all: [
         'Gruntfile.js',
-        '<%= yeoman.app %>/scripts/{,**/}*.js',
-        '!<%= yeoman.app %>/scripts/vendor/*',
-        'test/spec/{,*/}*.js'
-      ]
+        '<%= postopic.app %>/scripts/{,**/}*.js',
+        '!<%= postopic.app %>/scripts/vendor/*',
+//        'test/spec/{,*/}*.js'
+      ]//jshint:all
     },
     requirejs: {
       compile: {
         options: {
           name: 'main',
-          baseUrl: '<%= yeoman.app %>/scripts',
-          mainConfigFile: '<%= yeoman.app %>/scripts/init.js',
-          out: '<%= yeoman.dist %>/r.js'
-        }
-      }
-    },
+          baseUrl: '<%= postopic.app %>/scripts',
+          mainConfigFile: '<%= postopic.app %>/scripts/init.js',
+          out: '<%= postopic.dest %>/r.js'
+        }//requirejs:compile:options
+      }//requirejs:compile
+    },//requirejs
     copy: {
       dist: {
         files: [{
           expand: true,
           dot: true,
-          cwd: '<%= yeoman.app %>',
-          dest: '<%= yeoman.dist %>',
+          cwd: '<%= postopic.app %>',
+          dest: '<%= postopic.dest %>',
           src: [
             '*.{ico,txt}',
             '.htaccess',
             'images/{,*/}*.{webp,gif}',
             'bower_components/requirejs/require.js'
-          ]
-        }]
-      }
-    },
-    bower: {
-      all: {
-        rjsConfig: '<%= yeoman.app %>/scripts/main.js'
-      }
-    },
-    handlebars: {
-      compile: {
-        options: {
-          namespace: 'JST',
-          amd: true
-        },
-        files: {
-          '.tmp/scripts/templates.js': ['templates/**/*.hbs']
-        }
-      }
-    }
-  });
+          ]//copy:dist:files:src
+        }]//copy:dist:files
+      }//copy:dist
+    }//copy
+  });//grunt.initConfig
 
-  grunt.registerTask('createDefaultTemplate', function () {
-    grunt.file.write('.tmp/scripts/templates.js', 'this.JST = this.JST || {};');
-  });
 
-  grunt.registerTask('default', function (target) {
-    if (target === 'dist') {
-      return grunt.task.run(['build', 'open', 'connect:dist:keepalive']);
-    }
-    grunt.option('force', true);
-    grunt.task.run([
-      'clean:server',
-      'connect:testserver',
-      'express:dev',
-      'exec',
-      'open',
-      'watch'
-    ]);
-  });
+  grunt.registerTask('default', [
+    'clean:server',
+    'connect:testserver',
+    'express:dev',
+    'exec',
+    'open',
+    'watch'
+  ]);//grunt.registerTask
 
   grunt.registerTask('test', [
     'clean:server',
-    'createDefaultTemplate',
     'connect:testserver',
     'exec:mocha'
-  ]);
+  ]);//grunt.registerTask
 
   grunt.registerTask('build', [
     'createDefaultTemplate',
-//    'requirejs',
-//    'concat',
-//    'uglify',
+    'requirejs',
     'copy',
-  ]);
+  ]);//grunt.registerTask
 
-};
+};//module.exports

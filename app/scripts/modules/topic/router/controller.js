@@ -1,7 +1,9 @@
 define([
+  /* Libraries */
   'communicator',
   'backbone',
   'jquery',
+  /* Helpers */
   'modules/topic/router/helper'
 ],
 

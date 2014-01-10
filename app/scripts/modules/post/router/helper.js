@@ -1,9 +1,15 @@
 define([
+  /* Libraries */
   'jquery'
 ],
 
 function($){
   'use strict';
+  /*
+   * This returns a hash. The key is an alias to the function (the value).
+   * These functions are simply helpers. They return promises for the data
+   * being fetched.
+   */
   return function(App){
     var getAllPosts = function(){
       var data = new App.Post.Collection();
