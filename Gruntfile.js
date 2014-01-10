@@ -111,7 +111,7 @@ module.exports = function (grunt) {
 
 
   grunt.registerTask('default', [
-    'clean:server',
+    'clean:tmp',
     'connect:testserver',
     'express:dev',
     'exec',
@@ -120,13 +120,12 @@ module.exports = function (grunt) {
   ]);//grunt.registerTask
 
   grunt.registerTask('test', [
-    'clean:server',
+    'clean:tmp',
     'connect:testserver',
     'exec:mocha'
   ]);//grunt.registerTask
 
   grunt.registerTask('build', [
-    'createDefaultTemplate',
     'requirejs',
     'copy',
   ]);//grunt.registerTask
