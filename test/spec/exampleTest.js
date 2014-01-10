@@ -3,14 +3,19 @@
 
 	var root = this;
 
-	root.define( function() {
+	root.define([
+		'application',
+		'backbone'
+		],
+		function( App, Backbone ) {
 
-		describe('Example Test', function () {
-			it('should have true equal true', function () {
-				expect( true ).to.equal( true );
+			describe('App Object', function () {
+				it('should be an instance of Marionette.App', function () {
+					expect( App ).to.be.an.instanceof( Backbone.Marionette.Application );
+				});
+
 			});
-		});
 
-	});
+		});
 
 }).call( this );
